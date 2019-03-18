@@ -56,7 +56,7 @@
 		17EFE1856AE679994C7C312D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A39376D7F8CF12BAF2A616E /* Pods-SDOSSwinjectExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDOSSwinjectExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SDOSSwinjectExample/Pods-SDOSSwinjectExample.debug.xcconfig"; sourceTree = "<group>"; };
 		27703CC52B072DD0A398091A /* libPods-SDOSSwinjectExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SDOSSwinjectExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		294F78992226942700E2A24F /* SDOSSwinjectExampleScript */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinjectExampleScript; sourceTree = BUILT_PRODUCTS_DIR; };
+		294F78992226942700E2A24F /* SDOSSwinject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinject; sourceTree = BUILT_PRODUCTS_DIR; };
 		294F789B2226942700E2A24F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		294F78B222269EFD00E2A24F /* ConsoleParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleParameter.swift; sourceTree = "<group>"; };
 		29AE5AFE223F8FC000F589F9 /* DependencyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyDTO.swift; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		2970AD761BFA153F007CFBD9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				294F78992226942700E2A24F /* SDOSSwinjectExampleScript */,
+				294F78992226942700E2A24F /* SDOSSwinject */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 			);
 			name = SDOSSwinjectExampleScript;
 			productName = SDOSEnvironmentScript;
-			productReference = 294F78992226942700E2A24F /* SDOSSwinjectExampleScript */;
+			productReference = 294F78992226942700E2A24F /* SDOSSwinject */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -297,7 +297,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SDOSSwinject;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -356,7 +356,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SDOSSwinject;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
@@ -414,7 +414,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SDOSSwinject;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
