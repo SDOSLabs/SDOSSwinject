@@ -1,6 +1,6 @@
 {
     "config": {
-        "prefix": "Module"
+        "name": "Module"
         },
     "headers": [
         "typealias NavigationController = UINavigationController"

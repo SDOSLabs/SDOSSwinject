@@ -230,36 +230,22 @@ extension ScriptAction {
 extension ScriptAction {
     func generateAllRegister(config: ConfigDTO?, items: [BodyDTO]) -> String {
         var result = ""
-        var prefix = ""
-        if let p = config?.prefix {
-            prefix = p
+        var name = ""
+        if let p = config?.name {
+            name = p
         }
         result.append("""
             extension Container {
-                ///Register all dependencies: \(items.count) options
-                func registerAll\(prefix)() {
+                ///Register all dependencies: \(items.count) dependencies
+                func registerAll\(name)() {
 
             """)
         for item in items {
-            result.append("\t\t\(generateAllRegisterFunctionCall(config: config, item: item))\n")
+            result.append("\t\tself.\(item.registerHeader(globalName: config?.name))\n")
         }
         result.append("\t}")
         result.append("\n}\n\n")
         
-        return result
-    }
-    
-    func generateAllRegisterFunctionCall(config: ConfigDTO?, item: BodyDTO) -> String {
-        var result = ""
-        var prefix = ""
-        if let p = config?.prefix {
-            prefix = p
-        }
-        result.append("self.register\(item.dependencyName)\(prefix)")
-        if let name = item.name {
-            result.append("\(name.capitalizingFirstLetter())")
-        }
-        result.append("()")
         return result
     }
 }
@@ -268,71 +254,13 @@ extension ScriptAction {
 extension ScriptAction {
     func generateResolver(config: ConfigDTO?, items: [BodyDTO]) -> String {
         var result = ""
-        result.append("//Generate resolvers with \(items.count) options\n")
+        result.append("//Generate resolvers with \(items.count) dependencies\n")
         result.append("extension Resolver {\n")
         for item in items {
-            result.append("""
-                    func resolve\(generateResolveSignature(config: config, item: item)) {
-                        return self.resolve(\(generateResolveFunctionCall(config: config, item: item)))!
-                    }
-                
-                """
-            )
+            result.append(item.resolveFunction(globalName: config?.name))
         }
         result.append("\n}\n\n")
         
-        return result
-    }
-    
-    func generateResolveSignature(config: ConfigDTO?, item: BodyDTO) -> String {
-        var result = ""
-        var prefix = ""
-        if let p = config?.prefix {
-            prefix = p
-        }
-        result.append("\(item.dependencyName)\(prefix)")
-        if let name = item.name {
-            result.append("\(name.capitalizingFirstLetter())")
-        }
-        result.append("(")
-        if let arguments = item.arguments {
-            var arrayNames = [String]()
-            for argument in arguments {
-                arrayNames.append("\(argument.name): \(argument.type)")
-            }
-            result.append("\(arrayNames.joined(separator: ", "))")
-        }
-        result.append(") -> \(item.dependencyName)")
-        
-        return result
-    }
-    
-    func generateResolveFunctionCall(config: ConfigDTO?, item: BodyDTO) -> String {
-        var result = ""
-        var prefix = ""
-        if let p = config?.prefix {
-            prefix = p
-        }
-        result.append("\(item.dependencyName).self")
-        var name = prefix
-        if let n = item.name {
-            name.append(n.capitalizingFirstLetter())
-        }
-        if !name.isEmpty {
-            result.append(", name: \"\(name)\"")
-        }
-        if let arguments = item.arguments {
-            if arguments.count == 1 {
-                result.append(", argument: ")
-            } else {
-                result.append(", arguments: ")
-            }
-            var arrayNames = [String]()
-            for argument in arguments {
-                arrayNames.append(argument.name)
-            }
-            result.append("\(arrayNames.joined(separator: ", "))")
-        }
         return result
     }
 }
@@ -341,73 +269,13 @@ extension ScriptAction {
 extension ScriptAction {
     func generateRegister(config: ConfigDTO?, items: [BodyDTO]) -> String {
         var result = ""
-        result.append("//Generate registers with \(items.count) options\n")
+        result.append("//Generate registers with \(items.count) dependencies\n")
         result.append("extension Container {\n")
         for item in items {
-            result.append("""
-                    @discardableResult
-                    func register\(generateRegisterSignature(config: config, item: item)) {
-                        return self.register\(generateRegisterFunctionCall(config: config, item: item))
-                    }
-                
-                """
-            )
+            result.append(item.registerFunction(globalName: config?.name))
         }
         result.append("\n}\n\n")
         
-        return result
-    }
-    
-    func generateRegisterSignature(config: ConfigDTO?, item: BodyDTO) -> String {
-        var result = ""
-        var prefix = ""
-        if let p = config?.prefix {
-            prefix = p
-        }
-        result.append("\(item.dependencyName)\(prefix)")
-        if let name = item.name {
-            result.append("\(name.capitalizingFirstLetter())")
-        }
-        result.append("() -> ServiceEntry<\(item.dependencyName)>")
-        
-        return result
-    }
-    
-    func generateRegisterFunctionCall(config: ConfigDTO?, item: BodyDTO) -> String {
-        var result = ""
-        var prefix = ""
-        if let p = config?.prefix {
-            prefix = p
-        }
-        result.append("(\(item.dependencyName).self")
-        var name = prefix
-        if let n = item.name {
-            name.append(n.capitalizingFirstLetter())
-        }
-        if !name.isEmpty {
-            result.append(", name: \"\(name)\"")
-        }
-        result.append(") { (r: Resolver")
-        if let arguments = item.arguments {
-            result.append(", ")
-            var arrayNames = [String]()
-            for argument in arguments {
-                arrayNames.append("\(argument.name): \(argument.type)")
-            }
-            result.append("\(arrayNames.joined(separator: ", "))")
-        }
-        result.append(") in \(item.className)(")
-        if let arguments = item.arguments {
-            var arrayCalls = [String]()
-            for argument in arguments {
-                arrayCalls.append("\(argument.name): \(argument.name)")
-            }
-            result.append("\(arrayCalls.joined(separator: ", "))")
-        }
-        result.append(") }")
-        if let scope = item.scope {
-            result.append(".inObjectScope(.\(scope))")
-        }
         return result
     }
 }

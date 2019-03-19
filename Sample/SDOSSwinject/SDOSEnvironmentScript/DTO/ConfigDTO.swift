@@ -9,5 +9,5 @@
 import Foundation
 
 struct ConfigDTO: Codable {
-    var prefix: String?
+    var name: String?
 }

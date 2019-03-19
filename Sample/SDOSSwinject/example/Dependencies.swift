@@ -9,7 +9,7 @@ import Swinject
 typealias NavigationController = UINavigationController
 
 extension Container {
-    ///Register all dependencies: 10 options
+    ///Register all dependencies: 10 dependencies
     func registerAllModule() {
 		self.registerNavigationControllerModuleNombre()
 		self.registerNewsRepositoryActionsModule()
@@ -24,42 +24,42 @@ extension Container {
 	}
 }
 
-//Generate resolvers with 10 options
+//Generate resolvers with 10 dependencies
 extension Resolver {
     func resolveNavigationControllerModuleNombre(rootViewController: UIViewController) -> NavigationController {
-        return self.resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
+        return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
     }
     func resolveNewsRepositoryActionsModule() -> NewsRepositoryActions {
-        return self.resolve(NewsRepositoryActions.self, name: "Module")!
+        return resolve(NewsRepositoryActions.self, name: "Module")!
     }
     func resolveUseCaseNewsListModule() -> UseCaseNewsList {
-        return self.resolve(UseCaseNewsList.self, name: "Module")!
+        return resolve(UseCaseNewsList.self, name: "Module")!
     }
     func resolveUseCaseNewsDetailModule() -> UseCaseNewsDetail {
-        return self.resolve(UseCaseNewsDetail.self, name: "Module")!
+        return resolve(UseCaseNewsDetail.self, name: "Module")!
     }
     func resolveNewsListPresenterActionsModule(delegate: NewsListPresenterDelegate) -> NewsListPresenterActions {
-        return self.resolve(NewsListPresenterActions.self, name: "Module", argument: delegate)!
+        return resolve(NewsListPresenterActions.self, name: "Module", argument: delegate)!
     }
     func resolveNewsListViewActionsModule() -> NewsListViewActions {
-        return self.resolve(NewsListViewActions.self, name: "Module")!
+        return resolve(NewsListViewActions.self, name: "Module")!
     }
     func resolveNewsListWireframeActionsModule() -> NewsListWireframeActions {
-        return self.resolve(NewsListWireframeActions.self, name: "Module")!
+        return resolve(NewsListWireframeActions.self, name: "Module")!
     }
     func resolveNewsDetailPresenterActionsModule(delegate: NewsDetailPresenterDelegate) -> NewsDetailPresenterActions {
-        return self.resolve(NewsDetailPresenterActions.self, name: "Module", argument: delegate)!
+        return resolve(NewsDetailPresenterActions.self, name: "Module", argument: delegate)!
     }
     func resolveNewsDetailViewActionsModule(item: NewsListVO) -> NewsDetailViewActions {
-        return self.resolve(NewsDetailViewActions.self, name: "Module", argument: item)!
+        return resolve(NewsDetailViewActions.self, name: "Module", argument: item)!
     }
     func resolveNewsDetailWireframeActionsModule() -> NewsDetailWireframeActions {
-        return self.resolve(NewsDetailWireframeActions.self, name: "Module")!
+        return resolve(NewsDetailWireframeActions.self, name: "Module")!
     }
 
 }
 
-//Generate registers with 10 options
+//Generate registers with 10 dependencies
 extension Container {
     @discardableResult
     func registerNavigationControllerModuleNombre() -> ServiceEntry<NavigationController> {
