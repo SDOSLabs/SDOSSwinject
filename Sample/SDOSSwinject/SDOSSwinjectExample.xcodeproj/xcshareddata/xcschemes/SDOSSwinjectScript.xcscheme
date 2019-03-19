@@ -63,11 +63,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-o ${PROJECT_DIR}/example/Dependencies.swift"
+            argument = "-o &quot;${PROJECT_DIR}/example/Dependencies.swift&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-i ${PROJECT_DIR}/example/dependencies.json"
+            argument = "-i &quot;${PROJECT_DIR}/example/dependencies.json&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

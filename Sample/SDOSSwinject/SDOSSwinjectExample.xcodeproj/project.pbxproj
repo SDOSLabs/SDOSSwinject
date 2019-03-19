@@ -6,31 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		29AFB1FF1C04BFE7004AB1B6 /* Mogenerator */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 29AFB2031C04BFE7004AB1B6 /* Build configuration list for PBXAggregateTarget "Mogenerator" */;
-			buildPhases = (
-				29AFB2041C04BFEE004AB1B6 /* Mogenerator */,
-			);
-			dependencies = (
-			);
-			name = Mogenerator;
-			productName = Mogenerator;
-		};
-		29AFB2171C04C3C4004AB1B6 /* AutoGenerate */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 29AFB2181C04C3C4004AB1B6 /* Build configuration list for PBXAggregateTarget "AutoGenerate" */;
-			buildPhases = (
-				29AFB21C1C04C3C9004AB1B6 /* AutoGenerate */,
-			);
-			dependencies = (
-			);
-			name = AutoGenerate;
-			productName = AutoGenerate;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		294F789C2226942700E2A24F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F789B2226942700E2A24F /* main.swift */; };
 		294F78B322269EFD00E2A24F /* ConsoleParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F78B222269EFD00E2A24F /* ConsoleParameter.swift */; };
@@ -191,12 +166,6 @@
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
-					29AFB1FF1C04BFE7004AB1B6 = {
-						CreatedOnToolsVersion = 7.1.1;
-					};
-					29AFB2171C04C3C4004AB1B6 = {
-						CreatedOnToolsVersion = 7.1.1;
-					};
 				};
 			};
 			buildConfigurationList = 2970AD701BFA153F007CFBD9 /* Build configuration list for PBXProject "SDOSSwinjectExample" */;
@@ -213,43 +182,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				29AFB1FF1C04BFE7004AB1B6 /* Mogenerator */,
-				29AFB2171C04C3C4004AB1B6 /* AutoGenerate */,
 				294F78982226942700E2A24F /* SDOSSwinjectExampleScript */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		29AFB2041C04BFEE004AB1B6 /* Mogenerator */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Mogenerator;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/mogenerator --human-dir \"App/DataSource/Domain\" --machine-dir \"App/DataSource/Domain/AutoGenerate\" --template-var arc=true -m \"App/DataSource/DatabaseScheme/<name>.xcdatamodeld/\"";
-		};
-		29AFB21C1C04C3C9004AB1B6 /* AutoGenerate */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = AutoGenerate;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/SDOS/src/Scripts/SDOS.sh\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		294F78952226942700E2A24F /* Sources */ = {
@@ -562,48 +498,6 @@
 			};
 			name = Production;
 		};
-		29AFB2001C04BFE7004AB1B6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		29AFB2011C04BFE7004AB1B6 /* Preproduction */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Preproduction;
-		};
-		29AFB2021C04BFE7004AB1B6 /* Production */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Production;
-		};
-		29AFB2191C04C3C4004AB1B6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		29AFB21A1C04C3C4004AB1B6 /* Preproduction */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Preproduction;
-		};
-		29AFB21B1C04C3C4004AB1B6 /* Production */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Production;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -623,26 +517,6 @@
 				2970AD8D1BFA153F007CFBD9 /* Debug */,
 				2970AD8E1BFA153F007CFBD9 /* Preproduction */,
 				29AFB1E61C04A0F8004AB1B6 /* Production */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Preproduction;
-		};
-		29AFB2031C04BFE7004AB1B6 /* Build configuration list for PBXAggregateTarget "Mogenerator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				29AFB2001C04BFE7004AB1B6 /* Debug */,
-				29AFB2011C04BFE7004AB1B6 /* Preproduction */,
-				29AFB2021C04BFE7004AB1B6 /* Production */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Preproduction;
-		};
-		29AFB2181C04C3C4004AB1B6 /* Build configuration list for PBXAggregateTarget "AutoGenerate" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				29AFB2191C04C3C4004AB1B6 /* Debug */,
-				29AFB21A1C04C3C4004AB1B6 /* Preproduction */,
-				29AFB21B1C04C3C4004AB1B6 /* Production */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Preproduction;
