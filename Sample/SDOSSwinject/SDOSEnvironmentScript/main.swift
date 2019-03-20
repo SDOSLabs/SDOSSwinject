@@ -177,6 +177,8 @@ extension ScriptAction {
         }
         
         do {
+            let num = dependency.body?.count ?? 0
+            print("Todo correcto: Se han generado \(num) dependencias")
             try file.write(to: URL(fileURLWithPath: output), atomically: true, encoding: .utf8)
         } catch {
             print("Fallo durante la generación del fichero autogenerado. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
