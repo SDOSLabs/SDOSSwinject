@@ -32,6 +32,8 @@ class ScriptAction {
     var pwd: String!
     var input: String!
     var output: String!
+    var disableInputOutputFilesValidation = false
+    var unlockFiles = false
     
     var parameters = [ConsoleParameter]()
     
@@ -47,6 +49,7 @@ class ScriptAction {
     }
     
     func executeAction() {
+        validateInputOutput()
         generateFile()
     }
     
@@ -77,13 +80,27 @@ class ScriptAction {
         }
         parameters.append(parameter2)
         
+        let parameter3 = ConsoleParameter(numArgs: 0, option: "--disable-input-output-files-validation") { values in
+            self.disableInputOutputFilesValidation = true
+            return true
+        }
+        parameters.append(parameter3)
+        
+        let parameter4 = ConsoleParameter(numArgs: 0, option: "--unlock-files") { values in
+            self.unlockFiles = true
+            return true
+        }
+        parameters.append(parameter4)
+        
     }
     
     func printUsage() {
         print("Los valores validos son los siguientes")
         print("-i ruta del fichero de entrada. Debe ser un .json")
         print("-o ruta del fichero encriptado de salida. Debe incluir el nombre del fichero a generar")
-
+        print("--disable-input-output-files-validation Deshabilita la validación de los inputs y outputs files. Usar sólo para dar compatibilidad a Legacy Build System")
+        print("--unlock-files Indica que los ficheros de salida no se deben bloquear en el sistema")
+        
     }
     
 }
@@ -179,7 +196,9 @@ extension ScriptAction {
         do {
             let num = dependency.body?.count ?? 0
             print("Todo correcto: Se han generado \(num) dependencias")
+            unlockFile(output)
             try file.write(to: URL(fileURLWithPath: output), atomically: true, encoding: .utf8)
+            lockFile(output)
         } catch {
             print("Fallo durante la generación del fichero autogenerado. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
             exit(1)
@@ -279,6 +298,77 @@ extension ScriptAction {
         result.append("\n}\n\n")
         
         return result
+    }
+}
+
+//MARK: - Validate Input/Outputs files
+extension ScriptAction {
+    enum TypeParams: String {
+        case INPUT
+        case OUTPUT
+    }
+    
+    func validateInputOutput() {
+        guard !disableInputOutputFilesValidation else {
+            return
+        }
+        checkInput(params: parseParams(type: .INPUT), sources: [self.input])
+        checkOutput(params: parseParams(type: .OUTPUT), sources: [self.output])
+    }
+    
+    func parseParams(type: TypeParams) -> [String] {
+        var params = [String]()
+        if let numString = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_FILE_COUNT"] {
+            if let num = Int(numString) {
+                for i in 0...num {
+                    if let param = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_FILE_\(i)"] {
+                        params.append(param)
+                    }
+                }
+            }
+        }
+        return params
+    }
+    
+    func checkInput(params: [String], sources: [String]) {
+        checkInputOutput(params: params, sources: sources, message: "Build phase Intput Files does not contain")
+    }
+    
+    func checkOutput(params: [String], sources: [String]) {
+        checkInputOutput(params: params, sources: sources, message: "Build phase Output Files does not contain")
+    }
+    
+    func checkInputOutput(params: [String], sources: [String], message: String) {
+        for source in sources {
+            if !params.contains(source) {
+                print("[SDOSEnvironment] - \(message) '\(source.replacingOccurrences(of: pwd, with: "${SRCROOT}"))'.")
+                exit(7)
+            }
+        }
+    }
+}
+
+//MARK: - Lock files
+extension ScriptAction {
+    func unlockFile(_ path: String) {
+        shell("chflags", "-R", "nouchg", path)
+    }
+    
+    func lockFile(_ path: String) {
+        guard !unlockFiles else {
+            return
+        }
+        shell("chflags", "uchg", path)
+    }
+    
+    @discardableResult
+    func shell(_ args: String...) -> Int32 {
+        let task = Process()
+        task.launchPath = "/usr/bin/env"
+        task.arguments = args
+        task.launch()
+        task.waitUntilExit()
+        return task.terminationStatus
     }
 }
 
