@@ -70,7 +70,37 @@
             argument = "-i &quot;${PROJECT_DIR}/example/dependencies.json&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--disable-input-output-files-validation"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--unlock-files"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "SCRIPT_INPUT_FILE_COUNT"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_INPUT_FILE_0"
+            value = "${PROJECT_DIR}/example/dependencies.json"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_OUTPUT_FILE_COUNT"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_OUTPUT_FILE_0"
+            value = "${PROJECT_DIR}/example/Dependencies.swift"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
