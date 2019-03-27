@@ -100,7 +100,7 @@ class ScriptAction {
         print("-o ruta del fichero encriptado de salida. Debe incluir el nombre del fichero a generar")
         print("--disable-input-output-files-validation Deshabilita la validación de los inputs y outputs files. Usar sólo para dar compatibilidad a Legacy Build System")
         print("--unlock-files Indica que los ficheros de salida no se deben bloquear en el sistema")
-        
+        exit(1)
     }
     
 }

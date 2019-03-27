@@ -1,3 +1,7 @@
+## [0.9.4 Implementado código de error al imprimir la ayuda](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v0.9.4)
+
+- Cuando imprimimos la ayuda ahora el script finalizará con un código de error para parar la ejecución de los comandos
+
 ## [0.9.3 Añadido soporte para el nuevo Build System](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v0.9.3)
 
 - Se ha añadido soporte para el nuevo Build System. Ahora es necesario poner las rutas correctas en los campos input files y output files
