@@ -158,7 +158,7 @@ struct BodyDTO: Decodable {
      return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
      */
     func resolveImplementation(globalName: String?) -> String {
-        var result = "return resolve(\(self.dependencyName).self"
+        var result = "return (self as! Container).synchronize().resolve(\(self.dependencyName).self"
         var nameFinal = ""
         if let globalName = globalName {
             nameFinal.append(globalName.capitalizingFirstLetter())
