@@ -27,34 +27,34 @@ extension Container {
 //Generate resolvers with 10 dependencies
 extension Resolver {
     func resolveNavigationControllerModuleNombre(rootViewController: UIViewController) -> NavigationController {
-        return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
+        return (self as! Container).synchronize().resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
     }
     func resolveNewsRepositoryActionsModule() -> NewsRepositoryActions {
-        return resolve(NewsRepositoryActions.self, name: "Module")!
+        return (self as! Container).synchronize().resolve(NewsRepositoryActions.self, name: "Module")!
     }
     func resolveUseCaseNewsListModule() -> UseCaseNewsList {
-        return resolve(UseCaseNewsList.self, name: "Module")!
+        return (self as! Container).synchronize().resolve(UseCaseNewsList.self, name: "Module")!
     }
     func resolveUseCaseNewsDetailModule() -> UseCaseNewsDetail {
-        return resolve(UseCaseNewsDetail.self, name: "Module")!
+        return (self as! Container).synchronize().resolve(UseCaseNewsDetail.self, name: "Module")!
     }
     func resolveNewsListPresenterActionsModule(delegate: NewsListPresenterDelegate) -> NewsListPresenterActions {
-        return resolve(NewsListPresenterActions.self, name: "Module", argument: delegate)!
+        return (self as! Container).synchronize().resolve(NewsListPresenterActions.self, name: "Module", argument: delegate)!
     }
     func resolveNewsListViewActionsModule() -> NewsListViewActions {
-        return resolve(NewsListViewActions.self, name: "Module")!
+        return (self as! Container).synchronize().resolve(NewsListViewActions.self, name: "Module")!
     }
     func resolveNewsListWireframeActionsModule() -> NewsListWireframeActions {
-        return resolve(NewsListWireframeActions.self, name: "Module")!
+        return (self as! Container).synchronize().resolve(NewsListWireframeActions.self, name: "Module")!
     }
     func resolveNewsDetailPresenterActionsModule(delegate: NewsDetailPresenterDelegate) -> NewsDetailPresenterActions {
-        return resolve(NewsDetailPresenterActions.self, name: "Module", argument: delegate)!
+        return (self as! Container).synchronize().resolve(NewsDetailPresenterActions.self, name: "Module", argument: delegate)!
     }
     func resolveNewsDetailViewActionsModule(item: NewsListVO) -> NewsDetailViewActions {
-        return resolve(NewsDetailViewActions.self, name: "Module", argument: item)!
+        return (self as! Container).synchronize().resolve(NewsDetailViewActions.self, name: "Module", argument: item)!
     }
     func resolveNewsDetailWireframeActionsModule() -> NewsDetailWireframeActions {
-        return resolve(NewsDetailWireframeActions.self, name: "Module")!
+        return (self as! Container).synchronize().resolve(NewsDetailWireframeActions.self, name: "Module")!
     }
 
 }

@@ -1,3 +1,7 @@
+## [1.0.0 Documentación](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v1.0.0)
+
+- Documentación de la librería
+
 ## [0.9.4 Implementado código de error al imprimir la ayuda](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v0.9.4)
 
 - Cuando imprimimos la ayuda ahora el script finalizará con un código de error para parar la ejecución de los comandos
