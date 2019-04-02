@@ -41,8 +41,6 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
         {
             "dependencyName": "NavigationController",
             "className": "UINavigationController",
-            "name": null,
-            "scope": null,
             "arguments": [
                 {
                     "name": "rootViewController",
@@ -52,7 +50,7 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
         }]
 }
 ```
-2. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **+** arriba a la izquierda
+2. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **`+`** arriba a la izquierda
 3. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
 4. (Opcional) Renombrar el script a `SDOSSwinject - Create dependencies`
 5. Copiar el siguiente script:
@@ -64,9 +62,16 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
 7. Añadir `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift` al apartado `Output Files`
 8.  Compilar el proyecto. Esto generará los ficheros en la ruta `${SRCROOT}/main/resources/generated/` que deberán ser incluidos en el proyecto.
 
+Además de estos pasos el script tiene otros parámetros que pueden incluirse en base a las necesidades del proyecto:
+
+|Parámetro                                |Descripción                                                                                                        |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+|`--disable-input-output-files-validation`|Deshabilita la validación de los inputs y outputs files. Usar sólo para dar compatibilidad a `Legacy Build System` |
+|`--unlock-files`                         |Indica que los ficheros de salida no se deben bloquear en el sistema                                               |
+
 ## JSON
 
-La librería se apoya en un JSON para generar el código `.swift`. Este JSON tiene los siguientes campos
+La librería se apoya en un JSON para generar el código `.swift`. Este JSON tiene la siguiente estructura
 
 ```json
 {
@@ -107,7 +112,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.arguments.type`|Tipo del argumento|`UIViewController`|
 
 ## Dependencias
-* [Swinject](https://github.com/Swinject/Swinject) - 2.x
+* [Swinject](https://github.com/Swinject/Swinject) - >= 2.6
 
 ## Referencias
 * https://svrgitpub.sdos.es/iOS/SDOSSwinject
