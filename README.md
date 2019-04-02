@@ -58,8 +58,8 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
     "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/Dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
     ```
     <sup><sub>Los valores del script pueden cambiarse en función de las necesidades del proyecto</sup></sub>
-6. Añadir `${SRCROOT}/main/resources/Dependencies.json` al apartado `Input Files`
-7. Añadir `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift` al apartado `Output Files`
+6. Añadir `${SRCROOT}/main/resources/Dependencies.json` al apartado `Input Files`. **No poner comillas**
+7. Añadir `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift` al apartado `Output Files`. **No poner comillas**
 8.  Compilar el proyecto. Esto generará los ficheros en la ruta `${SRCROOT}/main/resources/generated/` que deberán ser incluidos en el proyecto.
 
 Además de estos pasos el script tiene otros parámetros que pueden incluirse en base a las necesidades del proyecto:
