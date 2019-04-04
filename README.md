@@ -69,7 +69,7 @@ Además de estos pasos el script tiene otros parámetros que pueden incluirse en
 |Parámetro|Obligatorio|Descripción|Ejemplo|
 |---------|-----------|-----------|-----------|
 |`-i [fichero.json]`|[x]|Ruta del fichero de entrada. Debe ser un .json | `${SRCROOT}/main/resources/Dependencies.json`|
-|`-o [fichero.swift]`|[x]|Ruta del fichero encriptado de salida. Debe incluir el nombre del fichero a generar|`${SRCROOT}/main/resources/generated/DependenciesGenerated.swift`|
+|`-o [fichero.swift]`|[x]|Ruta del fichero de salida. Debe incluir el nombre del fichero a generar|`${SRCROOT}/main/resources/generated/DependenciesGenerated.swift`|
 |`--disable-input-output-files-validation`||Deshabilita la validación de los inputs y outputs files. Usar sólo para dar compatibilidad a `Legacy Build System` |
 |`--unlock-files`||Indica que los ficheros de salida no se deben bloquear en el sistema|
 
