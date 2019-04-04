@@ -1,3 +1,7 @@
+## [1.0.1 Documentación](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v1.0.1)
+
+- Cambios en la documentación
+
 ## [1.0.0 Documentación](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v1.0.0)
 
 - Documentación de la librería
