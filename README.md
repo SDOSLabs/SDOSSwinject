@@ -12,6 +12,7 @@
 # SDOSSwinject
 
 - Enlace confluence: https://kc.sdos.es/x/RQPLAQ
+- Changelog: https://svrgitpub.sdos.es/iOS/SDOSSwinject/blob/master/CHANGELOG.md
 
 ## Introducción
 SDOSSwinject es un script que parsea un JSON para generar código Swift para el registro y la resolución de dependencias con la librería Swinject. Se ha optado por esta solución ya que el registro y la resolución de dependencias son implementaciones separadas pero que necesitan ser consecuentes (para un registro sólo hay un tipo de resolución). La implementación manual podía contener errores que son impercetibles en tiempo de compilación y haría que las aplicaciones fallaran en tiempo de ejecución.
