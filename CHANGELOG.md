@@ -1,3 +1,7 @@
+## [1.0.2 Documentación](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v1.0.2)
+
+- Modificada la forma de bloquear los ficheros. Ahora les quita el permiso de escritura
+
 ## [1.0.1 Documentación](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v1.0.1)
 
 - Cambios en la documentación
