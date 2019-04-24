@@ -1,0 +1,71 @@
+{
+    "config": {
+        "name": "Module",
+        "globalAccessLevel": "internal",
+        "registerAllAccessLevel": "public"
+        },
+    "headers": [
+        "typealias NavigationController = UINavigationController"
+    ],
+    "body": [
+        {
+            "dependencyName": "NavigationController",
+            "className": "UINavigationController",
+            "name": "nombre",
+            "arguments": [
+                {
+                    "name": "rootViewController",
+                    "type": "UIViewController"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsRepositoryActions",
+            "className": "NewsRepository",
+            "scope": "container"
+        }, {
+            "dependencyName": "UseCaseNewsList",
+            "className": "UseCaseNews.List",
+            "scope": "container"
+        }, {
+            "dependencyName": "UseCaseNewsDetail",
+            "className": "UseCaseNews.Detail",
+            "scope": "container",
+            "accessLevel": "public"
+        }, {
+            "dependencyName": "NewsListPresenterActions",
+            "className": "NewsListPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsListPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsListViewActions",
+            "className": "NewsListViewController"
+        }, {
+            "dependencyName": "NewsListWireframeActions",
+            "className": "NewsListWireframe"
+        }, {
+            "dependencyName": "NewsDetailPresenterActions",
+            "className": "NewsDetailPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsDetailPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailViewActions",
+            "className": "NewsDetailViewController",
+            "arguments": [
+                {
+                    "name": "item",
+                    "type": "NewsListVO"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailWireframeActions",
+            "className": "NewsDetailWireframe"
+        }]
+}

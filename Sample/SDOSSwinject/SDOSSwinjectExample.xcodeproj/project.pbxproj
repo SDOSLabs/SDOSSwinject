@@ -42,6 +42,8 @@
 		29AE5B11223FD40900F589F9 /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
 		29D10360224B5F7700B787BF /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
 		29D10361224B5F7700B787BF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		8C7DFC9A22708611004FBC61 /* DependenciesAccessLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependenciesAccessLevel.swift; sourceTree = "<group>"; };
+		8C7DFC9B22708611004FBC61 /* dependenciesAccessLevel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dependenciesAccessLevel.json; sourceTree = "<group>"; };
 		EFC357613C5653C7886BF973 /* Pods-SDOSSwinjectExample.preproduction.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDOSSwinjectExample.preproduction.xcconfig"; path = "Pods/Target Support Files/Pods-SDOSSwinjectExample/Pods-SDOSSwinjectExample.preproduction.xcconfig"; sourceTree = "<group>"; };
 		F399E3EE0A9E3A83C489D02A /* Pods-SDOSSwinjectExample.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDOSSwinjectExample.production.xcconfig"; path = "Pods/Target Support Files/Pods-SDOSSwinjectExample/Pods-SDOSSwinjectExample.production.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,8 @@
 		29AE5B04223FB36000F589F9 /* example */ = {
 			isa = PBXGroup;
 			children = (
+				8C7DFC9B22708611004FBC61 /* dependenciesAccessLevel.json */,
+				8C7DFC9A22708611004FBC61 /* DependenciesAccessLevel.swift */,
 				29AE5B05223FB36000F589F9 /* dependencies.json */,
 				29AE5B06223FB36000F589F9 /* Dependencies.swift */,
 			);
