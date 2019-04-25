@@ -1,3 +1,7 @@
+## [HEAD Niveles de acceso]()
+
+- Se han añadido nuevos parámetros para permitir definir los niveles de acceso de los métodos de registro y resolución de las dependencias, tanto a nivel global como para una dependencia específica
+
 ## [1.0.2 Documentación](https://svrgitpub.sdos.es/iOS/SDOSSwinject.git/tree/v1.0.2)
 
 - Modificada la forma de bloquear los ficheros. Ahora les quita el permiso de escritura
