@@ -10,4 +10,6 @@ import Foundation
 
 struct ConfigDTO: Codable {
     var name: String?
+    var globalAccessLevel: String?
+    var registerAllAccessLevel: String?
 }

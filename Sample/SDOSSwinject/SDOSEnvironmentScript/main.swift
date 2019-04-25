@@ -255,10 +255,17 @@ extension ScriptAction {
         if let p = config?.name {
             name = p
         }
+        var accessLevel = ""
+        if let globalAccessLevel = config?.globalAccessLevel {
+            accessLevel = globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " "
+        }
+        if let registerAllAccessLevel = config?.registerAllAccessLevel {
+            accessLevel = registerAllAccessLevel.isEmpty ? registerAllAccessLevel: registerAllAccessLevel + " "
+        }
         result.append("""
             extension Container {
                 ///Register all dependencies: \(items.count) dependencies
-                func registerAll\(name)() {
+                \(accessLevel)func registerAll\(name)() {
 
             """)
         for item in items {
@@ -278,7 +285,7 @@ extension ScriptAction {
         result.append("//Generate resolvers with \(items.count) dependencies\n")
         result.append("extension Resolver {\n")
         for item in items {
-            result.append(item.resolveFunction(globalName: config?.name))
+            result.append(item.resolveFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel))
         }
         result.append("\n}\n\n")
         
@@ -293,7 +300,7 @@ extension ScriptAction {
         result.append("//Generate registers with \(items.count) dependencies\n")
         result.append("extension Container {\n")
         for item in items {
-            result.append(item.registerFunction(globalName: config?.name))
+            result.append(item.registerFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel))
         }
         result.append("\n}\n\n")
         
