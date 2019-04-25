@@ -24,7 +24,7 @@ SDOSSwinject es un script que parsea un JSON para generar código Swift para el 
 Usaremos [CocoaPods](https://cocoapods.org). Hay que añadir la dependencia al `Podfile`:
 
 ```ruby
-pod 'SDOSSwinject', '~>1.0.2' 
+pod 'SDOSSwinject', '~>1.0.3' 
 ```
 
 ## Cómo se usa
@@ -115,7 +115,9 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 ```json
 {
     "config": {
-        "name": "string"
+        "name": "string",
+        "globalAccessLevel": "string",
+        "registerAllAccessLevel": "string"
     },
     "headers": [
         "string"
@@ -126,6 +128,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "className": "string",
             "name": "string",
             "scope": "string",
+            "accessLevel": "string",
             "arguments": [
                 {
                     "name": "string",
@@ -140,12 +143,15 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |---------|----------|-----------|-------|
 |`config`||Apartado de configuración general de las dependencias||
 |`config.name`||Nombre que se usará como sufijo de todo el código autogenerado. El uso más común es generar ficheros de dependencias diferentes por modúlos|`Event`|
+|`config.globalAccessLevel`||Nivel de acceso que se utilizará por defecto para los métodos de registro y resolución de dependencias|`public`|
+|`config.registerAllAccessLevel`||Nivel de acceso que se utilizará para el método registerAll. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`headers`||Array de strings que se incluiran al inicio del fichero generado. Se usará para realizar imports de librerías o crear `typealias`.|`typealias NavigationController = UINavigationController`|
 |`body`|[x]|Array de objetos. Cada uno de ellos es la definición de una dependencia. **Este array se ampliará cuando se añadan nuevas dependencias**||
 |`body.dependencyName`|[x]|Tipo de la dependencia a injectar. Por lo general será un protocolo|`NavigationController`|
 |`body.className`|[x]|Nombre de la clase que se debe inicializar al solicitar la dependencia. Esta clase deberá contener un método init con los parámetros indicados en el valor `body.arguments`|`UINavigationController`|
 |`body.name`||Nombre especifico para el registro de la dependencia. Este parámetro nos permite crear varios registros a la misma dependencia sin que se solapen los nombres de los métodos. Es útil cuando queremos registrar varias veces la misma dependencia con diferentes argumentos|`Test`|
 |`body.scope`||Ámbito de resolución de la dependencia. Estos ámbitos son los [definidos en la librería Swinject](https://github.com/Swinject/Swinject/blob/master/Documentation/ObjectScopes.md). Valores disponibles: `transient`, (default) `graph`, `container`, `weak`|`container`|
+|`body.accessLevel`||Nivel de acceso que se utilizará para los métodos de registro y resolución de la dependencia. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`body.arguments`||Array de argumentos que serán usados para el registro y la resolución de la dependencia||
 |`body.arguments.name`||Nombre del argumento. Deberá coincidir con el nombre del argumento en su init||`rootViewController`|
 |`body.arguments.type`||Tipo del argumento|`UIViewController`|

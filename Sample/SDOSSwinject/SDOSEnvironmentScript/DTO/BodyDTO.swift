@@ -14,6 +14,7 @@ struct BodyDTO: Decodable {
     var scope: String?
     var name: String?
     var arguments: [ArgumentDTO]?
+    var accessLevel: String?
     
     /**
      Example result:
@@ -21,11 +22,18 @@ struct BodyDTO: Decodable {
         return self.register(NavigationController.self, name: "ModuleNombre") { (r: Resolver, rootViewController: UIViewController) in UINavigationController(rootViewController: rootViewController) }
      }
      */
-    func registerFunction(globalName: String?) -> String {
+    func registerFunction(globalName: String?, globalAccessLevel: String?) -> String {
         var result = ""
+        var accessLevel = ""
+        if let globalAccessLevel = globalAccessLevel {
+            accessLevel = globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " "
+        }
+        if let dependencyAccessLevel = self.accessLevel {
+            accessLevel = dependencyAccessLevel.isEmpty ? dependencyAccessLevel: dependencyAccessLevel + " "
+        }
         result.append("""
                 @discardableResult
-                func \(registerHeader(globalName: globalName)) -> \(registerReturn()) {
+                \(accessLevel)func \(registerHeader(globalName: globalName)) -> \(registerReturn()) {
                     \(registerImplementation(globalName: globalName))
                 }
             
@@ -107,10 +115,17 @@ struct BodyDTO: Decodable {
         return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
      }
      */
-    func resolveFunction(globalName: String?) -> String {
+    func resolveFunction(globalName: String?, globalAccessLevel: String?) -> String {
         var result = ""
+        var accessLevel = ""
+        if let globalAccessLevel = globalAccessLevel {
+            accessLevel = globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " "
+        }
+        if let dependencyAccessLevel = self.accessLevel {
+            accessLevel = dependencyAccessLevel.isEmpty ? dependencyAccessLevel: dependencyAccessLevel + " "
+        }
         result.append("""
-                func \(resolveHeader(globalName: globalName)) -> \(resolveReturn()) {
+                \(accessLevel)func \(resolveHeader(globalName: globalName)) -> \(resolveReturn()) {
                     \(resolveImplementation(globalName: globalName))
                 }
             
