@@ -1,10 +1,10 @@
 - [SDOSSwinject](#sdosswinject)
-  - [Introducción](#introducci%C3%B3n)
-  - [Instalación](#instalaci%C3%B3n)
+  - [Introducción](#introducci%c3%b3n)
+  - [Instalación](#instalaci%c3%b3n)
     - [Cocoapods](#cocoapods)
-  - [Cómo se usa](#c%C3%B3mo-se-usa)
+  - [Cómo se usa](#c%c3%b3mo-se-usa)
     - [Registro de dependencias](#registro-de-dependencias)
-    - [Resolución de dependencias](#resoluci%C3%B3n-de-dependencias)
+    - [Resolución de dependencias](#resoluci%c3%b3n-de-dependencias)
   - [JSON](#json)
   - [Dependencias](#dependencias)
   - [Referencias](#referencias)
@@ -12,7 +12,7 @@
 # SDOSSwinject
 
 - Enlace confluence: https://kc.sdos.es/x/RQPLAQ
-- Changelog: https://svrgitpub.sdos.es/iOS/SDOSSwinject/blob/master/CHANGELOG.md
+- Changelog: https://github.com/SDOSLabs/SDOSSwinject/blob/master/CHANGELOG.md
 
 ## Introducción
 SDOSSwinject es un script que parsea un JSON para generar código Swift para el registro y la resolución de dependencias con la librería Swinject. Se ha optado por esta solución ya que el registro y la resolución de dependencias son implementaciones separadas pero que necesitan ser consecuentes (para un registro sólo hay un tipo de resolución). La implementación manual podía contener errores que son impercetibles en tiempo de compilación y haría que las aplicaciones fallaran en tiempo de ejecución.
@@ -160,5 +160,5 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 * [Swinject](https://github.com/Swinject/Swinject) - >= 2.6
 
 ## Referencias
-* https://svrgitpub.sdos.es/iOS/SDOSSwinject
+* https://github.com/SDOSLabs/SDOSSwinject
 
