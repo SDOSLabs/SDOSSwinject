@@ -129,6 +129,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "name": "string",
             "scope": "string",
             "accessLevel": "string",
+            "initName": "string",
             "arguments": [
                 {
                     "name": "string",
@@ -152,6 +153,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.name`||Nombre especifico para el registro de la dependencia. Este parámetro nos permite crear varios registros a la misma dependencia sin que se solapen los nombres de los métodos. Es útil cuando queremos registrar varias veces la misma dependencia con diferentes argumentos|`Test`|
 |`body.scope`||Ámbito de resolución de la dependencia. Estos ámbitos son los [definidos en la librería Swinject](https://github.com/Swinject/Swinject/blob/master/Documentation/ObjectScopes.md). Valores disponibles: `transient`, (default) `graph`, `container`, `weak`|`container`|
 |`body.accessLevel`||Nivel de acceso que se utilizará para los métodos de registro y resolución de la dependencia. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
+|`body.initName`||Indica el nombre del método que deberá llamarse para inicializar la clase |`shared`|
 |`body.arguments`||Array de argumentos que serán usados para el registro y la resolución de la dependencia||
 |`body.arguments.name`||Nombre del argumento. Deberá coincidir con el nombre del argumento en su init||`rootViewController`|
 |`body.arguments.type`||Tipo del argumento|`UIViewController`|

@@ -83,7 +83,7 @@ extension Container {
     }
     @discardableResult
     func registerNewsListViewActionsModule() -> ServiceEntry<NewsListViewActions> {
-        return self.register(NewsListViewActions.self, name: "Module") { (r: Resolver) in NewsListViewController() }
+        return self.register(NewsListViewActions.self, name: "Module") { (r: Resolver) in NewsListViewController.init() }
     }
     @discardableResult
     func registerNewsListWireframeActionsModule() -> ServiceEntry<NewsListWireframeActions> {
