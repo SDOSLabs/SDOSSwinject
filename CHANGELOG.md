@@ -1,4 +1,4 @@
-## [HEAD]
+## [1.0.4 Custom init y check](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.0.4)
 
 - Se ha añadido un nuevo parámetro para definir el nombre del método init que se debe invocar al resolver la dependencia
 - Se ha arreglado un error por el que la validación de los inputs y output files no funcionaban correctamente si la ruta contenia "../"
