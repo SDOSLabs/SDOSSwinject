@@ -1,10 +1,10 @@
 - [SDOSSwinject](#sdosswinject)
-  - [Introducción](#introducci%C3%B3n)
-  - [Instalación](#instalaci%C3%B3n)
+  - [Introducción](#introducci%c3%b3n)
+  - [Instalación](#instalaci%c3%b3n)
     - [Cocoapods](#cocoapods)
-  - [Cómo se usa](#c%C3%B3mo-se-usa)
+  - [Cómo se usa](#c%c3%b3mo-se-usa)
     - [Registro de dependencias](#registro-de-dependencias)
-    - [Resolución de dependencias](#resoluci%C3%B3n-de-dependencias)
+    - [Resolución de dependencias](#resoluci%c3%b3n-de-dependencias)
   - [JSON](#json)
   - [Dependencias](#dependencias)
   - [Referencias](#referencias)
@@ -12,7 +12,7 @@
 # SDOSSwinject
 
 - Enlace confluence: https://kc.sdos.es/x/RQPLAQ
-- Changelog: https://svrgitpub.sdos.es/iOS/SDOSSwinject/blob/master/CHANGELOG.md
+- Changelog: https://github.com/SDOSLabs/SDOSSwinject/blob/master/CHANGELOG.md
 
 ## Introducción
 SDOSSwinject es un script que parsea un JSON para generar código Swift para el registro y la resolución de dependencias con la librería Swinject. Se ha optado por esta solución ya que el registro y la resolución de dependencias son implementaciones separadas pero que necesitan ser consecuentes (para un registro sólo hay un tipo de resolución). La implementación manual podía contener errores que son impercetibles en tiempo de compilación y haría que las aplicaciones fallaran en tiempo de ejecución.
@@ -129,6 +129,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "name": "string",
             "scope": "string",
             "accessLevel": "string",
+            "initName": "string",
             "arguments": [
                 {
                     "name": "string",
@@ -152,6 +153,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.name`||Nombre especifico para el registro de la dependencia. Este parámetro nos permite crear varios registros a la misma dependencia sin que se solapen los nombres de los métodos. Es útil cuando queremos registrar varias veces la misma dependencia con diferentes argumentos|`Test`|
 |`body.scope`||Ámbito de resolución de la dependencia. Estos ámbitos son los [definidos en la librería Swinject](https://github.com/Swinject/Swinject/blob/master/Documentation/ObjectScopes.md). Valores disponibles: `transient`, (default) `graph`, `container`, `weak`|`container`|
 |`body.accessLevel`||Nivel de acceso que se utilizará para los métodos de registro y resolución de la dependencia. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
+|`body.initName`||Indica el nombre del método que deberá llamarse para inicializar la clase |`shared`|
 |`body.arguments`||Array de argumentos que serán usados para el registro y la resolución de la dependencia||
 |`body.arguments.name`||Nombre del argumento. Deberá coincidir con el nombre del argumento en su init||`rootViewController`|
 |`body.arguments.type`||Tipo del argumento|`UIViewController`|
@@ -160,5 +162,5 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 * [Swinject](https://github.com/Swinject/Swinject) - >= 2.6
 
 ## Referencias
-* https://svrgitpub.sdos.es/iOS/SDOSSwinject
+* https://github.com/SDOSLabs/SDOSSwinject
 
