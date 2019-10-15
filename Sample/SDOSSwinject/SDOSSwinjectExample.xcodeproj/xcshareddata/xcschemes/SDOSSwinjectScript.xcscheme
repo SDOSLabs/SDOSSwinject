@@ -87,7 +87,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "SCRIPT_INPUT_FILE_0"
-            value = "${PROJECT_DIR}/example/dependencies.json"
+            value = "${PROJECT_DIR}/App/../example/dependencies.json"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
