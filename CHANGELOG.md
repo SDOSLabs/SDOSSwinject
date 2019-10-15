@@ -1,3 +1,8 @@
+## [HEAD]
+
+- Se ha añadido un nuevo parámetro para definir el nombre del método init que se debe invocar al resolver la dependencia
+- Se ha arreglado un error por el que la validación de los inputs y output files no funcionaban correctamente si la ruta contenia "../"
+
 ## [1.0.3 Niveles de acceso](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.0.3)
 
 - Se han añadido nuevos parámetros para permitir definir los niveles de acceso de los métodos de registro y resolución de las dependencias, tanto a nivel global como para una dependencia específica

@@ -15,6 +15,7 @@ struct BodyDTO: Decodable {
     var name: String?
     var arguments: [ArgumentDTO]?
     var accessLevel: String?
+    var initName: String?
     
     /**
      Example result:
@@ -94,7 +95,12 @@ struct BodyDTO: Decodable {
             }
             result.append("\(arrayNames.joined(separator: ", "))")
         }
-        result.append(") in \(self.className)(")
+        result.append(") in \(self.className)")
+        
+        if let initName = initName {
+            result.append(".\(initName)")
+        }
+        result.append("(")
         if let arguments = self.arguments {
             var arrayCalls = [String]()
             for argument in arguments {

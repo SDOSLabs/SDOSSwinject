@@ -67,7 +67,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-i &quot;${PROJECT_DIR}/example/dependencies.json&quot;"
+            argument = "-i &quot;${PROJECT_DIR}/App/../example/dependencies.json&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

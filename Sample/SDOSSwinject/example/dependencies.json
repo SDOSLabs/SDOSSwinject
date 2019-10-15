@@ -39,7 +39,8 @@
             ]
         }, {
             "dependencyName": "NewsListViewActions",
-            "className": "NewsListViewController"
+            "className": "NewsListViewController",
+            "initName": "init"
         }, {
             "dependencyName": "NewsListWireframeActions",
             "className": "NewsListWireframe"
