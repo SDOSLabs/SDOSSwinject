@@ -347,7 +347,23 @@ extension ScriptAction {
     
     func checkInputOutput(params: [String], sources: [String], message: String) {
         for source in sources {
-            if !params.contains(source) {
+            var arrayComponents: [String] = source.components(separatedBy: "/").reversed()
+            var numComponentsToDelete = 0
+            arrayComponents = arrayComponents.compactMap { item -> String? in
+                if item == ".." {
+                    numComponentsToDelete += 1
+                    return nil
+                } else {
+                    if numComponentsToDelete != 0 {
+                        numComponentsToDelete -= 1
+                        return nil
+                    } else {
+                        return item
+                    }
+                }
+            }
+            let realSource: String = arrayComponents.reversed().joined(separator: "/")
+            if !params.contains(realSource) {
                 print("[SDOSEnvironment] - \(message) '\(source.replacingOccurrences(of: pwd, with: "${SRCROOT}"))'.")
                 exit(7)
             }
