@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  SDOSEnvironmentScript
+//  SDOSSwinjectScript
 //
 //  Created by Rafael Fernandez Alvarez on 27/02/2019.
 //  Copyright © 2019 SDOS. All rights reserved.
@@ -349,7 +349,7 @@ extension ScriptAction {
         for source in sources {
             let realSource = resolvePath(path: source)
             if !params.contains(realSource) {
-                print("[SDOSEnvironment] - \(message) '\(source.replacingOccurrences(of: pwd, with: "${SRCROOT}"))'.")
+                print("[SDOSSwinject] - \(message) '\(source.replacingOccurrences(of: pwd, with: "${SRCROOT}"))'.")
                 exit(7)
             }
         }

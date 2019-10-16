@@ -68,14 +68,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		294F789A2226942700E2A24F /* SDOSEnvironmentScript */ = {
+		294F789A2226942700E2A24F /* SDOSSwinjectScript */ = {
 			isa = PBXGroup;
 			children = (
 				29AE5B10223FD2A200F589F9 /* DTO */,
 				294F78AE22269E8600E2A24F /* ConsoleParameter */,
 				294F789B2226942700E2A24F /* main.swift */,
 			);
-			path = SDOSEnvironmentScript;
+			path = SDOSSwinjectScript;
 			sourceTree = "<group>";
 		};
 		294F78AE22269E8600E2A24F /* ConsoleParameter */ = {
@@ -92,7 +92,7 @@
 				29D10360224B5F7700B787BF /* CHANGELOG.md */,
 				29D10361224B5F7700B787BF /* README.md */,
 				29AE5B04223FB36000F589F9 /* example */,
-				294F789A2226942700E2A24F /* SDOSEnvironmentScript */,
+				294F789A2226942700E2A24F /* SDOSSwinjectScript */,
 				2970AD761BFA153F007CFBD9 /* Products */,
 				1A3F2B7365F64DEDC650C528 /* Frameworks */,
 				49D95299EC16568E6CBBDA23 /* Pods */,

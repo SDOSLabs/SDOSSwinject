@@ -1,6 +1,6 @@
 //
 //  ConsoleParameter.swift
-//  SDOSEnvironmentScript
+//  SDOSSwinjectScript
 //
 //  Created by Rafael Fernandez Alvarez on 27/02/2019.
 //  Copyright © 2019 SDOS. All rights reserved.
