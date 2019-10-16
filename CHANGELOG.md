@@ -1,3 +1,8 @@
+## [1.0.6 Validate input and output files](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.0.6)
+
+- Se ha arreglado un error por el que la validación de los inputs y output files no funcionaban correctamente si la ruta contenia "../"
+- Arreglado mensaje de log incorrecto
+
 ## [1.0.5 Validate input and output files](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.0.5)
 
 - Se ha arreglado un error por el que la validación de los inputs y output files no funcionaban correctamente si la ruta contenia "../"
