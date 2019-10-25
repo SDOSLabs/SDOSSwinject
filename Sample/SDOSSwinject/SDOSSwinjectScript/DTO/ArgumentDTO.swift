@@ -11,5 +11,6 @@ import Foundation
 struct ArgumentDTO: Decodable {
     var name: String
     var type: String
+    var defaultValue: String?
     
 }

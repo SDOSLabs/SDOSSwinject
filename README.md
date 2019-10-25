@@ -24,7 +24,7 @@ SDOSSwinject es un script que parsea un JSON para generar código Swift para el 
 Usaremos [CocoaPods](https://cocoapods.org). Hay que añadir la dependencia al `Podfile`:
 
 ```ruby
-pod 'SDOSSwinject', '~>1.0.3' 
+pod 'SDOSSwinject', '~>1.1.0' 
 ```
 
 ## Cómo se usa
@@ -133,7 +133,8 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "arguments": [
                 {
                     "name": "string",
-                    "type": "string"
+                    "type": "string",
+                    "defaultValue": "string"
                 }
             ]
         }]
@@ -155,8 +156,9 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.accessLevel`||Nivel de acceso que se utilizará para los métodos de registro y resolución de la dependencia. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`body.initName`||Indica el nombre del método que deberá llamarse para inicializar la clase |`shared`|
 |`body.arguments`||Array de argumentos que serán usados para el registro y la resolución de la dependencia||
-|`body.arguments.name`||Nombre del argumento. Deberá coincidir con el nombre del argumento en su init||`rootViewController`|
-|`body.arguments.type`||Tipo del argumento|`UIViewController`|
+|`body.arguments.name`|[x]|Nombre del argumento. Deberá coincidir con el nombre del argumento en su init|`rootViewController`|
+|`body.arguments.type`|[x]|Tipo del argumento|`UIViewController`|
+|`body.arguments.defaultValue`||Valor por defecto del argumento|`UIViewController.init()`|
 
 ## Dependencias
 * [Swinject](https://github.com/Swinject/Swinject) - >= 2.6

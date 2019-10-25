@@ -56,6 +56,12 @@ struct BodyDTO: Decodable {
         if let name = self.name {
             result.append(name.capitalizingFirstLetter())
         }
+        if let arguments = arguments, arguments.count != 0 {
+            result.append("With")
+            arguments.forEach {
+                result.append($0.name.capitalizingFirstLetter())
+            }
+        }
         result.append("()")
         return result
     }
@@ -156,7 +162,11 @@ struct BodyDTO: Decodable {
         if let arguments = self.arguments {
             var arrayNames = [String]()
             for argument in arguments {
-                arrayNames.append("\(argument.name): \(argument.type)")
+                var str = "\(argument.name): \(argument.type)"
+                if let defaultValue = argument.defaultValue {
+                    str = "\(str) = \(defaultValue)"
+                }
+                arrayNames.append(str)
             }
             result.append("\(arrayNames.joined(separator: ", "))")
         }
