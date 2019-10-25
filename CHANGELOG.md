@@ -1,3 +1,8 @@
+## [HEAD]
+
+- Modificado el nombre del registro del método de las dependencias. Ahora incluye los nombres de los parámetros para que sean métodos únicos
+- Añadido nuevo parámetro para poner un valor por defecto a los argumentos de las dependencias
+
 ## [1.0.6 Validate input and output files](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.0.6)
 
 - Se ha arreglado un error por el que la validación de los inputs y output files no funcionaban correctamente si la ruta contenia "../"

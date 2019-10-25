@@ -13,7 +13,8 @@
             "arguments": [
                 {
                     "name": "rootViewController",
-                    "type": "UIViewController"
+                    "type": "UIViewController",
+                    "defaultValue": "UIViewController()"
                 }
             ]
         }, {
