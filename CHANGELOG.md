@@ -1,4 +1,4 @@
-## [HEAD]
+## [1.1.0 Naming and default values](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.1.0)
 
 - Modificado el nombre del registro del método de las dependencias. Ahora incluye los nombres de los parámetros para que sean métodos únicos
 - Añadido nuevo parámetro para poner un valor por defecto a los argumentos de las dependencias
