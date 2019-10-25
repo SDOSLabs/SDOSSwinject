@@ -11,22 +11,22 @@ typealias NavigationController = UINavigationController
 extension Container {
     ///Register all dependencies: 10 dependencies
     func registerAllModule() {
-		self.registerNavigationControllerModuleNombre()
+		self.registerNavigationControllerModuleNombreWithRootViewController()
 		self.registerNewsRepositoryActionsModule()
 		self.registerUseCaseNewsListModule()
 		self.registerUseCaseNewsDetailModule()
-		self.registerNewsListPresenterActionsModule()
+		self.registerNewsListPresenterActionsModuleWithDelegate()
 		self.registerNewsListViewActionsModule()
 		self.registerNewsListWireframeActionsModule()
-		self.registerNewsDetailPresenterActionsModule()
-		self.registerNewsDetailViewActionsModule()
+		self.registerNewsDetailPresenterActionsModuleWithDelegate()
+		self.registerNewsDetailViewActionsModuleWithItem()
 		self.registerNewsDetailWireframeActionsModule()
 	}
 }
 
 //Generate resolvers with 10 dependencies
 extension Resolver {
-    func resolveNavigationControllerModuleNombre(rootViewController: UIViewController) -> NavigationController {
+    func resolveNavigationControllerModuleNombre(rootViewController: UIViewController = UIViewController()) -> NavigationController {
         return (self as! Container).synchronize().resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
     }
     func resolveNewsRepositoryActionsModule() -> NewsRepositoryActions {
@@ -62,7 +62,7 @@ extension Resolver {
 //Generate registers with 10 dependencies
 extension Container {
     @discardableResult
-    func registerNavigationControllerModuleNombre() -> ServiceEntry<NavigationController> {
+    func registerNavigationControllerModuleNombreWithRootViewController() -> ServiceEntry<NavigationController> {
         return self.register(NavigationController.self, name: "ModuleNombre") { (r: Resolver, rootViewController: UIViewController) in UINavigationController(rootViewController: rootViewController) }
     }
     @discardableResult
@@ -78,7 +78,7 @@ extension Container {
         return self.register(UseCaseNewsDetail.self, name: "Module") { (r: Resolver) in UseCaseNews.Detail() }.inObjectScope(.container)
     }
     @discardableResult
-    func registerNewsListPresenterActionsModule() -> ServiceEntry<NewsListPresenterActions> {
+    func registerNewsListPresenterActionsModuleWithDelegate() -> ServiceEntry<NewsListPresenterActions> {
         return self.register(NewsListPresenterActions.self, name: "Module") { (r: Resolver, delegate: NewsListPresenterDelegate) in NewsListPresenter(delegate: delegate) }
     }
     @discardableResult
@@ -90,11 +90,11 @@ extension Container {
         return self.register(NewsListWireframeActions.self, name: "Module") { (r: Resolver) in NewsListWireframe() }
     }
     @discardableResult
-    func registerNewsDetailPresenterActionsModule() -> ServiceEntry<NewsDetailPresenterActions> {
+    func registerNewsDetailPresenterActionsModuleWithDelegate() -> ServiceEntry<NewsDetailPresenterActions> {
         return self.register(NewsDetailPresenterActions.self, name: "Module") { (r: Resolver, delegate: NewsDetailPresenterDelegate) in NewsDetailPresenter(delegate: delegate) }
     }
     @discardableResult
-    func registerNewsDetailViewActionsModule() -> ServiceEntry<NewsDetailViewActions> {
+    func registerNewsDetailViewActionsModuleWithItem() -> ServiceEntry<NewsDetailViewActions> {
         return self.register(NewsDetailViewActions.self, name: "Module") { (r: Resolver, item: NewsListVO) in NewsDetailViewController(item: item) }
     }
     @discardableResult
