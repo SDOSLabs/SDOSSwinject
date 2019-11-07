@@ -255,6 +255,9 @@ extension ScriptAction {
         if let p = config?.name {
             name = p
         }
+        if let suffixName = config?.suffixName {
+            name.append(suffixName)
+        }
         var accessLevel = ""
         if let globalAccessLevel = config?.globalAccessLevel {
             accessLevel = globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " "
@@ -269,7 +272,7 @@ extension ScriptAction {
 
             """)
         for item in items {
-            result.append("\t\tself.\(item.registerHeader(globalName: config?.name))\n")
+            result.append("\t\tself.\(item.registerHeader(globalName: config?.name, suffixName: config?.suffixName))\n")
         }
         result.append("\t}")
         result.append("\n}\n\n")
@@ -281,12 +284,23 @@ extension ScriptAction {
 //MARK: - Resolver
 extension ScriptAction {
     func generateResolver(config: ConfigDTO?, items: [BodyDTO]) -> String {
-        var result = ""
-        result.append("//Generate resolvers with \(items.count) dependencies\n")
-        result.append("extension Resolver {\n")
+        var resultDependencies = ""
+        var countTotal = 0
         for item in items {
-            result.append(item.resolveFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel))
+            if let resolve = item.resolveFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel, suffixName: config?.suffixName) {
+                resultDependencies.append(resolve)
+                countTotal = countTotal + 1
+            }
         }
+        
+        var result = ""
+        result.append("//Generate resolvers with \(countTotal) dependencies")
+        if countTotal != items.count {
+            result.append(" (\(items.count - countTotal) skipped)")
+        }
+        result.append("\n")
+        result.append("extension Resolver {\n")
+        result.append(contentsOf: resultDependencies)
         result.append("\n}\n\n")
         
         return result
@@ -300,7 +314,7 @@ extension ScriptAction {
         result.append("//Generate registers with \(items.count) dependencies\n")
         result.append("extension Container {\n")
         for item in items {
-            result.append(item.registerFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel))
+            result.append(item.registerFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel, suffixName: config?.suffixName))
         }
         result.append("\n}\n\n")
         
