@@ -16,6 +16,7 @@ struct BodyDTO: Decodable {
     var arguments: [ArgumentDTO]?
     var accessLevel: String?
     var initName: String?
+    var onlyRegister: Bool? = false
     
     /**
      Example result:
@@ -23,7 +24,7 @@ struct BodyDTO: Decodable {
         return self.register(NavigationController.self, name: "ModuleNombre") { (r: Resolver, rootViewController: UIViewController) in UINavigationController(rootViewController: rootViewController) }
      }
      */
-    func registerFunction(globalName: String?, globalAccessLevel: String?) -> String {
+    func registerFunction(globalName: String?, globalAccessLevel: String?, suffixName: String?) -> String {
         var result = ""
         var accessLevel = ""
         if let globalAccessLevel = globalAccessLevel {
@@ -34,7 +35,7 @@ struct BodyDTO: Decodable {
         }
         result.append("""
                 @discardableResult
-                \(accessLevel)func \(registerHeader(globalName: globalName)) -> \(registerReturn()) {
+                \(accessLevel)func \(registerHeader(globalName: globalName, suffixName: suffixName)) -> \(registerReturn()) {
                     \(registerImplementation(globalName: globalName))
                 }
             
@@ -48,13 +49,16 @@ struct BodyDTO: Decodable {
      Example result:
      registerNavigationControllerModuleNombre()
      */
-    func registerHeader(globalName: String?) -> String {
+    func registerHeader(globalName: String?, suffixName: String?) -> String {
         var result = "register\(self.dependencyName)"
         if let globalName = globalName {
             result.append(globalName.capitalizingFirstLetter())
         }
         if let name = self.name {
             result.append(name.capitalizingFirstLetter())
+        }
+        if let suffixName = suffixName {
+            result.append(suffixName.capitalizingFirstLetter())
         }
         if let arguments = arguments, arguments.count != 0 {
             result.append("With")
@@ -127,7 +131,10 @@ struct BodyDTO: Decodable {
         return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
      }
      */
-    func resolveFunction(globalName: String?, globalAccessLevel: String?) -> String {
+    func resolveFunction(globalName: String?, globalAccessLevel: String?, suffixName: String?) -> String? {
+        if let onlyRegister = onlyRegister, onlyRegister {
+            return nil
+        }
         var result = ""
         var accessLevel = ""
         if let globalAccessLevel = globalAccessLevel {
@@ -137,7 +144,7 @@ struct BodyDTO: Decodable {
             accessLevel = dependencyAccessLevel.isEmpty ? dependencyAccessLevel: dependencyAccessLevel + " "
         }
         result.append("""
-                \(accessLevel)func \(resolveHeader(globalName: globalName)) -> \(resolveReturn()) {
+                \(accessLevel)func \(resolveHeader(globalName: globalName, suffixName: suffixName)) -> \(resolveReturn()) {
                     \(resolveImplementation(globalName: globalName))
                 }
             
@@ -150,13 +157,16 @@ struct BodyDTO: Decodable {
      Example result:
      resolveNavigationControllerModuleNombre(rootViewController: UIViewController)
      */
-    func resolveHeader(globalName: String?) -> String {
+    func resolveHeader(globalName: String?, suffixName: String?) -> String {
         var result = "resolve\(self.dependencyName)"
         if let globalName = globalName {
             result.append(globalName.capitalizingFirstLetter())
         }
         if let name = self.name {
             result.append(name.capitalizingFirstLetter())
+        }
+        if let suffixName = suffixName {
+            result.append(suffixName.capitalizingFirstLetter())
         }
         result.append("(")
         if let arguments = self.arguments {

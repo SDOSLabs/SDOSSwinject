@@ -117,7 +117,8 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
     "config": {
         "name": "string",
         "globalAccessLevel": "string",
-        "registerAllAccessLevel": "string"
+        "registerAllAccessLevel": "string",
+        "suffixName": "string"
     },
     "headers": [
         "string"
@@ -130,6 +131,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "scope": "string",
             "accessLevel": "string",
             "initName": "string",
+            "onlyRegister": Bool,
             "arguments": [
                 {
                     "name": "string",
@@ -147,6 +149,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`config.name`||Nombre que se usará como sufijo de todo el código autogenerado. El uso más común es generar ficheros de dependencias diferentes por modúlos|`Event`|
 |`config.globalAccessLevel`||Nivel de acceso que se utilizará por defecto para los métodos de registro y resolución de dependencias|`public`|
 |`config.registerAllAccessLevel`||Nivel de acceso que se utilizará para el método registerAll. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
+|`config.suffixName`||Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json`|`Custom`|
 |`headers`||Array de strings que se incluiran al inicio del fichero generado. Se usará para realizar imports de librerías o crear `typealias`.|`typealias NavigationController = UINavigationController`|
 |`body`|[x]|Array de objetos. Cada uno de ellos es la definición de una dependencia. **Este array se ampliará cuando se añadan nuevas dependencias**||
 |`body.dependencyName`|[x]|Tipo de la dependencia a injectar. Por lo general será un protocolo|`NavigationController`|
@@ -155,6 +158,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.scope`||Ámbito de resolución de la dependencia. Estos ámbitos son los [definidos en la librería Swinject](https://github.com/Swinject/Swinject/blob/master/Documentation/ObjectScopes.md). Valores disponibles: `transient`, (default) `graph`, `container`, `weak`|`container`|
 |`body.accessLevel`||Nivel de acceso que se utilizará para los métodos de registro y resolución de la dependencia. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`body.initName`||Indica el nombre del método que deberá llamarse para inicializar la clase |`shared`|
+|`body.onlyRegister`||Indica que sólo se debe crear el método de registro para esta dependencia. Esto es útil cuando estemos sobrescribiendo el registro de la dependencia en un nuevo fichero .json, por lo que la resolución de la dependencia ya estaría creada|`true`|
 |`body.arguments`||Array de argumentos que serán usados para el registro y la resolución de la dependencia||
 |`body.arguments.name`|[x]|Nombre del argumento. Deberá coincidir con el nombre del argumento en su init|`rootViewController`|
 |`body.arguments.type`|[x]|Tipo del argumento|`UIViewController`|
