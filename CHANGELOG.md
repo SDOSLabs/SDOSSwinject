@@ -1,6 +1,6 @@
-## [HEAD]
+## [1.2.0 News parameters - override register](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.2.0)
 
-- Añadidos nuevos parámetros al json de generación: 
+- Añadidos nuevos parámetros al json de generación para facilitar el sobrescribir el registro de una dependencia: 
   - `config.suffixName`: Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json. Esta propiedad no afecta al registro ni la resolución de la dependencia` 
   - `body.onlyRegister`: Indica que sólo se debe crear el método de registro para esta dependencia. Esto es útil cuando estemos sobrescribiendo el registro de la dependencia en un nuevo fichero .json, por lo que la resolución de la dependencia ya estaría creada
 
