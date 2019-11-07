@@ -1,3 +1,9 @@
+## [HEAD]
+
+- Añadidos nuevos parámetros al json de generación: 
+  - `config.suffixName`: Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json. Esta propiedad no afecta al registro ni la resolución de la dependencia` 
+  - `body.onlyRegister`: Indica que sólo se debe crear el método de registro para esta dependencia. Esto es útil cuando estemos sobrescribiendo el registro de la dependencia en un nuevo fichero .json, por lo que la resolución de la dependencia ya estaría creada
+
 ## [1.1.0 Naming and default values](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.1.0)
 
 - Modificado el nombre del registro del método de las dependencias. Ahora incluye los nombres de los parámetros para que sean métodos únicos
