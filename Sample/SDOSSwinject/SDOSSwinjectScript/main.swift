@@ -284,14 +284,23 @@ extension ScriptAction {
 //MARK: - Resolver
 extension ScriptAction {
     func generateResolver(config: ConfigDTO?, items: [BodyDTO]) -> String {
-        var result = ""
-        result.append("//Generate resolvers with \(items.count) dependencies\n")
-        result.append("extension Resolver {\n")
+        var resultDependencies = ""
+        var countTotal = 0
         for item in items {
             if let resolve = item.resolveFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel, suffixName: config?.suffixName) {
-                result.append(resolve)
+                resultDependencies.append(resolve)
+                countTotal = countTotal + 1
             }
         }
+        
+        var result = ""
+        result.append("//Generate resolvers with \(countTotal) dependencies")
+        if countTotal != items.count {
+            result.append(" (\(items.count - countTotal) skipped)")
+        }
+        result.append("\n")
+        result.append("extension Resolver {\n")
+        result.append(contentsOf: resultDependencies)
         result.append("\n}\n\n")
         
         return result

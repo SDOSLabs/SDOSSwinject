@@ -24,7 +24,7 @@ extension Container {
 	}
 }
 
-//Generate resolvers with 10 dependencies
+//Generate resolvers with 9 dependencies (1 skipped)
 extension Resolver {
     func resolveNewsRepositoryActionsModuleCustom() -> NewsRepositoryActions {
         return (self as! Container).synchronize().resolve(NewsRepositoryActions.self, name: "Module")!
