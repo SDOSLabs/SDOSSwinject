@@ -131,7 +131,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "scope": "string",
             "accessLevel": "string",
             "initName": "string",
-            "onlyRegister": Bool,
+            "onlyRegister": bool,
             "arguments": [
                 {
                     "name": "string",
@@ -146,10 +146,10 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |Parámetro|Obigatorio|Descripción|Ejemplo|
 |---------|----------|-----------|-------|
 |`config`||Apartado de configuración general de las dependencias||
-|`config.name`||Nombre que se usará como sufijo de todo el código autogenerado. El uso más común es generar ficheros de dependencias diferentes por modúlos|`Event`|
+|`config.name`||Nombre que se usará como sufijo de todo el código autogenerado. El uso más común es generar ficheros de dependencias diferentes por modúlos. Esta propiedad forma parte del registro y la resolución de la dependencia, ya que se añade como identificador de la misma|`Event`|
 |`config.globalAccessLevel`||Nivel de acceso que se utilizará por defecto para los métodos de registro y resolución de dependencias|`public`|
 |`config.registerAllAccessLevel`||Nivel de acceso que se utilizará para el método registerAll. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
-|`config.suffixName`||Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json`|`Custom`|
+|`config.suffixName`||Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json. Esta propiedad no afecta al registro ni la resolución de la dependencia|`Custom`|
 |`headers`||Array de strings que se incluiran al inicio del fichero generado. Se usará para realizar imports de librerías o crear `typealias`.|`typealias NavigationController = UINavigationController`|
 |`body`|[x]|Array de objetos. Cada uno de ellos es la definición de una dependencia. **Este array se ampliará cuando se añadan nuevas dependencias**||
 |`body.dependencyName`|[x]|Tipo de la dependencia a injectar. Por lo general será un protocolo|`NavigationController`|
