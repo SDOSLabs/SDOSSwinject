@@ -31,6 +31,11 @@
 		17EFE1856AE679994C7C312D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A39376D7F8CF12BAF2A616E /* Pods-SDOSSwinjectExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDOSSwinjectExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SDOSSwinjectExample/Pods-SDOSSwinjectExample.debug.xcconfig"; sourceTree = "<group>"; };
 		27703CC52B072DD0A398091A /* libPods-SDOSSwinjectExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SDOSSwinjectExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29259E5D248E47FE005D8CEF /* Dependencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Dependencies.json; sourceTree = "<group>"; };
+		29259E5E248E4946005D8CEF /* UI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = UI.json; sourceTree = "<group>"; };
+		29259E5F248E4946005D8CEF /* BL.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BL.json; sourceTree = "<group>"; };
+		29259E60248E4979005D8CEF /* Repository.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Repository.json; sourceTree = "<group>"; };
+		29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependenciesMultiple.swift; sourceTree = "<group>"; };
 		294F78992226942700E2A24F /* SDOSSwinject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinject; sourceTree = BUILT_PRODUCTS_DIR; };
 		294F789B2226942700E2A24F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		294F78B222269EFD00E2A24F /* ConsoleParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleParameter.swift; sourceTree = "<group>"; };
@@ -66,6 +71,18 @@
 				27703CC52B072DD0A398091A /* libPods-SDOSSwinjectExample.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29259E5C248E47C1005D8CEF /* Multiple */ = {
+			isa = PBXGroup;
+			children = (
+				29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */,
+				29259E60248E4979005D8CEF /* Repository.json */,
+				29259E5F248E4946005D8CEF /* BL.json */,
+				29259E5E248E4946005D8CEF /* UI.json */,
+				29259E5D248E47FE005D8CEF /* Dependencies.json */,
+			);
+			path = Multiple;
 			sourceTree = "<group>";
 		};
 		294F789A2226942700E2A24F /* SDOSSwinjectScript */ = {
@@ -110,6 +127,7 @@
 		29AE5B04223FB36000F589F9 /* example */ = {
 			isa = PBXGroup;
 			children = (
+				29259E5C248E47C1005D8CEF /* Multiple */,
 				8C7DFC9B22708611004FBC61 /* dependenciesAccessLevel.json */,
 				8C7DFC9A22708611004FBC61 /* DependenciesAccessLevel.swift */,
 				29AE5B05223FB36000F589F9 /* dependencies.json */,

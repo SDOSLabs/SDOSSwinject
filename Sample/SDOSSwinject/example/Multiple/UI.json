@@ -1,0 +1,46 @@
+{
+    "config": {
+        "name": "Module",
+        "suffixName": "Custom",
+        "globalAccessLevel": "internal"
+        },
+    "body": [
+        {
+            "dependencyName": "NewsListPresenterActions",
+            "className": "NewsListPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsListPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsListViewActions",
+            "className": "NewsListViewController",
+            "initName": "init"
+        }, {
+            "dependencyName": "NewsListWireframeActions",
+            "className": "NewsListWireframe"
+        }, {
+            "dependencyName": "NewsDetailPresenterActions",
+            "className": "NewsDetailPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsDetailPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailViewActions",
+            "className": "NewsDetailViewController",
+            "arguments": [
+                {
+                    "name": "item",
+                    "type": "NewsListVO"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailWireframeActions",
+            "className": "NewsDetailWireframe"
+        }]
+}

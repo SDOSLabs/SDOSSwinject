@@ -1,0 +1,26 @@
+{
+    "config": {
+        "name": "Module",
+        "suffixName": "Custom"
+        },
+    "headers": [
+        "typealias NavigationController = UINavigationController"
+    ],
+    "dependencies": [
+        "UI.json",
+        "BL.json"
+    ],
+    "body": [
+        {
+            "dependencyName": "NavigationController",
+            "className": "UINavigationController",
+            "name": "nombre",
+            "arguments": [
+                {
+                    "name": "rootViewController",
+                    "type": "UIViewController",
+                    "defaultValue": "UIViewController()"
+                }
+            ]
+        }]
+}

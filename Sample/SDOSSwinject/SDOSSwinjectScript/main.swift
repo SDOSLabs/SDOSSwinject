@@ -181,17 +181,8 @@ extension ScriptAction {
 //MARK: - Generate File
 extension ScriptAction {
     func generateFile() {
-        var file = ""
-        file.append(generateComment())
         let dependency = parseJSON()
-        if let headers = dependency.headers {
-            file.append(generateHeaders(config: dependency.config, headers: headers))
-        }
-        if let body = dependency.body {
-            file.append(generateAllRegister(config: dependency.config, items: body))
-            file.append(generateResolver(config: dependency.config, items: body))
-            file.append(generateRegister(config: dependency.config, items: body))
-        }
+        let file = generateFileDependency(dependency: dependency)
         
         do {
             let num = dependency.body?.count ?? 0
@@ -203,18 +194,57 @@ extension ScriptAction {
             print("Fallo durante la generación del fichero autogenerado. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
             exit(1)
         }
-        
     }
     
-    func generateComment() -> String {
+    func generateFileDependency(dependency: DependencyDTO) -> String {
+        var file = ""
+        file.append(generateComment(dependency: dependency))
+        file.append(generateHeaders(dependency: dependency))
+        file.append(generateAllRegister(dependency: dependency))
+        file.append(generateResolver(dependency: dependency))
+        file.append(generateRegister(dependency: dependency))
+        dependency.dependenciesResolve?.forEach {
+            file.append(generateFileDependency(dependency: $0))
+        }
+        
+        return file
+    }
+    
+    func generateComment(dependency: DependencyDTO) -> String {
         var result = ""
-        result.append(contentsOf: "//  This is a generated file, do not edit!\n")
-        result.append(contentsOf: "//  \(fileName)\n")
-        result.append(contentsOf: "//\n")
-        result.append(contentsOf: "//  Created by SDOS\n")
-        result.append(contentsOf: "//\n")
+        if let subdependencyOriginalName = dependency.subdependencyOriginalName {
+            result.append(contentsOf: """
+                //MARK: - \(subdependencyOriginalName) dependency
+                
+                
+                """)
+        } else {
+            result.append(contentsOf: """
+                //  This is a generated file, do not edit!
+                //  \(fileName)
+                //  Created by SDOS
+                //
+                import Swinject
+                
+                //MARK: - Root dependency
+                
+                
+                """)
+        }
+        return result
+    }
+    
+    func generateSubComment(file: String) -> String {
+        var result = ""
+        result.append(contentsOf: "//==========================================\n")
+        result.append(contentsOf: "// Based on \(file) file\n")
         result.append(contentsOf: "\n")
-        result.append(contentsOf: "import Swinject\n")
+        return result
+    }
+    
+    func generateSubFooter(file: String) -> String {
+        var result = ""
+        result.append(contentsOf: "//==========================================\n")
         result.append(contentsOf: "\n")
         return result
     }
@@ -222,12 +252,24 @@ extension ScriptAction {
 
 //MARK: - JSON
 extension ScriptAction {
-    func parseJSON() -> DependencyDTO {
+    func parseJSON(file: String? = nil) -> DependencyDTO {
         do {
-            let url = URL(fileURLWithPath: input)
+            var filePath: String = input
+            if let file = file {
+                filePath = NSString(string: input).deletingLastPathComponent
+                filePath = "\(filePath)/\(file)"
+            }
+            let url = URL(fileURLWithPath: filePath)
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
-            return try! decoder.decode(DependencyDTO.self, from: data)
+            var dependency = try! decoder.decode(DependencyDTO.self, from: data)
+            dependency.saveDependenciesResolve(dependencies: dependency.dependencies?.map({
+                var dependency = parseJSON(file: $0)
+                dependency.saveSubdependencyOriginalName(subdependencyOriginalName: $0)
+                return dependency
+            }))
+            
+            return dependency
         } catch {
             print("Fallo durante el tratamiento del JSON. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
             exit(1)
@@ -237,45 +279,57 @@ extension ScriptAction {
 
 //MARK: - Generate Headers
 extension ScriptAction {
-    func generateHeaders(config: ConfigDTO?, headers: [String]) -> String {
+    func generateHeaders(dependency: DependencyDTO) -> String {
         var result = ""
-        for header in headers {
-            result.append("\(header)\n")
+        if let headers = dependency.headers {
+            for header in headers {
+                result.append("\(header)\n")
+            }
+            result.append("\n")
         }
-        result.append("\n")
         return result
     }
 }
 
 //MARK: - All Register
 extension ScriptAction {
-    func generateAllRegister(config: ConfigDTO?, items: [BodyDTO]) -> String {
+    func generateAllRegister(dependency: DependencyDTO) -> String {
         var result = ""
         var name = ""
-        if let p = config?.name {
+        if let p = dependency.config?.name {
             name = p
         }
-        if let suffixName = config?.suffixName {
+        if let suffixName = dependency.config?.suffixName {
             name.append(suffixName)
         }
         var accessLevel = ""
-        if let globalAccessLevel = config?.globalAccessLevel {
+        if let globalAccessLevel = dependency.config?.globalAccessLevel {
             accessLevel = globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " "
         }
-        if let registerAllAccessLevel = config?.registerAllAccessLevel {
+        if let registerAllAccessLevel = dependency.config?.registerAllAccessLevel {
             accessLevel = registerAllAccessLevel.isEmpty ? registerAllAccessLevel: registerAllAccessLevel + " "
         }
-        result.append("""
-            extension Container {
-                ///Register all dependencies: \(items.count) dependencies
-                \(accessLevel)func registerAll\(name)() {
-
-            """)
-        for item in items {
-            result.append("\t\tself.\(item.registerHeader(globalName: config?.name, suffixName: config?.suffixName))\n")
+        if let body = dependency.body {
+            
+            result.append("""
+                
+                extension Container {
+                ///Register all dependencies: \(body.count) dependencies
+                \(accessLevel)func \(dependency.registerAllHeader()) {
+                
+                """)
+            for item in body {
+                result.append("\t\tself.\(item.registerHeader(dependency: dependency))\n")
+            }
+            if dependency.dependenciesResolve?.count ?? 0 > 0 {
+                result.append("\n")
+            }
+            dependency.dependenciesResolve?.forEach {
+                result.append("\t\tself.\($0.registerAllHeader())\n")
+            }
+            result.append("\t}")
+            result.append("\n}\n\n")
         }
-        result.append("\t}")
-        result.append("\n}\n\n")
         
         return result
     }
@@ -283,25 +337,46 @@ extension ScriptAction {
 
 //MARK: - Resolver
 extension ScriptAction {
-    func generateResolver(config: ConfigDTO?, items: [BodyDTO]) -> String {
+    func generateResolver(dependency: DependencyDTO) -> String {
         var resultDependencies = ""
+        var resultFileDependencies = ""
         var countTotal = 0
-        for item in items {
-            if let resolve = item.resolveFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel, suffixName: config?.suffixName) {
-                resultDependencies.append(resolve)
-                countTotal = countTotal + 1
+        if let body = dependency.body {
+            for item in body {
+                if let resolve = item.resolveFunction(dependency: dependency) {
+                    resultDependencies.append(resolve)
+                    countTotal = countTotal + 1
+                }
             }
         }
         
         var result = ""
-        result.append("//Generate resolvers with \(countTotal) dependencies")
-        if countTotal != items.count {
-            result.append(" (\(items.count - countTotal) skipped)")
-        }
-        result.append("\n")
-        result.append("extension Resolver {\n")
-        result.append(contentsOf: resultDependencies)
-        result.append("\n}\n\n")
+//        if let fileDependency = fileDependency {
+//            result.append("//Generate resolvers with \(countTotal) dependencies for dependency file \(fileDependency)")
+//            if countTotal != dependency.body?.count {
+//                result.append(" (\(items.count - countTotal) skipped)")
+//            }
+//            result.append("\n")
+//            if let globalAccessLevel = config?.globalAccessLevel {
+//                result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
+//            }
+//            result.append("struct \((fileDependency as NSString).lastPathComponent.components(separatedBy: ".").first!)Resolver {\n")
+//            result.append("\tlet resolver: Resolver\n")
+//            result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
+//            result.append("\n")
+//            result.append(contentsOf: resultDependencies)
+//            result.append("\n}\n\n")
+//        } else {
+            result.append("//Generate resolvers with \(countTotal) dependencies")
+            if let body = dependency.body, countTotal != body.count {
+                result.append(" (\(body.count - countTotal) skipped)")
+            }
+            result.append("\n")
+            result.append("extension Resolver {\n")
+            result.append(contentsOf: resultFileDependencies)
+            result.append(contentsOf: resultDependencies)
+            result.append("\n}\n\n")
+//        }
         
         return result
     }
@@ -309,14 +384,16 @@ extension ScriptAction {
 
 //MARK: - Register
 extension ScriptAction {
-    func generateRegister(config: ConfigDTO?, items: [BodyDTO]) -> String {
+    func generateRegister(dependency: DependencyDTO) -> String {
         var result = ""
-        result.append("//Generate registers with \(items.count) dependencies\n")
-        result.append("extension Container {\n")
-        for item in items {
-            result.append(item.registerFunction(globalName: config?.name, globalAccessLevel: config?.globalAccessLevel, suffixName: config?.suffixName))
+        if let body = dependency.body {
+            result.append("//Generate registers with \(body.count) dependencies\n")
+            result.append("extension Container {\n")
+            for item in body {
+                result.append(item.registerFunction(dependency: dependency))
+            }
+            result.append("\n}\n\n")
         }
-        result.append("\n}\n\n")
         
         return result
     }
