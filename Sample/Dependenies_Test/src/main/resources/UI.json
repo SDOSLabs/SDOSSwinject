@@ -1,0 +1,36 @@
+{
+    "config": {
+        "name": null
+    },
+    "headers": [
+        "typealias NavigationController = UINavigationController"
+    ],
+    "body": [
+        {
+            "dependencyName": "NavigationController",
+            "className": "UINavigationController",
+            "name": null,
+            "scope": null,
+            "arguments": [
+                {
+                    "name": "rootViewController",
+                    "type": "UIViewController"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailPresenterActions",
+            "className": "NewsDetailPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsDetailPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailViewActions",
+            "className": "NewsDetailViewController"
+        }, {
+            "dependencyName": "NewsDetailWireframeActions",
+            "className": "NewsDetailWireframe"
+        }]
+}

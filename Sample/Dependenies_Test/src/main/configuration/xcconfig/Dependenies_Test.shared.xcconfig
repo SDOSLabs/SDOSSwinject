@@ -1,0 +1,15 @@
+//
+//  Dependenies_Test.shared.xcconfig
+//  Dependenies_Test
+//
+//  Copyright © 2019 SDOS. All rights reserved.
+//
+
+APP_NAME=$(TARGET_NAME)
+VERSION_NUMBER = 1.0.0
+BUILD_NUMBER = 1
+
+//L10n: <#Indicar el nombre del proyecto en la plataforma para poder identificarlo#>
+L10N_ACCESS_TOKEN = QGTlFuT
+L10N_BUNDLE_KEY =  // FIXME: Insert bundle key L10 project
+L10N_VERSION = 1.0.0 // FIXME: Insert version L10n project

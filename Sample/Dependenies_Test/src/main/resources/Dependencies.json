@@ -1,0 +1,7 @@
+{
+    "dependencies": [
+        "Repository.json",
+        "BL.json",
+        "UI.json"
+    ]
+}

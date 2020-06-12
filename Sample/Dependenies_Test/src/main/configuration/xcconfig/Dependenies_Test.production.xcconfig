@@ -1,0 +1,20 @@
+//
+//  Dependenies_Test.production.xcconfig
+//  Dependenies_Test
+//
+//  Copyright © 2019 SDOS. All rights reserved.
+//
+
+#include "main/configuration/xcconfig/Dependenies_Test.shared.xcconfig"
+#include "Pods/Target Support Files/Pods-Dependenies_Test/Pods-Dependenies_Test.production.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = es.sdos.app
+
+CODE_SIGN_IDENTITY = iPhone Distribution
+DEVELOPMENT_TEAM = xxxxxx // FIXME: Insert appstore TEAM ID here
+PROVISIONING_PROFILE_SPECIFIER = xxxxxx // FIXME: Insert appstore provisioning profile ID
+FABRIC_API_KEY = xxxxxx // FIXME: Insert Fabric Api key
+FABRIC_BUILD_SECRET = xxxxxx // FIXME: Insert Fabric Build Secret
+SDOSFIREBASE_CONFIG_FILENAME=GoogleService-Info-Production
+
+SDOSEnvironment = Production
