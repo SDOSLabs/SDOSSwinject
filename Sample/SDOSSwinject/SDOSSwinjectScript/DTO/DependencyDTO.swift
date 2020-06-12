@@ -37,9 +37,7 @@ struct DependencyDTO: Decodable {
         if let suffixName = config?.suffixName {
             name.append(suffixName)
         }
-        if let _ = self.body {
-            result.append("registerAll\(name)()")
-        }
+        result.append("registerAll\(name)()")
         
         return result
     }

@@ -199,7 +199,7 @@ struct BodyDTO: Decodable {
      return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
      */
     func resolveImplementation(dependency: DependencyDTO) -> String {
-        var result = "return (self as! Container).synchronize().resolve(\(self.dependencyName).self"
+        var result = "return (\(dependency.subdependencyOriginalName == nil ? "self" : "resolver") as! Container).synchronize().resolve(\(self.dependencyName).self"
         var nameFinal = ""
         if let name = dependency.config?.name {
             nameFinal.append(name.capitalizingFirstLetter())

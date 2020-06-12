@@ -185,7 +185,7 @@ extension ScriptAction {
         let file = generateFileDependency(dependency: dependency)
         
         do {
-            let num = dependency.body?.count ?? 0
+            let num = countDependencies(dependency: dependency)
             print("Todo correcto: Se han generado \(num) dependencias")
             unlockFile(output)
             try file.write(to: URL(fileURLWithPath: output), atomically: true, encoding: .utf8)
@@ -194,6 +194,17 @@ extension ScriptAction {
             print("Fallo durante la generación del fichero autogenerado. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
             exit(1)
         }
+    }
+    
+    func countDependencies(dependency: DependencyDTO) -> Int {
+        var result = 0
+        
+        result += dependency.body?.count ?? 0
+        dependency.dependenciesResolve?.forEach {
+            result += countDependencies(dependency: $0)
+        }
+        
+        return result
     }
     
     func generateFileDependency(dependency: DependencyDTO) -> String {
@@ -215,7 +226,6 @@ extension ScriptAction {
         if let subdependencyOriginalName = dependency.subdependencyOriginalName {
             result.append(contentsOf: """
                 //MARK: - \(subdependencyOriginalName) dependency
-                
                 
                 """)
         } else {
@@ -264,6 +274,7 @@ extension ScriptAction {
             let decoder = JSONDecoder()
             var dependency = try! decoder.decode(DependencyDTO.self, from: data)
             dependency.saveDependenciesResolve(dependencies: dependency.dependencies?.map({
+                checkSubdependencyInput(file: $0)
                 var dependency = parseJSON(file: $0)
                 dependency.saveSubdependencyOriginalName(subdependencyOriginalName: $0)
                 return dependency
@@ -309,24 +320,36 @@ extension ScriptAction {
         if let registerAllAccessLevel = dependency.config?.registerAllAccessLevel {
             accessLevel = registerAllAccessLevel.isEmpty ? registerAllAccessLevel: registerAllAccessLevel + " "
         }
-        if let body = dependency.body {
-            
+        
+        let dependenciesCount = dependency.dependenciesResolve?.count ?? 0
+        let bodyCount = dependency.body?.count ?? 0
+        
+        if dependenciesCount != 0 || bodyCount != 0 {
             result.append("""
                 
                 extension Container {
-                ///Register all dependencies: \(body.count) dependencies
-                \(accessLevel)func \(dependency.registerAllHeader()) {
+                ///Register all dependencies: \(bodyCount + dependenciesCount) dependencies
+                    \(accessLevel)func \(dependency.registerAllHeader()) {
                 
                 """)
+        }
+        
+        if let body = dependency.body {
             for item in body {
                 result.append("\t\tself.\(item.registerHeader(dependency: dependency))\n")
             }
-            if dependency.dependenciesResolve?.count ?? 0 > 0 {
+        }
+        
+        if let dependenciesResolve = dependency.dependenciesResolve {
+            if dependenciesResolve.count > 0 {
                 result.append("\n")
             }
-            dependency.dependenciesResolve?.forEach {
+            dependenciesResolve.forEach {
                 result.append("\t\tself.\($0.registerAllHeader())\n")
             }
+        }
+        
+        if dependenciesCount != 0 || bodyCount != 0 {
             result.append("\t}")
             result.append("\n}\n\n")
         }
@@ -339,7 +362,6 @@ extension ScriptAction {
 extension ScriptAction {
     func generateResolver(dependency: DependencyDTO) -> String {
         var resultDependencies = ""
-        var resultFileDependencies = ""
         var countTotal = 0
         if let body = dependency.body {
             for item in body {
@@ -351,32 +373,53 @@ extension ScriptAction {
         }
         
         var result = ""
-//        if let fileDependency = fileDependency {
-//            result.append("//Generate resolvers with \(countTotal) dependencies for dependency file \(fileDependency)")
-//            if countTotal != dependency.body?.count {
-//                result.append(" (\(items.count - countTotal) skipped)")
-//            }
-//            result.append("\n")
-//            if let globalAccessLevel = config?.globalAccessLevel {
-//                result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
-//            }
-//            result.append("struct \((fileDependency as NSString).lastPathComponent.components(separatedBy: ".").first!)Resolver {\n")
-//            result.append("\tlet resolver: Resolver\n")
-//            result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
-//            result.append("\n")
-//            result.append(contentsOf: resultDependencies)
-//            result.append("\n}\n\n")
-//        } else {
-            result.append("//Generate resolvers with \(countTotal) dependencies")
-            if let body = dependency.body, countTotal != body.count {
-                result.append(" (\(body.count - countTotal) skipped)")
+        if let subdependencyOriginalName = dependency.subdependencyOriginalName {
+            if let body = dependency.body {
+                let subdependencyName = subdependencyOriginalName.fileName.capitalizingFirstLetter()
+                let subdependencyNameResolver = "\(subdependencyName)Resolver"
+                
+                result.append("//Generate variable to access resolvers")
+                if countTotal != body.count {
+                    result.append(" (\(body.count - countTotal) skipped)")
+                }
+                result.append("\n")
+                result.append("""
+                            extension Resolver {
+                                var \(subdependencyName): \(subdependencyNameResolver) {
+                                    return \(subdependencyNameResolver)(resolver: self)
+                                }
+                            }
+                            
+                            
+                            """)
+                
+                result.append("//Generate resolvers with \(countTotal) dependencies for dependency file \(subdependencyOriginalName)")
+                if let body = dependency.body, countTotal != body.count {
+                    result.append(" (\(body.count - countTotal) skipped)")
+                }
+                result.append("\n")
+                if let globalAccessLevel = dependency.config?.globalAccessLevel {
+                    result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
+                }
+                result.append("struct \(subdependencyNameResolver) {\n")
+                result.append("\tprivate let resolver: Resolver\n")
+                result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
+                result.append("\n")
+                result.append(contentsOf: resultDependencies)
+                result.append("\n}\n\n")
             }
-            result.append("\n")
-            result.append("extension Resolver {\n")
-            result.append(contentsOf: resultFileDependencies)
-            result.append(contentsOf: resultDependencies)
-            result.append("\n}\n\n")
-//        }
+        } else {
+            if let body = dependency.body {
+                result.append("//Generate resolvers with \(countTotal) dependencies")
+                if countTotal != body.count {
+                    result.append(" (\(body.count - countTotal) skipped)")
+                }
+                result.append("\n")
+                result.append("extension Resolver {\n")
+                result.append(contentsOf: resultDependencies)
+                result.append("\n}\n\n")
+            }
+        }
         
         return result
     }
@@ -436,6 +479,13 @@ extension ScriptAction {
         checkInputOutput(params: params, sources: sources, message: "Build phase Output Files does not contain")
     }
     
+    func checkSubdependencyInput(file: String) {
+        var filePath = ""
+        filePath = NSString(string: input).deletingLastPathComponent
+        filePath = "\(filePath)/\(file)"
+        checkInputOutput(params: parseParams(type: .INPUT), sources: [filePath], message: "Build phase Intput Files does not contain")
+    }
+    
     func checkInputOutput(params: [String], sources: [String], message: String) {
         for source in sources {
             let realSource = resolvePath(path: source)
@@ -452,6 +502,8 @@ extension ScriptAction {
         arrayComponents = arrayComponents.compactMap { item -> String? in
             if item == ".." {
                 numComponentsToDelete += 1
+                return nil
+            } else if item == "." {
                 return nil
             } else {
                 if numComponentsToDelete != 0 {
