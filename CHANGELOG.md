@@ -1,3 +1,7 @@
+## [HEAD]
+
+- Add new parameter named "dependencies". This parameter allow link against other dependencies .json files and generate an access to resolvers mor clean
+
 ## [1.2.0 News parameters - override register](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.2.0)
 
 - Añadidos nuevos parámetros al json de generación para facilitar el sobrescribir el registro de una dependencia: 

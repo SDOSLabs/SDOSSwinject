@@ -50,7 +50,9 @@ class ScriptAction {
     
     func executeAction() {
         validateInputOutput()
-        generateFile()
+        let dependency = parseJSON()
+        validateDependency(dependency: dependency)
+        generateFile(dependency: dependency)
     }
     
     func registerParameters() {
@@ -178,10 +180,84 @@ extension ScriptAction {
     }
 }
 
+//MARK: - Validation
+extension ScriptAction {
+    func validateDependency(dependency: DependencyDTO) {
+        let allDependenciesStr = reduceBody(dependency: dependency)
+        var dictionaryDuplicateImplementation = [String: [(String, String, DependencyDTO, BodyDTO)]]()
+        var dictionaryDuplicateHeaders = [String: [(String, String, DependencyDTO, BodyDTO)]]()
+        
+        allDependenciesStr.forEach {
+            if let array = dictionaryDuplicateHeaders[$0.0] {
+                dictionaryDuplicateHeaders[$0.0] = array + [$0]
+            } else {
+                dictionaryDuplicateHeaders[$0.0] = [$0]
+            }
+        }
+        
+        allDependenciesStr.forEach {
+            if let array = dictionaryDuplicateImplementation[$0.1] {
+                dictionaryDuplicateImplementation[$0.1] = array + [$0]
+            } else {
+                dictionaryDuplicateImplementation[$0.1] = [$0]
+            }
+        }
+        
+        dictionaryDuplicateImplementation = dictionaryDuplicateImplementation.compactMapValues{
+            return $0.count == 1 ? nil : $0
+        }
+        
+        if dictionaryDuplicateImplementation.count > 0 {
+            dictionaryDuplicateImplementation.keys.forEach { key in
+                var description = ""
+                dictionaryDuplicateImplementation[key]?.forEach {
+                    var name = "Root dependency"
+                    if let n = $0.2.subdependencyOriginalName {
+                        name = n
+                    }
+                    description = description + " See file \"\(name)\" with dependencyName \"\($0.3.dependencyName)\" and className \"\($0.3.className)\"."
+                }
+                print("warning: [SDOSSwinject] ➡️ Some dependencies generate same register implementation \"\(key)\". Consider remove only one. \(description)")
+                print("")
+            }
+        }
+        
+        dictionaryDuplicateHeaders = dictionaryDuplicateHeaders.compactMapValues{
+            return $0.count == 1 ? nil : $0
+        }
+        
+        if dictionaryDuplicateHeaders.count > 0 {
+            dictionaryDuplicateHeaders.keys.forEach { key in
+                print("[SDOSSwinject] ➡️ Some dependencies generate same register header \"\(key)\"")
+                dictionaryDuplicateHeaders[key]?.forEach {
+                    var name = "Root dependency"
+                    if let n = $0.2.subdependencyOriginalName {
+                        name = n
+                    }
+                    print("\t🟥 In file \"\(name)\" with dependencyName \"\($0.3.dependencyName)\" and className \"\($0.3.className)\"")
+                }
+                print("")
+            }
+            exit(15)
+        }
+        print("")
+    }
+    
+    func reduceBody(dependency: DependencyDTO) -> [(String, String, DependencyDTO, BodyDTO)] {
+        var result = [(String, String, DependencyDTO, BodyDTO)]()
+        if let body = dependency.body {
+            result.append(contentsOf: body.compactMap({ ($0.registerHeader(dependency: dependency), $0.registerImplementation(dependency: dependency), dependency, $0)}))
+        }
+        dependency.dependenciesResolve?.forEach {
+            result.append(contentsOf: reduceBody(dependency: $0))
+        }
+        return result
+    }
+}
+
 //MARK: - Generate File
 extension ScriptAction {
-    func generateFile() {
-        let dependency = parseJSON()
+    func generateFile(dependency: DependencyDTO) {
         let file = generateFileDependency(dependency: dependency)
         
         do {

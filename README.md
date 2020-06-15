@@ -1,10 +1,11 @@
 - [SDOSSwinject](#sdosswinject)
-  - [Introducción](#introducci%c3%b3n)
-  - [Instalación](#instalaci%c3%b3n)
+  - [Introducción](#introducción)
+  - [Instalación](#instalación)
     - [Cocoapods](#cocoapods)
-  - [Cómo se usa](#c%c3%b3mo-se-usa)
+  - [Cómo se usa](#cómo-se-usa)
     - [Registro de dependencias](#registro-de-dependencias)
-    - [Resolución de dependencias](#resoluci%c3%b3n-de-dependencias)
+    - [Resolución de dependencias](#resolución-de-dependencias)
+    - [Estructura del fichero generado](#estructura-del-fichero-generado)
   - [JSON](#json)
   - [Dependencias](#dependencias)
   - [Referencias](#referencias)
@@ -23,20 +24,37 @@ SDOSSwinject es un script que parsea un JSON para generar código Swift para el 
 
 Usaremos [CocoaPods](https://cocoapods.org). Hay que añadir la dependencia al `Podfile`:
 
+Añadir el  "source" al `Podfile`:
 ```ruby
-pod 'SDOSSwinject', '~>1.1.0' 
+source 'https://github.com/SDOSLabs/cocoapods-specs.git'
+```
+
+Añadir la dependencia al `Podfile`:
+
+```ruby
+pod 'SDOSSwinject', '~>2.0.0' 
 ```
 
 ## Cómo se usa
 
 Para hacer uso de la librería se debe lanzar un script durante la compilación que generará el fichero `.swift` con el registro y la resolución de dependencias que deberá añadirse al proyecto. Para ello hay que seguir los siguientes pasos:
 
-1. Añadir el fichero `Dependencies.json` en la ruta `${SRCROOT}/main/resources/` a Xcode. Este fichero **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Copiar el siguiente código para crear un fichero básico:
+1. Crear los fichero `Dependencies.json`, `UI.json`, `BL,json` y `Repository.json` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Estos ficheros **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Copiar el siguiente código en cada uno para crear un fichero básico:
+
+*Dependencies.json*
 ```json
 {
-    "config": {
-        "name": null
-    },
+    "dependencies": [
+        "UI.json",
+        "BL.json",
+        "Repository.json"
+    ]
+}
+```
+
+*UI.json*
+```json
+{
     "headers": [
         "typealias NavigationController = UINavigationController"
     ],
@@ -53,23 +71,46 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
         }]
 }
 ```
-2. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **`+`** arriba a la izquierda
-3. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
-4. (Opcional) Renombrar el script a `SDOSSwinject - Create dependencies`
-5. Copiar el siguiente script:
+
+*BL.json*
+```json
+{
+    "body": [
+        ]
+}
+```
+
+*Repository.json*
+```json
+{
+    "body": [
+        ]
+}
+```
+
+Nota: Esta estructura es la que sugerimos desde el departamento. Podríamos trabajar úncamente con un fichero `.json`, tal y como hacíamos en versiones anteriores de la librería. Esta estructura nos permite la separación de las dependencias en diferentes ficheros, permitiendo un nivel de ordenación más claro.
+
+1. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **`+`** arriba a la izquierda
+2. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
+3. (Opcional) Renombrar el script a `SDOSSwinject - Create dependencies`
+4. Copiar el siguiente script:
     ```sh
-    "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/Dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
+    "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/dependencies/Dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
     ```
     <sup><sub>Los valores del script pueden cambiarse en función de las necesidades del proyecto</sup></sub>
-6. Añadir `${SRCROOT}/main/resources/Dependencies.json` al apartado `Input Files`. **No poner comillas**
-7. Añadir `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift` al apartado `Output Files`. **No poner comillas**
-8. Compilar el proyecto. Esto generará los ficheros en la ruta `${SRCROOT}/main/resources/generated/` que deberán ser incluidos en el proyecto.
+5. Añadir las siguientes líneas al apartado `Input Files`. **No poner comillas**:
+   - `${SRCROOT}/main/resources/dependencies/Dependencies.json`
+   - `${SRCROOT}/main/resources/dependencies/UI.json`
+   - `${SRCROOT}/main/resources/dependencies/BL.json`
+   - `${SRCROOT}/main/resources/dependencies/Repository.json` 
+6. Añadir `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift` al apartado `Output Files`. **No poner comillas**
+7. Compilar el proyecto. Esto generará los ficheros en la ruta `${SRCROOT}/main/resources/generated/` que deberán ser incluidos en el proyecto.
 
 Además de estos pasos el script tiene otros parámetros que pueden incluirse en base a las necesidades del proyecto:
 
 |Parámetro|Obligatorio|Descripción|Ejemplo|
 |---------|-----------|-----------|-----------|
-|`-i [fichero.json]`|[x]|Ruta del fichero de entrada. Debe ser un .json | `${SRCROOT}/main/resources/Dependencies.json`|
+|`-i [fichero.json]`|[x]|Ruta del fichero de entrada. Debe ser un .json | `${SRCROOT}/main/resources/dependencies/Dependencies.json`|
 |`-o [fichero.swift]`|[x]|Ruta del fichero de salida. Debe incluir el nombre del fichero a generar|`${SRCROOT}/main/resources/generated/DependenciesGenerated.swift`|
 |`--disable-input-output-files-validation`||Deshabilita la validación de los inputs y outputs files. Usar sólo para dar compatibilidad a `Legacy Build System` |
 |`--unlock-files`||Indica que los ficheros de salida no se deben bloquear en el sistema|
@@ -78,7 +119,7 @@ La ejecución del script genera un fichero `.swift` que contiene todos los regis
 
 ### Registro de dependencias
 
-El fichero `.swift` contiene todos los registros de las dependencias incluidas en el fichero `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Lo puede hacer de forma individual o registrando todas con la siguiente función:
+El fichero `.swift` contiene todos los registros de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Lo puede hacer de forma individual o registrando todas con la siguiente función:
 ```js
 let container = Container()
 container.registerAll()
@@ -103,9 +144,51 @@ De esta forma con la llamada `Dependency.injector` obtenemos el objeto con todas
 
 ### Resolución de dependencias
 
-Una vez registradas las dependencias se pueden resolver con las funciones proporcionadas por el fichero `.swift` generado. Un ejemplo de resolución sería el siguiente:
+Al incluir el nuevo concepto de dependencias anidadas dentro de los `.json` de dependencias hay un cambio a la hora de resolver las dependencias dependiendo si son declaradas en el fichero root (`Dependencies.json`) o en una dependencia hija (cualquier dependencia que esté contenida dentro de `Dependencies.json`)
+
+- **Resolución desde el fichero root**. En este caso la dependencia se crea directamente en una extensión de la clase `Resolver` de la librería `Swinject`, lo que nos permite usar el objeto `injector` para acceder a la resolución:
 ```js
 Dependency.injector.resolveNavigationController(rootViewController: UIViewController())
+```
+Este es el mismo caso que en versiones anteriores de la librería
+
+- **Resolución desde una dependencia hija**. En este caso la dependencia se crea en un `struct` nuevo que se nombrará como el fichero `.json` seguido de la palabra `Resolver` (Para el fichero `UI.json` se creará un `struct` llamado `UIResolver`). También se creará una variable computada en una extensión de la clase `Resolver` para que podamos acceder a la resolución de la dependencia:
+```js
+Dependency.injector.UI.resolveNavigationController(rootViewController: UIViewController())
+```
+En el ejemplo que tratamos en está documentación la resolución será como se indica en este segundo caso
+
+### Estructura del fichero generado
+
+Cuando tenemos las dependencias definidas en los diferentes ficheros `.json` se crea la siguiente estructura dentro del fichero de generación:
+
+```js
+
+//========================================================
+
+//Dependencia Root
+
+// - Extension de la clase "Container" con un método con todos los registros de dependencias (tanto propias como hijas). Este método  en la dependencia Root contendrá TODOS los registros, por lo que será el único necesario para registrar todas las dependencias.
+
+// - Extensión de la clase "Resolver" con la resolución de las dependencias definidas en el fichero (no dependencias hijas)
+
+// - Extensión de la clase "Container" con el registro de las dependencias definidas en el fichero (no dependencias hijas)
+
+//========================================================
+
+
+//Dependencias hijas - Se repite por cada dependencia hija de forma recursiva
+
+// - Extension de la clase "Container" con un método con todos los registros de dependencias (tanto propias como hijas)
+
+// - Extensión de la clase "Resolver" con la creación de una variable computada que tendrá el nombre del fichero .json
+
+// - Nuevo struct con el nombre del fichero .json seguido del sufijo "Resolver" que contendrá la resolución de las dependencias definidas en el fichero (no dependencias hijas)
+
+// - Extensión de la clase "Container" con el registro de las dependencias definidas en el fichero (no dependencias hijas)
+
+//========================================================
+
 ```
 
 ## JSON
@@ -120,6 +203,9 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
         "registerAllAccessLevel": "string",
         "suffixName": "string"
     },
+    "dependencies": [
+        "string"
+    ],
     "headers": [
         "string"
     ],
@@ -151,6 +237,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`config.registerAllAccessLevel`||Nivel de acceso que se utilizará para el método registerAll. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`config.suffixName`||Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json. Esta propiedad no afecta al registro ni la resolución de la dependencia|`Custom`|
 |`headers`||Array de strings que se incluiran al inicio del fichero generado. Se usará para realizar imports de librerías o crear `typealias`.|`typealias NavigationController = UINavigationController`|
+|`dependencies`||Array de strings que son rutas relativas hacia desde el propio fichero hacía otros ficheros `.json` de dependencias.|`BL.json` o `./BL.json` (Los dos casos son iguales)|
 |`body`|[x]|Array de objetos. Cada uno de ellos es la definición de una dependencia. **Este array se ampliará cuando se añadan nuevas dependencias**||
 |`body.dependencyName`|[x]|Tipo de la dependencia a injectar. Por lo general será un protocolo|`NavigationController`|
 |`body.className`|[x]|Nombre de la clase que se debe inicializar al solicitar la dependencia. Esta clase deberá contener un método init con los parámetros indicados en el valor `body.arguments`|`UINavigationController`|
