@@ -3,6 +3,7 @@
   - [Instalación](#instalación)
     - [Cocoapods](#cocoapods)
   - [Cómo se usa](#cómo-se-usa)
+    - [Errores comunes](#errores-comunes)
     - [Registro de dependencias](#registro-de-dependencias)
     - [Resolución de dependencias](#resolución-de-dependencias)
     - [Estructura del fichero generado](#estructura-del-fichero-generado)
@@ -90,21 +91,31 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
 
 Nota: Esta estructura es la que sugerimos desde el departamento. Podríamos trabajar úncamente con un fichero `.json`, tal y como hacíamos en versiones anteriores de la librería. Esta estructura nos permite la separación de las dependencias en diferentes ficheros, permitiendo un nivel de ordenación más claro.
 
-1. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **`+`** arriba a la izquierda
-2. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
-3. (Opcional) Renombrar el script a `SDOSSwinject - Create dependencies`
-4. Copiar el siguiente script:
+2. Crear el fichero `Dependencies.xcfilelist` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Este fichero **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Deberá tener el siguiente contenido:
+```bash
+#===================================
+${SRCROOT}/main/resources/dependencies/Repository.json
+${SRCROOT}/main/resources/dependencies/BL.json
+${SRCROOT}/main/resources/dependencies/UI.json
+#===================================
+```
+Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de dependencias
+
+3. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **`+`** arriba a la izquierda
+4. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
+5. (Opcional) Renombrar el script a `SDOSSwinject - Create dependencies`
+6. Copiar el siguiente script:
     ```sh
     "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/dependencies/Dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
     ```
     <sup><sub>Los valores del script pueden cambiarse en función de las necesidades del proyecto</sup></sub>
-5. Añadir las siguientes líneas al apartado `Input Files`. **No poner comillas**:
+7. Añadir la siguiente líneas al apartado `Input Files`. **No poner comillas**:
    - `${SRCROOT}/main/resources/dependencies/Dependencies.json`
-   - `${SRCROOT}/main/resources/dependencies/UI.json`
-   - `${SRCROOT}/main/resources/dependencies/BL.json`
-   - `${SRCROOT}/main/resources/dependencies/Repository.json` 
-6. Añadir `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift` al apartado `Output Files`. **No poner comillas**
-7. Compilar el proyecto. Esto generará los ficheros en la ruta `${SRCROOT}/main/resources/generated/` que deberán ser incluidos en el proyecto.
+8. Añadir la siguiente líneas al apartado `Input File Lists`. **No poner comillas**:
+   - `${SRCROOT}/main/resources/dependencies/Dependencies.xcfilelist`
+9. Añadir la siguiente líneas al apartado `Output File`. **No poner comillas**:
+   - `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift`
+10. Compilar el proyecto. Esto generará el fichero en la ruta del paso anterior y deberá ser incluido al target del proyecto
 
 Además de estos pasos el script tiene otros parámetros que pueden incluirse en base a las necesidades del proyecto:
 
@@ -116,6 +127,10 @@ Además de estos pasos el script tiene otros parámetros que pueden incluirse en
 |`--unlock-files`||Indica que los ficheros de salida no se deben bloquear en el sistema|
 
 La ejecución del script genera un fichero `.swift` que contiene todos los registros del gestor de dependencias y sus resoluciones. **Estas funciones las debe invocar el desarrollador cuando sea necesario**.
+
+### Errores comunes
+
+Para la correcta utilización de la librería es muy importante que el script que declaremos en el `Build Phases` tenga correctamente los valores `Input Files`, `Input File Lists` y `Output File`. Estos valores indican cuales son los ficheros de que el script debe tomar como datos de entrada (`Input`) y cuales son los ficheros que genera (`Output`). Si estos valores no está correctamente seteados la ejecución del script podrá dar un error indicando que falta alguno y sugiriendo que hay que añadir para solucionar el problema
 
 ### Registro de dependencias
 
