@@ -9,7 +9,7 @@ import Swinject
 
 extension Container {
 ///Register all dependencies: 2 dependencies
-    func registerAllModuleCustom() {
+func registerAllModuleCustom() {
 
 		self.registerAllUIModuleCustom()
 		self.registerAllBLModuleCustom()
@@ -22,7 +22,7 @@ typealias NavigationController = UINavigationController
 
 extension Container {
 ///Register all dependencies: 7 dependencies
-    internal func registerAllUIModuleCustom() {
+internal func registerAllUIModuleCustom() {
 		self.registerNavigationControllerModuleNombreCustomWithRootViewController()
 		self.registerNewsListPresenterActionsModuleCustomWithDelegate()
 		self.registerNewsListViewActionsModuleCustom()
@@ -106,7 +106,7 @@ extension Container {
 
 extension Container {
 ///Register all dependencies: 3 dependencies
-    func registerAllBLModuleCustom() {
+func registerAllBLModuleCustom() {
 		self.registerUseCaseNewsListModuleCustom()
 		self.registerUseCaseNewsDetailModuleCustom()
 
@@ -152,7 +152,7 @@ extension Container {
 
 extension Container {
 ///Register all dependencies: 1 dependencies
-    func registerAllRepositoryModule() {
+func registerAllRepositoryModule() {
 		self.registerNewsRepositoryActionsModule()
 	}
 }

@@ -446,15 +446,13 @@ extension ScriptAction {
         let dependenciesCount = dependency.dependenciesResolve?.count ?? 0
         let bodyCount = dependency.body?.count ?? 0
         
-        if dependenciesCount != 0 || bodyCount != 0 {
-            result.append("""
-                
-                extension Container {
-                ///Register all dependencies: \(bodyCount + dependenciesCount) dependencies
-                    \(accessLevel)func \(dependency.registerAllHeader()) {
-                
-                """)
-        }
+        result.append("""
+            
+            extension Container {
+            ///Register all dependencies: \(bodyCount + dependenciesCount) dependencies
+            \(accessLevel)func \(dependency.registerAllHeader()) {
+            
+            """)
         
         if let body = dependency.body {
             for item in body {
@@ -470,11 +468,8 @@ extension ScriptAction {
                 result.append("\t\tself.\($0.registerAllHeader())\n")
             }
         }
-        
-        if dependenciesCount != 0 || bodyCount != 0 {
-            result.append("\t}")
-            result.append("\n}\n\n")
-        }
+        result.append("\t}")
+        result.append("\n}\n\n")
         
         return result
     }
