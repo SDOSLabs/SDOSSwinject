@@ -23,7 +23,7 @@ SDOSSwinject es un script que parsea un JSON para generar código Swift para el 
 
 ### Cocoapods
 
-Usaremos [CocoaPods](https://cocoapods.org). Hay que añadir la dependencia al `Podfile`:
+Usaremos [CocoaPods](https://cocoapods.org).
 
 Añadir el  "source" al `Podfile`:
 ```ruby
