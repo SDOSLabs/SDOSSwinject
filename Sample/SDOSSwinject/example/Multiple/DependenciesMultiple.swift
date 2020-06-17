@@ -8,30 +8,12 @@ import Swinject
 
 
 extension Container {
-///Register all dependencies: 3 dependencies
+///Register all dependencies: 2 dependencies
     func registerAllModuleCustom() {
-		self.registerNewsRepositoryActionsModuleCustom()
 
 		self.registerAllUIModuleCustom()
 		self.registerAllBLModuleCustom()
 	}
-}
-
-//Generate resolvers with 1 dependencies
-extension Resolver {
-    func resolveNewsRepositoryActionsModuleCustom() -> NewsRepositoryActions {
-        return (self as! Container).synchronize().resolve(NewsRepositoryActions.self, name: "Module")!
-    }
-
-}
-
-//Generate registers with 1 dependencies
-extension Container {
-    @discardableResult
-    func registerNewsRepositoryActionsModuleCustom() -> ServiceEntry<NewsRepositoryActions> {
-        return self.register(NewsRepositoryActions.self, name: "Module") { (r: Resolver) in NewsRepository() }.inObjectScope(.container)
-    }
-
 }
 
 //MARK: - UI.json dependency

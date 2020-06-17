@@ -39,6 +39,7 @@
 		294F78992226942700E2A24F /* SDOSSwinject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinject; sourceTree = BUILT_PRODUCTS_DIR; };
 		294F789B2226942700E2A24F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		294F78B222269EFD00E2A24F /* ConsoleParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleParameter.swift; sourceTree = "<group>"; };
+		295B94852498D6CA00FBEEBF /* DependenciesMultiple.swift.files */ = {isa = PBXFileReference; lastKnownFileType = text; path = DependenciesMultiple.swift.files; sourceTree = "<group>"; };
 		29AE5AFE223F8FC000F589F9 /* DependencyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyDTO.swift; sourceTree = "<group>"; };
 		29AE5B00223F8FCD00F589F9 /* ArgumentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDTO.swift; sourceTree = "<group>"; };
 		29AE5B05223FB36000F589F9 /* dependencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dependencies.json; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		29259E5C248E47C1005D8CEF /* Multiple */ = {
 			isa = PBXGroup;
 			children = (
+				295B94852498D6CA00FBEEBF /* DependenciesMultiple.swift.files */,
 				29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */,
 				29259E60248E4979005D8CEF /* Repository.json */,
 				29259E5F248E4946005D8CEF /* BL.json */,

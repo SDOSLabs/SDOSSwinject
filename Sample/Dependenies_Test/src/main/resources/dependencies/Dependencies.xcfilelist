@@ -1,0 +1,5 @@
+#===================================
+${SRCROOT}/main/resources/dependencies/Repository.json
+${SRCROOT}/main/resources/dependencies/BL.json
+${SRCROOT}/main/resources/dependencies/UI.json
+#===================================

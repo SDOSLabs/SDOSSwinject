@@ -1,0 +1,3 @@
+${SRCROOT}/App/../example/Multiple/UI.json
+${SRCROOT}/App/../example/Multiple/BL.json
+${SRCROOT}/App/../example/Multiple/./Repository.json

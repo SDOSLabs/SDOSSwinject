@@ -77,6 +77,7 @@
 		2940E44B223187670057986A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2940E452223187690057986A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2940E457223187690057986A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29677F90249A07DF007C5D80 /* Dependencies.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = Dependencies.xcfilelist; sourceTree = "<group>"; };
 		296D911422646B9700380A68 /* SDOSSwinject.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = SDOSSwinject.sh; sourceTree = "<group>"; };
 		296D911522646B9700380A68 /* SwiftGen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = SwiftGen.sh; sourceTree = "<group>"; };
 		296D911622646B9700380A68 /* SDOSEnvironment.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = SDOSEnvironment.sh; sourceTree = "<group>"; };
@@ -221,10 +222,7 @@
 		2905B71E223258FA007206DE /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				29CC819F249384370073C975 /* BL.json */,
-				29CC81A0249384370073C975 /* Repository.json */,
-				29CC81A1249384370073C975 /* UI.json */,
-				2902F6862240FC2B002378CE /* Dependencies.json */,
+				295B94862498D6FE00FBEEBF /* dependencies */,
 				2905B73E223296C3007206DE /* Environments.plist */,
 				29D35C942236435100F34C48 /* Style+Design.swift */,
 				29D35C9022363E8900F34C48 /* AppIcon.xcassets */,
@@ -313,6 +311,18 @@
 				2905B715223256A6007206DE /* ui */,
 			);
 			path = main;
+			sourceTree = "<group>";
+		};
+		295B94862498D6FE00FBEEBF /* dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				29677F90249A07DF007C5D80 /* Dependencies.xcfilelist */,
+				29CC819F249384370073C975 /* BL.json */,
+				2902F6862240FC2B002378CE /* Dependencies.json */,
+				29CC81A0249384370073C975 /* Repository.json */,
+				29CC81A1249384370073C975 /* UI.json */,
+			);
+			path = dependencies;
 			sourceTree = "<group>";
 		};
 		296D911322646B9700380A68 /* scripts */ = {
@@ -508,13 +518,11 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${SRCROOT}/main/resources/dependencies/Dependencies.xcfilelist",
 			);
 			inputPaths = (
 				"$(SRCROOT)/scripts/SDOSSwinject.sh",
-				"${SRCROOT}/main/resources/Dependencies.json",
-				"${SRCROOT}/main/resources/Repository.json",
-				"${SRCROOT}/main/resources/BL.json",
-				"${SRCROOT}/main/resources/UI.json",
+				"${SRCROOT}/main/resources/dependencies/Dependencies.json",
 			);
 			name = "SDOSSwinject - Create dependencies";
 			outputFileListPaths = (

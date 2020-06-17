@@ -51,6 +51,7 @@ class ScriptAction {
     func executeAction() {
         validateInputOutput()
         let dependency = parseJSON()
+        //generateFilelist(dependency: dependency)
         validateDependency(dependency: dependency)
         generateFile(dependency: dependency)
     }
@@ -183,6 +184,9 @@ extension ScriptAction {
 //MARK: - Validation
 extension ScriptAction {
     func validateDependency(dependency: DependencyDTO) {
+        
+        validateInputSubdependency(dependency: dependency)
+        
         let allDependenciesStr = reduceBody(dependency: dependency)
         var dictionaryDuplicateImplementation = [String: [(String, String, DependencyDTO, BodyDTO)]]()
         var dictionaryDuplicateHeaders = [String: [(String, String, DependencyDTO, BodyDTO)]]()
@@ -252,6 +256,15 @@ extension ScriptAction {
             result.append(contentsOf: reduceBody(dependency: $0))
         }
         return result
+    }
+    
+    func validateInputSubdependency(dependency: DependencyDTO) {
+        dependency.dependenciesResolve?.forEach {
+            if let subdependencyOriginalName = $0.subdependencyOriginalName {
+                checkSubdependencyInput(file: subdependencyOriginalName, fileContent: getPathsForFilelist(dependency: dependency).joined(separator: "\n"))
+            }
+            validateInputSubdependency(dependency: $0)
+        }
     }
 }
 
@@ -350,7 +363,6 @@ extension ScriptAction {
             let decoder = JSONDecoder()
             var dependency = try! decoder.decode(DependencyDTO.self, from: data)
             dependency.saveDependenciesResolve(dependencies: dependency.dependencies?.map({
-                checkSubdependencyInput(file: $0)
                 var dependency = parseJSON(file: $0)
                 dependency.saveSubdependencyOriginalName(subdependencyOriginalName: $0)
                 return dependency
@@ -361,6 +373,40 @@ extension ScriptAction {
             print("Fallo durante el tratamiento del JSON. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
             exit(1)
         }
+    }
+}
+
+//MARK: - Generate filelist
+extension ScriptAction {
+    func generateFilelist(dependency: DependencyDTO) {
+        guard let output = output else { return }
+        let result = getPathsForFilelist(dependency: dependency).joined(separator: "\n")
+        if !result.isEmpty {
+            let filelistOutput = "\(output).files"
+            do {
+                unlockFile(output)
+                try result.write(to: URL(fileURLWithPath: filelistOutput), atomically: true, encoding: .utf8)
+                lockFile(output)
+            } catch {
+                print("Fallo durante la generación del fichero .files en la ruta \(filelistOutput).")
+                exit(2)
+            }
+        }
+    }
+    
+    func getPathsForFilelist(dependency: DependencyDTO) -> [String] {
+        var result = [String]()
+        if let subdependencyOriginalName = dependency.subdependencyOriginalName {
+            var path = "\(NSString(string: input).deletingLastPathComponent)/\(subdependencyOriginalName)"
+            if let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] {
+                path = path.replacingOccurrences(of: srcRoot, with: "${SRCROOT}")
+            }
+            result.append(path)
+        }
+        dependency.dependenciesResolve?.forEach {
+            result.append(contentsOf: getPathsForFilelist(dependency: $0))
+        }
+        return result
     }
 }
 
@@ -521,25 +567,36 @@ extension ScriptAction {
 //MARK: - Validate Input/Outputs files
 extension ScriptAction {
     enum TypeParams: String {
-        case INPUT
-        case OUTPUT
+        case INPUT_FILE
+        case INPUT_FILE_LIST
+        case OUTPUT_FILE
     }
     
     func validateInputOutput() {
         guard !disableInputOutputFilesValidation else {
             return
         }
-        checkInput(params: parseParams(type: .INPUT), sources: [self.input])
-        checkOutput(params: parseParams(type: .OUTPUT), sources: [self.output])
+        checkInput(params: parseParams(type: .INPUT_FILE) + parseParams(type: .INPUT_FILE_LIST), sources: [self.input])
+        checkOutput(params: parseParams(type: .OUTPUT_FILE), sources: [self.output])
     }
     
     func parseParams(type: TypeParams) -> [String] {
         var params = [String]()
-        if let numString = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_FILE_COUNT"] {
+        if let numString = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_COUNT"] {
             if let num = Int(numString) {
                 for i in 0...num {
-                    if let param = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_FILE_\(i)"] {
-                        params.append(resolvePath(path: param))
+                    if let param = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_\(i)"] {
+                        if param.hasSuffix(".files") || type == .INPUT_FILE_LIST {
+                            if let fileContent = try? String(contentsOfFile: param) {
+                                fileContent.split(separator: "\n").map(String.init).forEach {
+                                    if !$0.hasPrefix("#") {
+                                        params.append(resolvePath(path: $0))
+                                    }
+                                }
+                            }
+                        } else {
+                            params.append(resolvePath(path: param))
+                        }
                     }
                 }
             }
@@ -555,18 +612,18 @@ extension ScriptAction {
         checkInputOutput(params: params, sources: sources, message: "Build phase Output Files does not contain")
     }
     
-    func checkSubdependencyInput(file: String) {
+    func checkSubdependencyInput(file: String, fileContent: String) {
         var filePath = ""
         filePath = NSString(string: input).deletingLastPathComponent
         filePath = "\(filePath)/\(file)"
-        checkInputOutput(params: parseParams(type: .INPUT), sources: [filePath], message: "Build phase Intput Files does not contain")
+        checkInputOutput(params: parseParams(type: .INPUT_FILE) + parseParams(type: .INPUT_FILE_LIST), sources: [resolvePath(path: filePath)], message: "Please create a file \".xcfilelist\" (also include it at the \"Input File Lists\") with the following content:\n\n#===================================\n\(fileContent)\n#===================================\n\nBuild phase Intput Files does not contain")
     }
     
     func checkInputOutput(params: [String], sources: [String], message: String) {
         for source in sources {
             let realSource = resolvePath(path: source)
             if !params.contains(realSource) {
-                print("[SDOSSwinject] - \(message) '\(source.replacingOccurrences(of: pwd, with: "${SRCROOT}"))'.")
+                print("[SDOSSwinject] ➡️ \(message) '\(source.replacingOccurrences(of: pwd, with: "${SRCROOT}"))'.")
                 exit(7)
             }
         }
@@ -590,7 +647,16 @@ extension ScriptAction {
                 }
             }
         }
-        return arrayComponents.reversed().joined(separator: "/")
+        var result = arrayComponents.reversed().joined(separator: "/")
+        if let projectDir = ProcessInfo.processInfo.environment["PROJECT_DIR"] {
+            result = result.replacingOccurrences(of: "${PROJECT_DIR}", with: projectDir).replacingOccurrences(of: "$PROJECT_DIR", with: projectDir).replacingOccurrences(of: "$(PROJECT_DIR)", with: projectDir)
+        }
+        
+        if let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] {
+            result = result.replacingOccurrences(of: "${SRCROOT}", with: srcRoot).replacingOccurrences(of: "$SRCROOT", with: srcRoot).replacingOccurrences(of: "$(SRCROOT)", with: srcRoot)
+        }
+        
+        return result
     }
 }
 
