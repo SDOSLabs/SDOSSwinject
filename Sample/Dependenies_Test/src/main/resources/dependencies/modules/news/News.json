@@ -1,0 +1,8 @@
+{
+    "config": {
+        "name": null
+    },
+    "dependencies": [
+        "detail/NewsDetail.json"
+    ]
+}

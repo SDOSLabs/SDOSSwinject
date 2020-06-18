@@ -28,7 +28,7 @@ protocol UseCaseNewsDetail: BaseUseCaseProtocol {
 struct UseCaseNews {
     class Detail: UseCaseNewsDetail {
         private lazy var repository: NewsRepositoryActions = {
-            return Dependency.injector.Repository.resolveNewsRepositoryActions()
+            return Dependency.injector.news.newsDetail.newsRepository.resolveNewsRepositoryActions()
         }()
         var request: Request?
         

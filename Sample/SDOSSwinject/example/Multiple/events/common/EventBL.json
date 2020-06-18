@@ -1,0 +1,12 @@
+{
+    "body": [
+        {
+            "dependencyName": "UseCaseEventList",
+            "className": "UseCaseEvent.List",
+            "scope": "container"
+        }, {
+            "dependencyName": "UseCaseEventDetail",
+            "className": "UseCaseEvent.Detail",
+            "scope": "container"
+        }]
+}

@@ -24,7 +24,7 @@ protocol NewsDetailViewActions: BaseViewActions, NewsDetailPresenterDelegate {
 
 class NewsDetailViewController: BaseViewController {
     private lazy var presenter: NewsDetailPresenterActions = {
-        Dependency.injector.UI.resolveNewsDetailPresenterActions(delegate: self)
+        Dependency.injector.news.newsDetail.resolveNewsDetailPresenterActions(delegate: self)
     }()
     
     //MARK: - Init

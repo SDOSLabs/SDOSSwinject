@@ -17,20 +17,5 @@
                     "type": "UIViewController"
                 }
             ]
-        }, {
-            "dependencyName": "NewsDetailPresenterActions",
-            "className": "NewsDetailPresenter",
-            "arguments": [
-                {
-                    "name": "delegate",
-                    "type": "NewsDetailPresenterDelegate"
-                }
-            ]
-        }, {
-            "dependencyName": "NewsDetailViewActions",
-            "className": "NewsDetailViewController"
-        }, {
-            "dependencyName": "NewsDetailWireframeActions",
-            "className": "NewsDetailWireframe"
         }]
 }

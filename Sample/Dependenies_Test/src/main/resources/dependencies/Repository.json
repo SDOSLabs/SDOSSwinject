@@ -3,8 +3,5 @@
         "name": null
     },
     "body": [
-        {
-            "dependencyName": "NewsRepositoryActions",
-            "className": "NewsRepository"
-        }]
+        ]
 }

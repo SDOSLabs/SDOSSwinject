@@ -42,10 +42,10 @@ protocol NewsDetailPresenterActions: BasePresenterActions {
 class NewsDetailPresenter: BasePresenter {
     unowned var delegate: NewsDetailPresenterDelegate
     private lazy var useCaseNewsDetail: UseCaseNewsDetail = {
-        Dependency.injector.BL.resolveUseCaseNewsDetail()
+        Dependency.injector.news.newsDetail.newsBL.resolveUseCaseNewsDetail()
     }()
     private lazy var wireframe: NewsDetailWireframeActions = {
-        Dependency.injector.UI.resolveNewsDetailWireframeActions()
+        Dependency.injector.news.newsDetail.resolveNewsDetailWireframeActions()
     }()
     
     var items: [NewsDetailVO]?

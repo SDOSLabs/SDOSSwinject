@@ -3,8 +3,5 @@
         "name": null
     },
     "body": [
-        {
-            "dependencyName": "UseCaseNewsDetail",
-            "className": "UseCaseNews.Detail"
-        }]
+        ]
 }

@@ -41,6 +41,20 @@ struct DependencyDTO: Decodable {
         
         return result
     }
+    
+    func structName() -> String? {
+        if let subdependencyOriginalName = subdependencyOriginalName {
+            return subdependencyOriginalName.fileName.capitalizingFirstLetter() + "Resolver"
+        }
+        return nil
+    }
+    
+    func subdependencyVariableName() -> String? {
+        if let subdependencyOriginalName = subdependencyOriginalName {
+            return subdependencyOriginalName.fileName.lowerCaseFirstLetter()
+        }
+        return nil
+    }
 }
 
 extension String {

@@ -37,6 +37,9 @@ class ScriptAction {
     
     var parameters = [ConsoleParameter]()
     
+    var generateFiles = [String]()
+    var generateFilesValidate = [String]()
+    
     
     func start(args: [String]) {
         registerParameters()
@@ -185,7 +188,7 @@ extension ScriptAction {
 extension ScriptAction {
     func validateDependency(dependency: DependencyDTO) {
         
-        validateInputSubdependency(dependency: dependency)
+        validateInputSubdependency(rootDependency: dependency, dependency: dependency)
         
         let allDependenciesStr = reduceBody(dependency: dependency)
         var dictionaryDuplicateImplementation = [String: [(String, String, DependencyDTO, BodyDTO)]]()
@@ -253,17 +256,24 @@ extension ScriptAction {
             result.append(contentsOf: body.compactMap({ ($0.registerHeader(dependency: dependency), $0.registerImplementation(dependency: dependency), dependency, $0)}))
         }
         dependency.dependenciesResolve?.forEach {
-            result.append(contentsOf: reduceBody(dependency: $0))
+            if let subdependencyOriginalName = $0.subdependencyOriginalName, generateFilesValidate.contains(subdependencyOriginalName) {
+                return
+            } else {
+                result.append(contentsOf: reduceBody(dependency: $0))
+                if let subdependencyOriginalName = $0.subdependencyOriginalName {
+                    generateFilesValidate.append(subdependencyOriginalName)
+                }
+            }
         }
         return result
     }
     
-    func validateInputSubdependency(dependency: DependencyDTO) {
+    func validateInputSubdependency(rootDependency: DependencyDTO, dependency: DependencyDTO) {
         dependency.dependenciesResolve?.forEach {
             if let subdependencyOriginalName = $0.subdependencyOriginalName {
-                checkSubdependencyInput(file: subdependencyOriginalName, fileContent: getPathsForFilelist(dependency: dependency).joined(separator: "\n"))
+                checkSubdependencyInput(file: subdependencyOriginalName, fileContent: getPathsForFilelist(dependency: rootDependency).joined(separator: "\n"))
             }
-            validateInputSubdependency(dependency: $0)
+            validateInputSubdependency(rootDependency: rootDependency, dependency: $0)
         }
     }
 }
@@ -296,15 +306,22 @@ extension ScriptAction {
         return result
     }
     
-    func generateFileDependency(dependency: DependencyDTO) -> String {
+    func generateFileDependency(dependency: DependencyDTO, parentDependency: DependencyDTO? = nil) -> String {
         var file = ""
         file.append(generateComment(dependency: dependency))
         file.append(generateHeaders(dependency: dependency))
         file.append(generateAllRegister(dependency: dependency))
-        file.append(generateResolver(dependency: dependency))
+        file.append(generateResolver(dependency: dependency, parentDependency: parentDependency))
         file.append(generateRegister(dependency: dependency))
         dependency.dependenciesResolve?.forEach {
-            file.append(generateFileDependency(dependency: $0))
+            if let subdependencyOriginalName = $0.subdependencyOriginalName, generateFiles.contains(subdependencyOriginalName) {
+                return
+            } else {
+                file.append(generateFileDependency(dependency: $0, parentDependency: dependency))
+                if let subdependencyOriginalName = $0.subdependencyOriginalName {
+                    generateFiles.append(subdependencyOriginalName)
+                }
+            }
         }
         
         return file
@@ -312,12 +329,17 @@ extension ScriptAction {
     
     func generateComment(dependency: DependencyDTO) -> String {
         var result = ""
+        var srcRoot = ""
+        if let root = ProcessInfo.processInfo.environment["SRCROOT"] {
+            srcRoot = root
+        }
         if let subdependencyOriginalName = dependency.subdependencyOriginalName {
             result.append(contentsOf: """
-                //MARK: - \(subdependencyOriginalName) dependency
+                //MARK: - \(resolvePath(path: NSString(string: input).deletingLastPathComponent).replacingOccurrences(of: srcRoot, with: "${SRCROOT}"))/\(subdependencyOriginalName) dependency
                 
                 """)
         } else {
+            
             result.append(contentsOf: """
                 //  This is a generated file, do not edit!
                 //  \(fileName)
@@ -325,7 +347,7 @@ extension ScriptAction {
                 //
                 import Swinject
                 
-                //MARK: - Root dependency
+                //MARK: - Root dependency (\(resolvePath(path: input).replacingOccurrences(of: srcRoot, with: "${SRCROOT}"))))
                 
                 
                 """)
@@ -352,25 +374,32 @@ extension ScriptAction {
 //MARK: - JSON
 extension ScriptAction {
     func parseJSON(file: String? = nil) -> DependencyDTO {
+        var filePath: String = input
+        if let file = file {
+            filePath = NSString(string: input).deletingLastPathComponent
+            filePath = "\(filePath)/\(file)"
+        }
         do {
-            var filePath: String = input
-            if let file = file {
-                filePath = NSString(string: input).deletingLastPathComponent
-                filePath = "\(filePath)/\(file)"
-            }
             let url = URL(fileURLWithPath: filePath)
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
             var dependency = try! decoder.decode(DependencyDTO.self, from: data)
             dependency.saveDependenciesResolve(dependencies: dependency.dependencies?.map({
-                var dependency = parseJSON(file: $0)
-                dependency.saveSubdependencyOriginalName(subdependencyOriginalName: $0)
-                return dependency
+                var subPath = ""
+                if let file = file {
+                    subPath = NSString(string: file).deletingLastPathComponent
+                    if !subPath.isEmpty {
+                        subPath = subPath + "/"
+                    }
+                }
+                var d = parseJSON(file: subPath + $0)
+                d.saveSubdependencyOriginalName(subdependencyOriginalName: resolvePath(path: subPath + $0, expandVariables: false))
+                return d
             }))
             
             return dependency
         } catch {
-            print("Fallo durante el tratamiento del JSON. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(input!)\"")
+            print("[SDOSSwinject] 🟥 Fallo durante el tratamiento del JSON. Comprueba que el fichero de entrada es correcto. Ruta de entrada: \"\(filePath)\"")
             exit(1)
         }
     }
@@ -406,7 +435,10 @@ extension ScriptAction {
         dependency.dependenciesResolve?.forEach {
             result.append(contentsOf: getPathsForFilelist(dependency: $0))
         }
-        return result
+        result = result.map {
+            resolvePath(path: $0, expandVariables: false)
+        }
+        return Array(Set(result)).sorted { $0.lowercased() < $1.lowercased() }
     }
 }
 
@@ -447,12 +479,12 @@ extension ScriptAction {
         let bodyCount = dependency.body?.count ?? 0
         
         result.append("""
-            
-            extension Container {
+        
+        extension Container {
             ///Register all dependencies: \(bodyCount + dependenciesCount) dependencies
             \(accessLevel)func \(dependency.registerAllHeader()) {
-            
-            """)
+        
+        """)
         
         if let body = dependency.body {
             for item in body {
@@ -461,7 +493,7 @@ extension ScriptAction {
         }
         
         if let dependenciesResolve = dependency.dependenciesResolve {
-            if dependenciesResolve.count > 0 {
+            if dependenciesResolve.count > 0 && dependency.body?.count ?? 0 != 0 {
                 result.append("\n")
             }
             dependenciesResolve.forEach {
@@ -477,7 +509,7 @@ extension ScriptAction {
 
 //MARK: - Resolver
 extension ScriptAction {
-    func generateResolver(dependency: DependencyDTO) -> String {
+    func generateResolver(dependency: DependencyDTO, parentDependency: DependencyDTO?) -> String {
         var resultDependencies = ""
         var countTotal = 0
         if let body = dependency.body {
@@ -490,41 +522,50 @@ extension ScriptAction {
         }
         
         var result = ""
-        if let subdependencyOriginalName = dependency.subdependencyOriginalName {
-            if let body = dependency.body {
-                let subdependencyName = subdependencyOriginalName.fileName.capitalizingFirstLetter()
-                let subdependencyNameResolver = "\(subdependencyName)Resolver"
-                
-                result.append("//Generate variable to access resolvers")
-                if countTotal != body.count {
-                    result.append(" (\(body.count - countTotal) skipped)")
-                }
+        if dependency.subdependencyOriginalName != nil {
+            guard let subdependencyNameResolver = dependency.structName(), let subdependencyName = dependency.subdependencyVariableName() else { return "" }
+            
+            if parentDependency?.structName() == nil {
                 result.append("\n")
-                result.append("""
-                            extension Resolver {
-                                var \(subdependencyName): \(subdependencyNameResolver) {
-                                    return \(subdependencyNameResolver)(resolver: self)
-                                }
-                            }
-                            
-                            
-                            """)
-                
-                result.append("//Generate resolvers with \(countTotal) dependencies for dependency file \(subdependencyOriginalName)")
+                result.append("//Generate variable to access resolvers")
                 if let body = dependency.body, countTotal != body.count {
                     result.append(" (\(body.count - countTotal) skipped)")
                 }
                 result.append("\n")
-                if let globalAccessLevel = dependency.config?.globalAccessLevel {
-                    result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
+                result.append("""
+                extension Resolver {
+                    var \(subdependencyName): \(subdependencyNameResolver) {
+                        return \(subdependencyNameResolver)(resolver: self)
+                    }
                 }
-                result.append("struct \(subdependencyNameResolver) {\n")
-                result.append("\tprivate let resolver: Resolver\n")
-                result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
-                result.append("\n")
-                result.append(contentsOf: resultDependencies)
-                result.append("\n}\n\n")
+                
+                
+                """)
             }
+            
+            result.append("//Generate resolvers with \(countTotal) dependencies")
+            if let body = dependency.body, countTotal != body.count {
+                result.append(" (\(body.count - countTotal) skipped)")
+            }
+            result.append("\n")
+            if let globalAccessLevel = dependency.config?.globalAccessLevel {
+                result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
+            }
+            result.append("struct \(subdependencyNameResolver) {\n")
+            result.append("\tprivate let resolver: Resolver\n")
+            result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
+            result.append("\n")
+            dependency.dependenciesResolve?.forEach {
+                guard let subdependencyNameResolver = $0.structName(), let subdependencyName = $0.subdependencyVariableName() else { return }
+                result.append("""
+                    var \(subdependencyName): \(subdependencyNameResolver) {
+                        return \(subdependencyNameResolver)(resolver: resolver)
+                    }
+                
+                """)
+            }
+            result.append(contentsOf: resultDependencies)
+            result.append("\n}\n\n")
         } else {
             if let body = dependency.body {
                 result.append("//Generate resolvers with \(countTotal) dependencies")
@@ -624,7 +665,7 @@ extension ScriptAction {
         }
     }
     
-    func resolvePath(path: String) -> String {
+    func resolvePath(path: String, expandVariables: Bool = true) -> String {
         var arrayComponents: [String] = path.components(separatedBy: "/").reversed()
         var numComponentsToDelete = 0
         arrayComponents = arrayComponents.compactMap { item -> String? in
@@ -643,12 +684,14 @@ extension ScriptAction {
             }
         }
         var result = arrayComponents.reversed().joined(separator: "/")
-        if let projectDir = ProcessInfo.processInfo.environment["PROJECT_DIR"] {
-            result = result.replacingOccurrences(of: "${PROJECT_DIR}", with: projectDir).replacingOccurrences(of: "$PROJECT_DIR", with: projectDir).replacingOccurrences(of: "$(PROJECT_DIR)", with: projectDir)
-        }
-        
-        if let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] {
-            result = result.replacingOccurrences(of: "${SRCROOT}", with: srcRoot).replacingOccurrences(of: "$SRCROOT", with: srcRoot).replacingOccurrences(of: "$(SRCROOT)", with: srcRoot)
+        if expandVariables {
+            if let projectDir = ProcessInfo.processInfo.environment["PROJECT_DIR"] {
+                result = result.replacingOccurrences(of: "${PROJECT_DIR}", with: projectDir).replacingOccurrences(of: "$PROJECT_DIR", with: projectDir).replacingOccurrences(of: "$(PROJECT_DIR)", with: projectDir)
+            }
+            
+            if let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] {
+                result = result.replacingOccurrences(of: "${SRCROOT}", with: srcRoot).replacingOccurrences(of: "$SRCROOT", with: srcRoot).replacingOccurrences(of: "$(SRCROOT)", with: srcRoot)
+            }
         }
         
         return result

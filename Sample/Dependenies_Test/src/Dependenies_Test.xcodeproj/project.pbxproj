@@ -100,6 +100,10 @@
 		29B0F278224933DC00947F62 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		29B0F279224933DC00947F62 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		29BB442F2237FE6A00401682 /* Environments.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = Environments.bin; sourceTree = "<group>"; };
+		29BB853A249B6A6300728046 /* NewsBL.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewsBL.json; sourceTree = "<group>"; };
+		29BCA9F4249A38B700731F6A /* NewsDetail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewsDetail.json; sourceTree = "<group>"; };
+		29BCA9F5249A38B700731F6A /* NewsRepository.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NewsRepository.json; sourceTree = "<group>"; };
+		29BCA9F7249A3D2600731F6A /* News.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = News.json; sourceTree = "<group>"; };
 		29C046A023D0A403005A98A0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29C12D6823B4E84B00EC3F17 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		29CC81862493836F0073C975 /* UseCasesNews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCasesNews.swift; sourceTree = "<group>"; };
@@ -316,6 +320,7 @@
 		295B94862498D6FE00FBEEBF /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				29BCA9F9249A3D2F00731F6A /* modules */,
 				29677F90249A07DF007C5D80 /* Dependencies.xcfilelist */,
 				29CC819F249384370073C975 /* BL.json */,
 				2902F6862240FC2B002378CE /* Dependencies.json */,
@@ -373,6 +378,65 @@
 			children = (
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		29BCA9F3249A389500731F6A /* news */ = {
+			isa = PBXGroup;
+			children = (
+				29BCA9F7249A3D2600731F6A /* News.json */,
+				29BCA9FF249A3D9A00731F6A /* common */,
+				29BCA9FB249A3D4100731F6A /* list */,
+				29BCA9FA249A3D3B00731F6A /* detail */,
+			);
+			path = news;
+			sourceTree = "<group>";
+		};
+		29BCA9F9249A3D2F00731F6A /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				29BCA9F3249A389500731F6A /* news */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
+		29BCA9FA249A3D3B00731F6A /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				29BCA9F4249A38B700731F6A /* NewsDetail.json */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		29BCA9FB249A3D4100731F6A /* list */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = list;
+			sourceTree = "<group>";
+		};
+		29BCA9FD249A3D7700731F6A /* repository */ = {
+			isa = PBXGroup;
+			children = (
+				29BCA9F5249A38B700731F6A /* NewsRepository.json */,
+			);
+			path = repository;
+			sourceTree = "<group>";
+		};
+		29BCA9FE249A3D7F00731F6A /* useCases */ = {
+			isa = PBXGroup;
+			children = (
+				29BB853A249B6A6300728046 /* NewsBL.json */,
+			);
+			path = useCases;
+			sourceTree = "<group>";
+		};
+		29BCA9FF249A3D9A00731F6A /* common */ = {
+			isa = PBXGroup;
+			children = (
+				29BCA9FE249A3D7F00731F6A /* useCases */,
+				29BCA9FD249A3D7700731F6A /* repository */,
+			);
+			path = common;
 			sourceTree = "<group>";
 		};
 		29CC81A224939A0C0073C975 /* NewsDetail */ = {

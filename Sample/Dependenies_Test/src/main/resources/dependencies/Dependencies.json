@@ -2,6 +2,7 @@
     "dependencies": [
         "Repository.json",
         "BL.json",
-        "UI.json"
+        "UI.json",
+        "modules/news/News.json"
     ]
 }

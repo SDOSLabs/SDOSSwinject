@@ -26,16 +26,10 @@ struct BodyDTO: Decodable {
      */
     func registerFunction(dependency: DependencyDTO) -> String {
         var result = ""
-        var accessLevel = ""
-        if let globalAccessLevel = dependency.config?.globalAccessLevel {
-            accessLevel = globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " "
-        }
-        if let dependencyAccessLevel = self.accessLevel {
-            accessLevel = dependencyAccessLevel.isEmpty ? dependencyAccessLevel: dependencyAccessLevel + " "
-        }
+        
         result.append("""
                 @discardableResult
-                \(accessLevel)func \(registerHeader(dependency: dependency)) -> \(registerReturn()) {
+                fileprivate func \(registerHeader(dependency: dependency)) -> \(registerReturn()) {
                     \(registerImplementation(dependency: dependency))
                 }
             

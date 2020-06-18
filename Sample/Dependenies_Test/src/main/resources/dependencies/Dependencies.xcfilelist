@@ -1,5 +1,9 @@
 #===================================
-${SRCROOT}/main/resources/dependencies/Repository.json
 ${SRCROOT}/main/resources/dependencies/BL.json
+${SRCROOT}/main/resources/dependencies/modules/news/common/repository/NewsRepository.json
+${SRCROOT}/main/resources/dependencies/modules/news/common/useCases/NewsBL.json
+${SRCROOT}/main/resources/dependencies/modules/news/detail/NewsDetail.json
+${SRCROOT}/main/resources/dependencies/modules/news/News.json
+${SRCROOT}/main/resources/dependencies/Repository.json
 ${SRCROOT}/main/resources/dependencies/UI.json
 #===================================
