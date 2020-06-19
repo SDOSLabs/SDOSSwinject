@@ -522,62 +522,51 @@ extension ScriptAction {
         }
         
         var result = ""
-        if dependency.subdependencyOriginalName != nil {
-            guard let subdependencyNameResolver = dependency.structName(), let subdependencyName = dependency.subdependencyVariableName() else { return "" }
+        if parentDependency == nil {
+            guard let subdependencyNameResolver = dependency.structName(input: input), let subdependencyName = dependency.subdependencyVariableName(input: input) else { return "" }
             
-            if parentDependency?.structName() == nil {
-                result.append("\n")
-                result.append("//Generate variable to access resolvers")
-                if let body = dependency.body, countTotal != body.count {
-                    result.append(" (\(body.count - countTotal) skipped)")
-                }
-                result.append("\n")
-                result.append("""
-                extension Resolver {
-                    var \(subdependencyName): \(subdependencyNameResolver) {
-                        return \(subdependencyNameResolver)(resolver: self)
-                    }
-                }
-                
-                
-                """)
-            }
-            
-            result.append("//Generate resolvers with \(countTotal) dependencies")
+            result.append("\n")
+            result.append("//Generate variable to access resolvers")
             if let body = dependency.body, countTotal != body.count {
                 result.append(" (\(body.count - countTotal) skipped)")
             }
             result.append("\n")
-            if let globalAccessLevel = dependency.config?.globalAccessLevel {
-                result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
-            }
-            result.append("struct \(subdependencyNameResolver) {\n")
-            result.append("\tprivate let resolver: Resolver\n")
-            result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
-            result.append("\n")
-            dependency.dependenciesResolve?.forEach {
-                guard let subdependencyNameResolver = $0.structName(), let subdependencyName = $0.subdependencyVariableName() else { return }
-                result.append("""
-                    var \(subdependencyName): \(subdependencyNameResolver) {
-                        return \(subdependencyNameResolver)(resolver: resolver)
-                    }
-                
-                """)
-            }
-            result.append(contentsOf: resultDependencies)
-            result.append("\n}\n\n")
-        } else {
-            if let body = dependency.body {
-                result.append("//Generate resolvers with \(countTotal) dependencies")
-                if countTotal != body.count {
-                    result.append(" (\(body.count - countTotal) skipped)")
+            result.append("""
+            extension Resolver {
+                var \(subdependencyName): \(subdependencyNameResolver) {
+                    return \(subdependencyNameResolver)(resolver: self)
                 }
-                result.append("\n")
-                result.append("extension Resolver {\n")
-                result.append(contentsOf: resultDependencies)
-                result.append("\n}\n\n")
             }
+            
+            
+            """)
         }
+        
+        guard let subdependencyNameResolver = dependency.structName(input: input) else { return "" }
+        
+        result.append("//Generate resolvers with \(countTotal) dependencies")
+        if let body = dependency.body, countTotal != body.count {
+            result.append(" (\(body.count - countTotal) skipped)")
+        }
+        result.append("\n")
+        if let globalAccessLevel = dependency.config?.globalAccessLevel {
+            result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
+        }
+        result.append("struct \(subdependencyNameResolver) {\n")
+        result.append("\tprivate let resolver: Resolver\n")
+        result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
+        result.append("\n")
+        dependency.dependenciesResolve?.forEach {
+            guard let subdependencyNameResolver = $0.structName(), let subdependencyName = $0.subdependencyVariableName() else { return }
+            result.append("""
+                var \(subdependencyName): \(subdependencyNameResolver) {
+                    return \(subdependencyNameResolver)(resolver: resolver)
+                }
+            
+            """)
+        }
+        result.append(contentsOf: resultDependencies)
+        result.append("\n}\n\n")
         
         return result
     }

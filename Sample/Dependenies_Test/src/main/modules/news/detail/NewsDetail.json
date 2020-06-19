@@ -3,6 +3,7 @@
         "name": null
     },
     "dependencies": [
+        "../../common/CommonUI.json",
         "../common/repository/NewsRepository.json",
         "../common/useCases/NewsBL.json"
     ],

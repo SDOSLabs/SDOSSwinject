@@ -42,10 +42,10 @@ protocol NewsDetailPresenterActions: BasePresenterActions {
 class NewsDetailPresenter: BasePresenter {
     unowned var delegate: NewsDetailPresenterDelegate
     private lazy var useCaseNewsDetail: UseCaseNewsDetail = {
-        Dependency.injector.news.newsDetail.newsBL.resolveUseCaseNewsDetail()
+        Dependency.injector.dependencies.news.newsDetail.newsBL.resolveUseCaseNewsDetail()
     }()
     private lazy var wireframe: NewsDetailWireframeActions = {
-        Dependency.injector.news.newsDetail.resolveNewsDetailWireframeActions()
+        Dependency.injector.dependencies.news.newsDetail.resolveNewsDetailWireframeActions()
     }()
     
     var items: [NewsDetailVO]?
@@ -80,4 +80,5 @@ extension NewsDetailPresenter: NewsDetailPresenterActions {
                 self.delegate.hideCenterLoader()
         }
     }
+    
 }

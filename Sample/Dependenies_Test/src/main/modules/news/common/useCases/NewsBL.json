@@ -6,5 +6,8 @@
         {
             "dependencyName": "UseCaseNewsDetail",
             "className": "UseCaseNews.Detail"
+        }, {
+            "dependencyName": "UseCaseNewsList",
+            "className": "UseCaseNews.List"
         }]
 }

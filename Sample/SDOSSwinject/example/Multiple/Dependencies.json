@@ -4,6 +4,13 @@
         "suffixName": "Custom"
         },
     "dependencies": [
+        "UI.json",
+        "BL.json",
         "events/Event.json"
-    ]
+    ], "body": [
+        {
+            "dependencyName": "UseCaseNewsList2",
+            "className": "UseCaseNews.List",
+            "scope": "container"
+        }]
 }

@@ -31,7 +31,7 @@ class UserInterfaceService: NSObject, ApplicationService, SceneService {
     //MARK: - Private methods
     
     private func loadViewController(window: UIWindow) {
-        window.rootViewController = UIViewController() //TODO: Configure first ViewController
+        window.rootViewController = UINavigationController(rootViewController: Dependency.injector.dependencies.news.newsList.resolveNewsListViewActions())
         window.makeKeyAndVisible()
         self.window = window
     }

@@ -1,7 +1,7 @@
 //
-//  NewsDetailViewController.swift
+//  NewsListViewController.swift
 //
-//  Created by Rafael Fernandez Alvarez on 12/06/2020.
+//  Created by Rafael Fernandez Alvarez on 18/06/2020.
 //  Archivo creado usando la plantilla VIPER por SDOS http://www.sdos.es/
 //
 
@@ -13,18 +13,18 @@ import SDOSLoader
  Dependency register JSON
  
  {
-    "dependencyName": "NewsDetailViewActions",
-    "className": "NewsDetailViewController"
+    "dependencyName": "NewsListViewActions",
+    "className": "NewsListViewController"
  }
  */
 
-protocol NewsDetailViewActions: BaseViewActions, NewsDetailPresenterDelegate {
+protocol NewsListViewActions: BaseViewActions, NewsListPresenterDelegate {
     
 }
 
-class NewsDetailViewController: BaseViewController {
-    private lazy var presenter: NewsDetailPresenterActions = {
-        Dependency.injector.news.newsDetail.resolveNewsDetailPresenterActions(delegate: self)
+class NewsListViewController: BaseViewController {
+    private lazy var presenter: NewsListPresenterActions = {
+        Dependency.injector.dependencies.news.newsList.resolveNewsListPresenterActions(delegate: self)
     }()
     
     //MARK: - Init
@@ -47,19 +47,23 @@ class NewsDetailViewController: BaseViewController {
     }
     
     //MARK: - Custom methods
+    
+    @IBAction func actionNavigate() {
+        presenter.goToDetail()
+    }
 
 }
 
-extension NewsDetailViewController: NewsDetailViewActions {
+extension NewsListViewController: NewsListViewActions {
     
 }
 
-extension NewsDetailViewController: NewsDetailPresenterDelegate {
+extension NewsListViewController: NewsListPresenterDelegate {
     func loadUI() {
         
     }
     
-    func itemsLoaded(items: [NewsDetailVO]) {
+    func itemsLoaded(items: [NewsListVO]) {
         //Do stuff
     }
     

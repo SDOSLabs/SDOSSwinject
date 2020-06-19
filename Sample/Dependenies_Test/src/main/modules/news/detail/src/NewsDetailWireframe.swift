@@ -17,7 +17,7 @@ import UIKit
  */
 
 protocol NewsDetailWireframeActions: BaseWireframeActions {
-    //func navigateToView(from navigationController: UINavigationController)
+    func navigate(from navigationController: UINavigationController)
 }
 
 class NewsDetailWireframe: BaseWireframe {
@@ -25,9 +25,7 @@ class NewsDetailWireframe: BaseWireframe {
 }
 
 extension NewsDetailWireframe: NewsDetailWireframeActions {
-    /*
-    func navigateToView(from navigationController: UINavigationController) {
-        navigationController.pushViewController(Dependency.injector.<#resolveViewController#>, animated: true)
+    func navigate(from navigationController: UINavigationController) {
+        navigationController.pushViewController(Dependency.injector.dependencies.news.newsDetail.resolveNewsDetailViewActions(), animated: true)
     }
-    */
 }

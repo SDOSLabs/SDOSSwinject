@@ -24,11 +24,32 @@ protocol UseCaseNewsDetail: BaseUseCaseProtocol {
     func execute() -> Promise<[NewsBO]>
 }
 
+protocol UseCaseNewsList: BaseUseCaseProtocol {
+    func execute() -> Promise<[NewsBO]>
+}
+
 //MARK: - Implementation
 struct UseCaseNews {
     class Detail: UseCaseNewsDetail {
         private lazy var repository: NewsRepositoryActions = {
-            return Dependency.injector.news.newsDetail.newsRepository.resolveNewsRepositoryActions()
+            return Dependency.injector.dependencies.news.newsDetail.newsRepository.resolveNewsRepositoryActions()
+        }()
+        var request: Request?
+        
+        func execute() -> Promise<[NewsBO]> {
+            request?.cancel()
+            return firstly { [weak self] () -> Promise<[NewsBO]> in
+                guard let self = self else { throw PMKError.cancelled }
+                let requestValue = repository.load()
+                self.request = requestValue.request
+                return requestValue.value
+            }
+        }
+    }
+    
+    class List: UseCaseNewsList {
+        private lazy var repository: NewsRepositoryActions = {
+            return Dependency.injector.dependencies.news.newsList.newsRepository.resolveNewsRepositoryActions()
         }()
         var request: Request?
         
