@@ -40,20 +40,20 @@ pod 'SDOSSwinject', '~>2.0.0'
 
 Para hacer uso de la librería se debe lanzar un script durante la compilación que generará el fichero `.swift` con el registro y la resolución de dependencias que deberá añadirse al proyecto. Para ello hay que seguir los siguientes pasos:
 
-1. Crear los fichero `Dependencies.json`, `UI.json`, `BL,json` y `Repository.json` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Estos ficheros **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Copiar el siguiente código en cada uno para crear un fichero básico:
+1. Crear los fichero `dependencies.json`, `ui.json`, `bl,json` y `repository.json` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Estos ficheros **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Copiar el siguiente código en cada uno para crear un fichero básico:
 
 *Dependencies.json*
 ```json
 {
     "dependencies": [
-        "UI.json",
-        "BL.json",
-        "Repository.json"
+        "ui.json",
+        "bl.json",
+        "repository.json"
     ]
 }
 ```
 
-*UI.json*
+*ui.json*
 ```json
 {
     "headers": [
@@ -73,7 +73,7 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
 }
 ```
 
-*BL.json*
+*bl.json*
 ```json
 {
     "body": [
@@ -81,7 +81,7 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
 }
 ```
 
-*Repository.json*
+*repository.json*
 ```json
 {
     "body": [
@@ -94,9 +94,9 @@ Nota: Esta estructura es la que sugerimos desde el departamento. Podríamos trab
 2. Crear el fichero `Dependencies.xcfilelist` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Este fichero **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Deberá tener el siguiente contenido:
 ```bash
 #===================================
-${SRCROOT}/main/resources/dependencies/Repository.json
-${SRCROOT}/main/resources/dependencies/BL.json
-${SRCROOT}/main/resources/dependencies/UI.json
+${SRCROOT}/main/resources/dependencies/repository.json
+${SRCROOT}/main/resources/dependencies/bl.json
+${SRCROOT}/main/resources/dependencies/ui.json
 #===================================
 ```
 Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de dependencias. Cuando se añaden nuevos `.json` de dependencias y no se ha tocado este fichero, la librería nos devolverá un error indicando que contenido debe tener este fichero para que sea correcto
@@ -106,17 +106,19 @@ Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de depe
 5. Renombrar el script a `SDOSSwinject - Create dependencies`
 6. Copiar el siguiente script:
     ```sh
-    "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/dependencies/Dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
+    "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/dependencies/dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
     ```
     <sup><sub>Los valores del script pueden cambiarse en función de las necesidades del proyecto</sup></sub>
 7. Añadir la siguiente línea al apartado `Input Files`. **No poner comillas**:
-   - `${SRCROOT}/main/resources/dependencies/Dependencies.json`
+   - `${SRCROOT}/main/resources/dependencies/dependencies.json`
 8. Añadir la siguiente línea al apartado `Input File Lists`. **No poner comillas**:
-   - `${SRCROOT}/main/resources/dependencies/Dependencies.xcfilelist`
+   - `${SRCROOT}/main/resources/dependencies/dependencies.xcfilelist`
 9. Añadir la siguiente línea al apartado `Output File`. **No poner comillas**:
    - `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift`
 10. Compilar el proyecto. Esto generará el fichero en la ruta del paso anterior y deberá ser incluido al target del proyecto
-11. El fichero `DependenciesGenerated.swift` generado contiene todos los registros y resoluciones de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Una forma de disponer del gestor de dependencias completo sería la siguiente
+11. El fichero `DependenciesGenerated.swift` generado contiene todos los registros y resoluciones de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Una forma de disponer del gestor de dependencias completo sería creando el siguiente fichero en nuestro proyecto:
+    
+    *Dependency.swift*
     ```js
     import Foundation
     import Swinject
