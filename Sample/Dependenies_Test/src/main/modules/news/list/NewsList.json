@@ -3,10 +3,10 @@
         "name": null
     },
     "dependencies": [
-        "../../common/CommonUI.json",
-        "../common/repository/NewsRepository.json",
-        "../common/useCases/NewsBL.json",
-        "../detail/NewsDetail.json"
+        "${SRCROOT}/main/modules/common/CommonUI.json",
+        "${SRCROOT}/main/modules/news/common/repository/NewsRepository.json",
+        "${SRCROOT}/main/modules/news/common/useCases/NewsBL.json",
+        "${SRCROOT}/main/modules/news/detail/NewsDetail.json"
     ],
     "body": [
         {

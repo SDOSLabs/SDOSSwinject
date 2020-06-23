@@ -256,12 +256,12 @@ extension ScriptAction {
             result.append(contentsOf: body.compactMap({ ($0.registerHeader(dependency: dependency), $0.registerImplementation(dependency: dependency), dependency, $0)}))
         }
         dependency.dependenciesResolve?.forEach {
-            if let subdependencyOriginalName = $0.subdependencyOriginalName, generateFilesValidate.contains(subdependencyOriginalName) {
+            if let subdependencyOriginalName = $0.subdependencyOriginalName, generateFilesValidate.contains(resolveFullPath(path: subdependencyOriginalName)) {
                 return
             } else {
                 result.append(contentsOf: reduceBody(dependency: $0))
                 if let subdependencyOriginalName = $0.subdependencyOriginalName {
-                    generateFilesValidate.append(subdependencyOriginalName)
+                    generateFilesValidate.append(resolveFullPath(path: subdependencyOriginalName))
                 }
             }
         }
@@ -314,12 +314,12 @@ extension ScriptAction {
         file.append(generateResolver(dependency: dependency, parentDependency: parentDependency))
         file.append(generateRegister(dependency: dependency))
         dependency.dependenciesResolve?.forEach {
-            if let subdependencyOriginalName = $0.subdependencyOriginalName, generateFiles.contains(subdependencyOriginalName) {
+            if let subdependencyOriginalName = $0.subdependencyOriginalName, generateFiles.contains(resolveFullPath(path: subdependencyOriginalName)) {
                 return
             } else {
                 file.append(generateFileDependency(dependency: $0, parentDependency: dependency))
                 if let subdependencyOriginalName = $0.subdependencyOriginalName {
-                    generateFiles.append(subdependencyOriginalName)
+                    generateFiles.append(resolveFullPath(path: subdependencyOriginalName))
                 }
             }
         }
@@ -334,8 +334,16 @@ extension ScriptAction {
             srcRoot = root
         }
         if let subdependencyOriginalName = dependency.subdependencyOriginalName {
+            var filePath = ""
+            if resolvePath(path: subdependencyOriginalName).hasPrefix("/") {
+                filePath = resolvePath(path: subdependencyOriginalName)
+            } else {
+                filePath = NSString(string: input).deletingLastPathComponent
+                filePath = "\(resolvePath(path: NSString(string: input).deletingLastPathComponent))/\(subdependencyOriginalName)"
+            }
+            filePath = filePath.replacingOccurrences(of: srcRoot, with: "${SRCROOT}")
             result.append(contentsOf: """
-                //MARK: - \(resolvePath(path: NSString(string: input).deletingLastPathComponent).replacingOccurrences(of: srcRoot, with: "${SRCROOT}"))/\(subdependencyOriginalName) dependency
+                //MARK: - \(filePath) dependency
                 
                 """)
         } else {
@@ -376,8 +384,12 @@ extension ScriptAction {
     func parseJSON(file: String? = nil) -> DependencyDTO {
         var filePath: String = input
         if let file = file {
-            filePath = NSString(string: input).deletingLastPathComponent
-            filePath = "\(filePath)/\(file)"
+            if resolvePath(path: file).hasPrefix("/") {
+                filePath = resolvePath(path: file)
+            } else {
+                filePath = NSString(string: input).deletingLastPathComponent
+                filePath = "\(filePath)/\(file)"
+            }
         }
         do {
             let url = URL(fileURLWithPath: filePath)
@@ -386,7 +398,7 @@ extension ScriptAction {
             var dependency = try! decoder.decode(DependencyDTO.self, from: data)
             dependency.saveDependenciesResolve(dependencies: dependency.dependencies?.map({
                 var subPath = ""
-                if let file = file {
+                if let file = file, !resolvePath(path: $0).hasPrefix("/") {
                     subPath = NSString(string: file).deletingLastPathComponent
                     if !subPath.isEmpty {
                         subPath = subPath + "/"
@@ -426,7 +438,7 @@ extension ScriptAction {
     func getPathsForFilelist(dependency: DependencyDTO) -> [String] {
         var result = [String]()
         if let subdependencyOriginalName = dependency.subdependencyOriginalName {
-            var path = "\(NSString(string: input).deletingLastPathComponent)/\(subdependencyOriginalName)"
+            var path = "\(resolveFullPath(path: subdependencyOriginalName))"
             if let srcRoot = ProcessInfo.processInfo.environment["SRCROOT"] {
                 path = path.replacingOccurrences(of: srcRoot, with: "${SRCROOT}")
             }
@@ -639,8 +651,12 @@ extension ScriptAction {
     
     func checkSubdependencyInput(file: String, fileContent: String) {
         var filePath = ""
-        filePath = NSString(string: input).deletingLastPathComponent
-        filePath = "\(filePath)/\(file)"
+        if resolvePath(path: file).hasPrefix("/") {
+            filePath = resolvePath(path: file)
+        } else {
+            filePath = NSString(string: input).deletingLastPathComponent
+            filePath = "\(filePath)/\(file)"
+        }
         checkInputOutput(params: parseParams(type: .INPUT_FILE) + parseParams(type: .INPUT_FILE_LIST), sources: [resolvePath(path: filePath)], message: "Please create a file \".xcfilelist\" (also include it at the \"Input File Lists\") with the following content:\n\n#===================================\n\(fileContent)\n#===================================\n\nBuild phase Intput Files does not contain")
     }
     
@@ -652,6 +668,17 @@ extension ScriptAction {
                 exit(7)
             }
         }
+    }
+    
+    func resolveFullPath(path: String) -> String {
+        var realPath: String = ""
+        if resolvePath(path: path).hasPrefix("/") {
+            realPath = resolvePath(path: path)
+        } else {
+            realPath = NSString(string: input).deletingLastPathComponent
+            realPath = resolvePath(path: "\(realPath)/\(path)")
+        }
+        return realPath
     }
     
     func resolvePath(path: String, expandVariables: Bool = true) -> String {

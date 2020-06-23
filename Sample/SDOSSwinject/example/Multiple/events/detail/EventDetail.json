@@ -1,7 +1,7 @@
 {
     "dependencies": [
         "../common/EventRepository.json",
-        "../common/EventBL.json",
+        "${SRCROOT}/example/Multiple/events/common/EventBL.json",
     ], "body": [
         {
             "dependencyName": "EventDetailPresenterActions",

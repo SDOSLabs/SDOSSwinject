@@ -49,7 +49,7 @@ class NewsListPresenter: BasePresenter {
         Dependency.injector.dependencies.news.newsList.resolveNewsListWireframeActions()
     }()
     private lazy var wireframeNewsDetail: NewsDetailWireframeActions = {
-        Dependency.injector.dependencies.news.newsDetail.resolveNewsDetailWireframeActions()
+        Dependency.injector.dependencies.news.newsList.newsDetail.resolveNewsDetailWireframeActions()
     }()
     
     var items: [NewsListVO]?

@@ -4,7 +4,7 @@
         "suffixName": "Custom"
         },
     "dependencies": [
-        "UI.json",
+        "${SRCROOT}/example/Multiple/UI.json",
         "BL.json",
         "events/Event.json"
     ], "body": [
