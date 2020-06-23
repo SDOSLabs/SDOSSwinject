@@ -42,7 +42,7 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
 
 1. Crear los fichero `dependencies.json`, `ui.json`, `bl,json` y `repository.json` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Estos ficheros **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Copiar el siguiente código en cada uno para crear un fichero básico:
 
-*Dependencies.json*
+*dependencies.json*
 ```json
 {
     "dependencies": [
