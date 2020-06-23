@@ -4,7 +4,6 @@
     - [Cocoapods](#cocoapods)
   - [Cómo se usa](#cómo-se-usa)
     - [Errores comunes](#errores-comunes)
-    - [Registro de dependencias](#registro-de-dependencias)
     - [Resolución de dependencias](#resolución-de-dependencias)
     - [Estructura del fichero generado](#estructura-del-fichero-generado)
   - [JSON](#json)
@@ -25,9 +24,10 @@ SDOSSwinject es un script que parsea un JSON para generar código Swift para el 
 
 Usaremos [CocoaPods](https://cocoapods.org).
 
-Añadir el  "source" al `Podfile`:
+Añadir el "source" privado de SDOSLabs al `Podfile`. Añadir también el source público de cocoapods para poder seguir instalando dependencias desde éste:
 ```ruby
-source 'https://github.com/SDOSLabs/cocoapods-specs.git'
+source 'https://github.com/SDOSLabs/cocoapods-specs.git' #SDOSLabs source
+source 'https://github.com/CocoaPods/Specs.git' #Cocoapods source
 ```
 
 Añadir la dependencia al `Podfile`:
@@ -89,7 +89,7 @@ Para hacer uso de la librería se debe lanzar un script durante la compilación 
 }
 ```
 
-Nota: Esta estructura es la que sugerimos desde el departamento. Podríamos trabajar úncamente con un fichero `.json`, tal y como hacíamos en versiones anteriores de la librería. Esta estructura nos permite la separación de las dependencias en diferentes ficheros, permitiendo un nivel de ordenación más claro.
+Nota: Esta estructura es la que sugerimos desde el departamento. Podríamos trabajar úncamente con un fichero `.json`, tal y como hacíamos en versiones anteriores de la librería o con un `.json` por módulo. Esta estructura nos permite la separación de las dependencias en diferentes ficheros, permitiendo un nivel de ordenación más claro.
 
 2. Crear el fichero `Dependencies.xcfilelist` en la ruta `${SRCROOT}/main/resources/dependencies` a Xcode. Este fichero **no se debe incluir al target** ya que no es necesario que se incluya en el binario de la aplicación. Deberá tener el siguiente contenido:
 ```bash
@@ -99,23 +99,45 @@ ${SRCROOT}/main/resources/dependencies/BL.json
 ${SRCROOT}/main/resources/dependencies/UI.json
 #===================================
 ```
-Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de dependencias
+Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de dependencias. Cuando se añaden nuevos `.json` de dependencias y no se ha tocado este fichero, la librería nos devolverá un error indicando que contenido debe tener este fichero para que sea correcto
 
 3. En Xcode: Seleccionar el proyecto, elegir el TARGET, selccionar la pestaña de `Build Phases` y pulsar en añadir `New Run Script Phase` en el icono de **`+`** arriba a la izquierda
 4. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
-5. (Opcional) Renombrar el script a `SDOSSwinject - Create dependencies`
+5. Renombrar el script a `SDOSSwinject - Create dependencies`
 6. Copiar el siguiente script:
     ```sh
     "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/dependencies/Dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
     ```
     <sup><sub>Los valores del script pueden cambiarse en función de las necesidades del proyecto</sup></sub>
-7. Añadir la siguiente líneas al apartado `Input Files`. **No poner comillas**:
+7. Añadir la siguiente línea al apartado `Input Files`. **No poner comillas**:
    - `${SRCROOT}/main/resources/dependencies/Dependencies.json`
-8. Añadir la siguiente líneas al apartado `Input File Lists`. **No poner comillas**:
+8. Añadir la siguiente línea al apartado `Input File Lists`. **No poner comillas**:
    - `${SRCROOT}/main/resources/dependencies/Dependencies.xcfilelist`
-9. Añadir la siguiente líneas al apartado `Output File`. **No poner comillas**:
+9. Añadir la siguiente línea al apartado `Output File`. **No poner comillas**:
    - `${SRCROOT}/main/resources/generated/DependenciesGenerated.swift`
 10. Compilar el proyecto. Esto generará el fichero en la ruta del paso anterior y deberá ser incluido al target del proyecto
+11. El fichero `DependenciesGenerated.swift` generado contiene todos los registros y resoluciones de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Una forma de disponer del gestor de dependencias completo sería la siguiente
+    ```js
+    import Foundation
+    import Swinject
+
+    struct Dependency {
+        private init() { }
+        static let injector: Container = {
+            let container = Container()
+            container.registerAll()
+            
+            return container
+        }()
+    }
+    ```
+
+    De esta forma con la llamada `Dependency.injector` obtenemos el objeto con todas las dependencias registradas y disponibles para resolver.
+
+    La resolución de las dependencias se realizará accediendo a una variable que será igual al nombre de los ficheros `json`, accediendo de forma anidada (tal cual están registradas las dependencias). Por ejemplo:
+    - `Dependency.injector.dependencies.ui.resolveNavigationController(rootViewController: UIViewController())`
+    - `Dependency.injector.dependencies.bl.resolveUseCaseNewsList()`
+    - `Dependency.injector.dependencies.repository.resolveNewsRepositoryActions()`
 
 Además de estos pasos el script tiene otros parámetros que pueden incluirse en base a las necesidades del proyecto:
 
@@ -131,31 +153,6 @@ La ejecución del script genera un fichero `.swift` que contiene todos los regis
 ### Errores comunes
 
 Para la correcta utilización de la librería es muy importante que el script que declaremos en el `Build Phases` tenga correctamente los valores `Input Files`, `Input File Lists` y `Output File`. Estos valores indican cuales son los ficheros de que el script debe tomar como datos de entrada (`Input`) y cuales son los ficheros que genera (`Output`). Si estos valores no está correctamente seteados la ejecución del script podrá dar un error indicando que falta alguno y sugiriendo que hay que añadir para solucionar el problema
-
-### Registro de dependencias
-
-El fichero `.swift` contiene todos los registros de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Lo puede hacer de forma individual o registrando todas con la siguiente función:
-```js
-let container = Container()
-container.registerAll()
-```
-Una forma de disponer del gestor de dependencias completo sería la siguiente
-```js
-import Foundation
-import Swinject
-
-struct Dependency {
-    private init() { }
-    static let injector: Container = {
-        let container = Container()
-        container.registerAll()
-        
-        return container
-    }()
-}
-```
-
-De esta forma con la llamada `Dependency.injector` obtenemos el objeto con todas las dependencias registradas y disponibles para resolver.
 
 ### Resolución de dependencias
 
