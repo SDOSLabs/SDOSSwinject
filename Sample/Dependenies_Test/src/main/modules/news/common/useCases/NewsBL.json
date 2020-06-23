@@ -1,0 +1,13 @@
+{
+    "config": {
+        "name": null
+    },
+    "body": [
+        {
+            "dependencyName": "UseCaseNewsDetail",
+            "className": "UseCaseNews.Detail"
+        }, {
+            "dependencyName": "UseCaseNewsList",
+            "className": "UseCaseNews.List"
+        }]
+}

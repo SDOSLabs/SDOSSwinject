@@ -1,3 +1,10 @@
+## [2.0.0 News parameters for reference dependencies files](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v2.0.0)
+
+- Add new parameter named `dependencies`. This parameter allow link against other dependencies `.json` files and generate an access to resolvers more clean
+- Add feature for support xcfilelist in input files. This is for indicate all .json files of subdependencies that affects to the generated file
+- Add support for multilevel dependencies in son files
+- Improvement error messages
+
 ## [1.2.0 News parameters - override register](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v1.2.0)
 
 - Añadidos nuevos parámetros al json de generación para facilitar el sobrescribir el registro de una dependencia: 

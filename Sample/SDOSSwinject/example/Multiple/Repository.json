@@ -1,0 +1,11 @@
+{
+    "config": {
+        "name": "Module"
+        },
+    "body": [
+        {
+            "dependencyName": "NewsRepositoryActions",
+            "className": "NewsRepository",
+            "scope": "container"
+        }]
+}

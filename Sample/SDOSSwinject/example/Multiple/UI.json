@@ -1,0 +1,60 @@
+{
+    "config": {
+        "name": "Module",
+        "suffixName": "Custom",
+        "globalAccessLevel": "internal"
+        },
+    "headers": [
+        "typealias NavigationController = UINavigationController"
+    ],
+    "body": [
+        {
+            "dependencyName": "NavigationController",
+            "className": "UINavigationController",
+            "name": "nombre",
+            "arguments": [
+                {
+                    "name": "rootViewController",
+                    "type": "UIViewController",
+                    "defaultValue": "UIViewController()"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsListPresenterActions",
+            "className": "NewsListPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsListPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsListViewActions",
+            "className": "NewsListViewController",
+            "initName": "init"
+        }, {
+            "dependencyName": "NewsListWireframeActions",
+            "className": "NewsListWireframe"
+        }, {
+            "dependencyName": "NewsDetailPresenterActions",
+            "className": "NewsDetailPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsDetailPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailViewActions",
+            "className": "NewsDetailViewController",
+            "arguments": [
+                {
+                    "name": "item",
+                    "type": "NewsListVO"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailWireframeActions",
+            "className": "NewsDetailWireframe"
+        }]
+}
