@@ -259,7 +259,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`config.registerAllAccessLevel`||Nivel de acceso que se utilizará para el método registerAll. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`config.suffixName`||Añade un sufijo al nombre de todos los métodos autogenerados. Esto es útil cuando se quiere sobrescribir un registro de dependencias con un nuevo fichero .json. Esta propiedad no afecta al registro ni la resolución de la dependencia|`Custom`|
 |`headers`||Array de strings que se incluiran al inicio del fichero generado. Se usará para realizar imports de librerías o crear `typealias`.|`typealias NavigationController = UINavigationController`|
-|`dependencies`||Array de strings que son rutas relativas hacia desde el propio fichero hacía otros ficheros `.json` de dependencias.|`BL.json` o `./BL.json` (Los dos casos son iguales)|
+|`dependencies`||Array de strings que son rutas relativas (desde el fichero actual) o absolutas (se permiten variables como $SRCROOT) hacia otros ficheros `.json` de dependencias.|`BL.json` o `./BL.json` (Los dos casos son iguales)|
 |`body`|[x]|Array de objetos. Cada uno de ellos es la definición de una dependencia. **Este array se ampliará cuando se añadan nuevas dependencias**||
 |`body.dependencyName`|[x]|Tipo de la dependencia a injectar. Por lo general será un protocolo|`NavigationController`|
 |`body.className`|[x]|Nombre de la clase que se debe inicializar al solicitar la dependencia. Esta clase deberá contener un método init con los parámetros indicados en el valor `body.arguments`|`UINavigationController`|
