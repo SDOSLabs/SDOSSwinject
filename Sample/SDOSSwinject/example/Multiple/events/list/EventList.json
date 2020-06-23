@@ -1,0 +1,23 @@
+{
+    "dependencies": [
+        "../common/EventRepository.json",
+        "../common/EventBL.json",
+    ], "body": [
+        {
+            "dependencyName": "EventListPresenterActions",
+            "className": "EventListPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "EventListPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "EventListViewActions",
+            "className": "EventListViewController",
+            "initName": "init"
+        }, {
+            "dependencyName": "EventListWireframeActions",
+            "className": "EventListWireframe"
+        }]
+}

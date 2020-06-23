@@ -1,0 +1,19 @@
+{
+    "config": {
+        "name": "Module",
+        "suffixName": "Custom"
+        },
+    "dependencies": [
+        "./Repository.json"
+    ],
+    "body": [
+        {
+            "dependencyName": "UseCaseNewsList",
+            "className": "UseCaseNews.List",
+            "scope": "container"
+        }, {
+            "dependencyName": "UseCaseNewsDetail",
+            "className": "UseCaseNews.Detail",
+            "scope": "container"
+        }]
+}

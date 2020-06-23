@@ -1,0 +1,28 @@
+{
+    "config": {
+        "name": null
+    },
+    "dependencies": [
+        "${SRCROOT}/main/modules/common/CommonUI.json",
+        "${SRCROOT}/main/modules/news/common/repository/NewsRepository.json",
+        "${SRCROOT}/main/modules/news/common/useCases/NewsBL.json",
+        "${SRCROOT}/main/modules/news/detail/NewsDetail.json"
+    ],
+    "body": [
+        {
+            "dependencyName": "NewsListPresenterActions",
+            "className": "NewsListPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsListPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsListViewActions",
+            "className": "NewsListViewController"
+        }, {
+            "dependencyName": "NewsListWireframeActions",
+            "className": "NewsListWireframe"
+        }]
+}

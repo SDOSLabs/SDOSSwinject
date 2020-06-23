@@ -1,0 +1,27 @@
+{
+    "config": {
+        "name": null
+    },
+    "dependencies": [
+        "../../common/CommonUI.json",
+        "../common/repository/NewsRepository.json",
+        "../common/useCases/NewsBL.json"
+    ],
+    "body": [
+        {
+            "dependencyName": "NewsDetailPresenterActions",
+            "className": "NewsDetailPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "NewsDetailPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "NewsDetailViewActions",
+            "className": "NewsDetailViewController"
+        }, {
+            "dependencyName": "NewsDetailWireframeActions",
+            "className": "NewsDetailWireframe"
+        }]
+}

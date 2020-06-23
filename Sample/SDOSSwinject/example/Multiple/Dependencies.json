@@ -1,0 +1,16 @@
+{
+    "config": {
+        "name": "Module",
+        "suffixName": "Custom"
+        },
+    "dependencies": [
+        "${SRCROOT}/example/Multiple/UI.json",
+        "BL.json",
+        "events/Event.json"
+    ], "body": [
+        {
+            "dependencyName": "UseCaseNewsList2",
+            "className": "UseCaseNews.List",
+            "scope": "container"
+        }]
+}

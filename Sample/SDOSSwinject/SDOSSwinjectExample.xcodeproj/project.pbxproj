@@ -31,15 +31,26 @@
 		17EFE1856AE679994C7C312D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A39376D7F8CF12BAF2A616E /* Pods-SDOSSwinjectExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDOSSwinjectExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SDOSSwinjectExample/Pods-SDOSSwinjectExample.debug.xcconfig"; sourceTree = "<group>"; };
 		27703CC52B072DD0A398091A /* libPods-SDOSSwinjectExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SDOSSwinjectExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29259E5D248E47FE005D8CEF /* Dependencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Dependencies.json; sourceTree = "<group>"; };
+		29259E5E248E4946005D8CEF /* UI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = UI.json; sourceTree = "<group>"; };
+		29259E5F248E4946005D8CEF /* BL.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BL.json; sourceTree = "<group>"; };
+		29259E60248E4979005D8CEF /* Repository.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Repository.json; sourceTree = "<group>"; };
+		29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependenciesMultiple.swift; sourceTree = "<group>"; };
 		294F78992226942700E2A24F /* SDOSSwinject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinject; sourceTree = BUILT_PRODUCTS_DIR; };
 		294F789B2226942700E2A24F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		294F78B222269EFD00E2A24F /* ConsoleParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleParameter.swift; sourceTree = "<group>"; };
+		295B94852498D6CA00FBEEBF /* Dependencies.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = Dependencies.xcfilelist; sourceTree = "<group>"; };
 		29AE5AFE223F8FC000F589F9 /* DependencyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyDTO.swift; sourceTree = "<group>"; };
 		29AE5B00223F8FCD00F589F9 /* ArgumentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDTO.swift; sourceTree = "<group>"; };
 		29AE5B05223FB36000F589F9 /* dependencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dependencies.json; sourceTree = "<group>"; };
 		29AE5B06223FB36000F589F9 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		29AE5B07223FB8BB00F589F9 /* BodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyDTO.swift; sourceTree = "<group>"; };
 		29AE5B11223FD40900F589F9 /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
+		29BB8532249B315D00728046 /* Event.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Event.json; sourceTree = "<group>"; };
+		29BB8534249B318600728046 /* EventList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventList.json; sourceTree = "<group>"; };
+		29BB8536249B318600728046 /* EventBL.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventBL.json; sourceTree = "<group>"; };
+		29BB8537249B318600728046 /* EventRepository.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventRepository.json; sourceTree = "<group>"; };
+		29BB8539249B318600728046 /* EventDetail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventDetail.json; sourceTree = "<group>"; };
 		29D10360224B5F7700B787BF /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
 		29D10361224B5F7700B787BF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		8C7DFC9A22708611004FBC61 /* DependenciesAccessLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependenciesAccessLevel.swift; sourceTree = "<group>"; };
@@ -66,6 +77,20 @@
 				27703CC52B072DD0A398091A /* libPods-SDOSSwinjectExample.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29259E5C248E47C1005D8CEF /* Multiple */ = {
+			isa = PBXGroup;
+			children = (
+				29BCAA00249A456000731F6A /* events */,
+				295B94852498D6CA00FBEEBF /* Dependencies.xcfilelist */,
+				29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */,
+				29259E60248E4979005D8CEF /* Repository.json */,
+				29259E5F248E4946005D8CEF /* BL.json */,
+				29259E5E248E4946005D8CEF /* UI.json */,
+				29259E5D248E47FE005D8CEF /* Dependencies.json */,
+			);
+			path = Multiple;
 			sourceTree = "<group>";
 		};
 		294F789A2226942700E2A24F /* SDOSSwinjectScript */ = {
@@ -110,6 +135,7 @@
 		29AE5B04223FB36000F589F9 /* example */ = {
 			isa = PBXGroup;
 			children = (
+				29259E5C248E47C1005D8CEF /* Multiple */,
 				8C7DFC9B22708611004FBC61 /* dependenciesAccessLevel.json */,
 				8C7DFC9A22708611004FBC61 /* DependenciesAccessLevel.swift */,
 				29AE5B05223FB36000F589F9 /* dependencies.json */,
@@ -127,6 +153,42 @@
 				29AE5B11223FD40900F589F9 /* ConfigDTO.swift */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		29BB8533249B318600728046 /* list */ = {
+			isa = PBXGroup;
+			children = (
+				29BB8534249B318600728046 /* EventList.json */,
+			);
+			path = list;
+			sourceTree = "<group>";
+		};
+		29BB8535249B318600728046 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				29BB8536249B318600728046 /* EventBL.json */,
+				29BB8537249B318600728046 /* EventRepository.json */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		29BB8538249B318600728046 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				29BB8539249B318600728046 /* EventDetail.json */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		29BCAA00249A456000731F6A /* events */ = {
+			isa = PBXGroup;
+			children = (
+				29BB8532249B315D00728046 /* Event.json */,
+				29BB8535249B318600728046 /* common */,
+				29BB8538249B318600728046 /* detail */,
+				29BB8533249B318600728046 /* list */,
+			);
+			path = events;
 			sourceTree = "<group>";
 		};
 		49D95299EC16568E6CBBDA23 /* Pods */ = {

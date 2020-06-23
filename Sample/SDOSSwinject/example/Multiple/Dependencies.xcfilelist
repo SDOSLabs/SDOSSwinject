@@ -1,0 +1,10 @@
+#===================================
+${SRCROOT}/example/Multiple/BL.json
+${SRCROOT}/example/Multiple/events/common/EventBL.json
+${SRCROOT}/example/Multiple/events/common/EventRepository.json
+${SRCROOT}/example/Multiple/events/detail/EventDetail.json
+${SRCROOT}/example/Multiple/events/Event.json
+${SRCROOT}/example/Multiple/events/list/EventList.json
+${SRCROOT}/example/Multiple/Repository.json
+${SRCROOT}/example/Multiple/UI.json
+#===================================

@@ -1,0 +1,58 @@
+source 'https://github.com/SDOSLabs/cocoapods-specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '10.0'
+use_frameworks!
+inhibit_all_warnings!
+
+def core_pods
+
+    #Services
+    pod 'SDOSPluggableApplicationDelegate/Scene'
+
+    #Keyboard
+    pod 'IQKeyboardManagerSwift'
+
+    #Images
+    pod 'Kingfisher'
+    
+    #WS
+    pod 'SDOSAlamofire'
+    
+    #Database
+    #pod 'RealmWrapper'
+    
+    #Architecture
+    pod 'PromiseKit'
+	
+    #Code Generation, dependency injection and environments variables
+    pod 'SDOSL10n'
+    pod 'SDOSEnvironment'
+    pod 'SDOSSwinject', :path => "../../../"
+    pod 'SwiftGen'
+    
+    #Animations and loaders
+    pod 'SDOSHero'
+    pod 'SDOSLoader'
+    
+    #Extensions
+    pod 'SwifterSwift'
+    
+    #Analytics
+    pod 'SDOSFirebase'
+    
+    #Crash
+    pod 'Firebase/Crashlytics'
+    
+    #Distribution
+    pod 'Applivery', :configurations => ['Debug', 'Preproduction']
+
+    #Debug
+    pod 'SDOSFLEX', :configurations => ['Debug', 'Preproduction']
+    pod 'FLEX', :configurations => ['Debug', 'Preproduction']
+    
+end
+
+target :Dependenies_Test do
+	core_pods
+end

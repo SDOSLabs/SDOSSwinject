@@ -1,0 +1,23 @@
+{
+    "dependencies": [
+        "../common/EventRepository.json",
+        "${SRCROOT}/example/Multiple/events/common/EventBL.json",
+    ], "body": [
+        {
+            "dependencyName": "EventDetailPresenterActions",
+            "className": "EventDetailPresenter",
+            "arguments": [
+                {
+                    "name": "delegate",
+                    "type": "EventDetailPresenterDelegate"
+                }
+            ]
+        }, {
+            "dependencyName": "EventDetailViewActions",
+            "className": "EventDetailViewController",
+            "initName": "init"
+        }, {
+            "dependencyName": "EventDetailWireframeActions",
+            "className": "EventDetailWireframe"
+        }]
+}

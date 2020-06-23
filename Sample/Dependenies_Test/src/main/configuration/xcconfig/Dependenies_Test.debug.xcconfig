@@ -1,0 +1,20 @@
+//
+//  Dependenies_Test.debug.xcconfig
+//  Dependenies_Test
+//
+//  Copyright © 2019 SDOS. All rights reserved.
+//
+
+#include "main/configuration/xcconfig/Dependenies_Test.shared.xcconfig"
+#include "Pods/Target Support Files/Pods-Dependenies_Test/Pods-Dependenies_Test.debug.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = es.sdos.app.dev
+
+CODE_SIGN_IDENTITY = iPhone Developer
+DEVELOPMENT_TEAM = Y5G9RYLF8Y
+PROVISIONING_PROFILE_SPECIFIER = match Development $(PRODUCT_BUNDLE_IDENTIFIER)
+
+SDOSAPPLIVERY_TOKEN=
+SDOSFIREBASE_CONFIG_FILENAME=GoogleService-Info-Debug
+
+SDOSEnvironment = Debug

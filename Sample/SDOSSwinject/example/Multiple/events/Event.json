@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "detail/EventDetail.json",
+        "list/EventList.json"
+    ]
+}
