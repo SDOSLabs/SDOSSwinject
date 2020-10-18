@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
   spec.summary      = 'Librería para la generación de código de Swinject'
   spec.source       = { :git => "https://github.com/SDOSLabs/SDOSSwinject.git", :tag => "v#{spec.version}" }
 
-  spec.preserve_paths = "src/Scripts/*"
+  spec.preserve_paths = "src/Scripts/SDOSSwinject"
   spec.dependency 'Swinject', '~> 2.6'
 
 end
