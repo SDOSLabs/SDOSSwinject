@@ -296,6 +296,8 @@
 			buildPhases = (
 				A3D54A73E032AFE53417BA6A /* [CP] Check Pods Manifest.lock */,
 				295298DE253C8A920037548A /* SDOSSwinject */,
+				2952990B253C90A60037548A /* SDOSSwinject - Access Level */,
+				2952990C253C90EC0037548A /* SDOSSwinject - Multiple */,
 				29FFDF27253C88D4008C3021 /* Sources */,
 				29FFDF28253C88D4008C3021 /* Frameworks */,
 				29FFDF29253C88D4008C3021 /* Resources */,
@@ -481,6 +483,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "xcrun --sdk macosx swift run SDOSSwinjectScript -o \"${PROJECT_DIR}/example/Multiple/DependenciesMultiple.swift\" -i \"${PROJECT_DIR}/App/../example/Multiple/Dependencies.json\"\n";
+		};
+		2952990B253C90A60037548A /* SDOSSwinject - Access Level */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PROJECT_DIR}/App/../example/dependenciesAccessLevel.json",
+			);
+			name = "SDOSSwinject - Access Level";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${PROJECT_DIR}/example/DependenciesAccessLevel.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/../../../src/Scripts/SDOSSwinject\" -o \"${PROJECT_DIR}/example/DependenciesAccessLevel.swift\" -i \"${PROJECT_DIR}/App/../example/dependenciesAccessLevel.json\"\n";
+		};
+		2952990C253C90EC0037548A /* SDOSSwinject - Multiple */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PROJECT_DIR}/App/../example/Multiple/Dependencies.xcfilelist",
+			);
+			inputPaths = (
+				"${SRCROOT}/App/../example/Multiple/Dependencies.json",
+			);
+			name = "SDOSSwinject - Multiple";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${SRCROOT}/example/Multiple/DependenciesMultiple.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/../../../src/Scripts/SDOSSwinject\" -o \"${PROJECT_DIR}/example/Multiple/DependenciesMultiple.swift\" -i \"${PROJECT_DIR}/App/../example/Multiple/Dependencies.json\"\n\n";
 		};
 		A3D54A73E032AFE53417BA6A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
