@@ -533,6 +533,13 @@ extension ScriptAction {
             }
         }
         
+        let globalAccessLevel: String
+        if let str = dependency.config?.globalAccessLevel, !str.isEmpty {
+            globalAccessLevel = str + " "
+        } else {
+            globalAccessLevel = ""
+        }
+        
         var result = ""
         if parentDependency == nil {
             guard let subdependencyNameResolver = dependency.structName(input: input), let subdependencyName = dependency.subdependencyVariableName(input: input) else { return "" }
@@ -543,9 +550,10 @@ extension ScriptAction {
                 result.append(" (\(body.count - countTotal) skipped)")
             }
             result.append("\n")
+            result.append(globalAccessLevel)
             result.append("""
             extension Resolver {
-                var \(subdependencyName): \(subdependencyNameResolver) {
+                \(globalAccessLevel)var \(subdependencyName): \(subdependencyNameResolver) {
                     return \(subdependencyNameResolver)(resolver: self)
                 }
             }
@@ -561,15 +569,14 @@ extension ScriptAction {
             result.append(" (\(body.count - countTotal) skipped)")
         }
         result.append("\n")
-        if let globalAccessLevel = dependency.config?.globalAccessLevel {
-            result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
-        }
+        result.append(globalAccessLevel)
         result.append("struct \(subdependencyNameResolver) {\n")
         result.append("\tprivate let resolver: Resolver\n")
         result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
         result.append("\n")
         dependency.dependenciesResolve?.forEach {
             guard let subdependencyNameResolver = $0.structName(), let subdependencyName = $0.subdependencyVariableName() else { return }
+            result.append(globalAccessLevel)
             result.append("""
                 var \(subdependencyName): \(subdependencyNameResolver) {
                     return \(subdependencyNameResolver)(resolver: resolver)

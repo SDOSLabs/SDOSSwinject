@@ -27,8 +27,8 @@ extension Container {
 
 
 //Generate variable to access resolvers
-extension Resolver {
-    var dependenciesAccessLevel: DependenciesAccessLevelResolver {
+internal extension Resolver {
+    internal var dependenciesAccessLevel: DependenciesAccessLevelResolver {
         return DependenciesAccessLevelResolver(resolver: self)
     }
 }
