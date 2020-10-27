@@ -91,11 +91,21 @@
          <EnvironmentVariable
             key = "SCRIPT_OUTPUT_FILE_COUNT"
             value = "1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "SCRIPT_OUTPUT_FILE_0"
             value = "${PROJECT_DIR}/example/Dependencies.swift"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_OUTPUT_FILE_LIST_COUNT"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_OUTPUT_FILE_LIST_0"
+            value = "${PROJECT_DIR}/example/dependencies_output.xcfilelist"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

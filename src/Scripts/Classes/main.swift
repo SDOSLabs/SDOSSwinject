@@ -631,7 +631,7 @@ extension ScriptAction {
             if let num = Int(numString) {
                 for i in 0...num {
                     if let param = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_\(i)"] {
-                        if param.hasSuffix(".files") || type == .INPUT_FILE_LIST || type == .OUTPUT_FILE_LIST {
+                        if param.hasSuffix(".files") || param.hasSuffix(".xcfilelist") || type == .INPUT_FILE_LIST || type == .OUTPUT_FILE_LIST {
                             if let fileContent = try? String(contentsOfFile: param) {
                                 fileContent.split(separator: "\n").map(String.init).forEach {
                                     if !$0.hasPrefix("#") {

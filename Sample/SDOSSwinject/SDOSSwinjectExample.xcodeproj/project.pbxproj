@@ -53,6 +53,7 @@
 		295B94852498D6CA00FBEEBF /* Dependencies.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = Dependencies.xcfilelist; sourceTree = "<group>"; };
 		29AE5B05223FB36000F589F9 /* dependencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dependencies.json; sourceTree = "<group>"; };
 		29AE5B06223FB36000F589F9 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		29B26E8A2548282300A4DFA7 /* dependencies_output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = dependencies_output.xcfilelist; sourceTree = "<group>"; };
 		29BB8532249B315D00728046 /* Event.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Event.json; sourceTree = "<group>"; };
 		29BB8534249B318600728046 /* EventList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventList.json; sourceTree = "<group>"; };
 		29BB8536249B318600728046 /* EventBL.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventBL.json; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 				8C7DFC9A22708611004FBC61 /* DependenciesAccessLevel.swift */,
 				29AE5B05223FB36000F589F9 /* dependencies.json */,
 				29AE5B06223FB36000F589F9 /* Dependencies.swift */,
+				29B26E8A2548282300A4DFA7 /* dependencies_output.xcfilelist */,
 			);
 			path = example;
 			sourceTree = "<group>";
@@ -437,7 +439,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${PROJECT_DIR}/example/Dependencies.swift",
+				"${PROJECT_DIR}/example/dependencies_output.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
