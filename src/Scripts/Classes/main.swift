@@ -553,7 +553,7 @@ extension ScriptAction {
             result.append(globalAccessLevel)
             result.append("""
             extension Resolver {
-                \(globalAccessLevel)var \(subdependencyName): \(subdependencyNameResolver) {
+                var \(subdependencyName): \(subdependencyNameResolver) {
                     return \(subdependencyNameResolver)(resolver: self)
                 }
             }
