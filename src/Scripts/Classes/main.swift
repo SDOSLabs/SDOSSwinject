@@ -614,6 +614,7 @@ extension ScriptAction {
         case INPUT_FILE
         case INPUT_FILE_LIST
         case OUTPUT_FILE
+        case OUTPUT_FILE_LIST
     }
     
     func validateInputOutput() {
@@ -621,7 +622,7 @@ extension ScriptAction {
             return
         }
         checkInput(params: parseParams(type: .INPUT_FILE) + parseParams(type: .INPUT_FILE_LIST), sources: [self.input])
-        checkOutput(params: parseParams(type: .OUTPUT_FILE), sources: [self.output])
+        checkOutput(params: parseParams(type: .OUTPUT_FILE) + parseParams(type: .OUTPUT_FILE_LIST), sources: [self.output])
     }
     
     func parseParams(type: TypeParams) -> [String] {
