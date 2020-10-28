@@ -522,6 +522,7 @@ extension ScriptAction {
 //MARK: - Resolver
 extension ScriptAction {
     func generateResolver(dependency: DependencyDTO, parentDependency: DependencyDTO?) -> String {
+        print("log")
         var resultDependencies = ""
         var countTotal = 0
         if let body = dependency.body {
