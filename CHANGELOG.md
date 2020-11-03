@@ -1,3 +1,7 @@
+## [HEAD]
+
+- Add support for Swift Package Manager
+
 ## [2.0.0 News parameters for reference dependencies files](https://github.com/SDOSLabs/SDOSSwinject.git/tree/v2.0.0)
 
 - Add new parameter named `dependencies`. This parameter allow link against other dependencies `.json` files and generate an access to resolvers more clean
