@@ -4,7 +4,7 @@
 //
 import Swinject
 
-//MARK: - Root dependency (${SRCROOT}/example/dependencies.json))
+//MARK: - Root dependency (/Users/lukanor/Documents/Github/SDOSSwinject/Sample/SDOSSwinject/example/dependencies.json))
 
 typealias NavigationController = UINavigationController
 

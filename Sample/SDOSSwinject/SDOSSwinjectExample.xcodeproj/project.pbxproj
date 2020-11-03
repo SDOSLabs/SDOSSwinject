@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		295298E9253C8BBB0037548A /* Libraries in Frameworks */ = {isa = PBXBuildFile; productRef = 295298E8253C8BBB0037548A /* Libraries */; };
+		296F1D9725518D6D0010A9B1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296F1D9625518D6D0010A9B1 /* main.swift */; };
+		296F1DA125518DD70010A9B1 /* ConsoleParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF24253C8825008C3021 /* ConsoleParameter.swift */; };
+		296F1DA525518DDE0010A9B1 /* ConfigDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF21253C8825008C3021 /* ConfigDTO.swift */; };
+		296F1DA625518DDE0010A9B1 /* DependencyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF1F253C8825008C3021 /* DependencyDTO.swift */; };
+		296F1DA725518DDE0010A9B1 /* BodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF20253C8825008C3021 /* BodyDTO.swift */; };
+		296F1DA825518DDE0010A9B1 /* ArgumentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF22253C8825008C3021 /* ArgumentDTO.swift */; };
 		29FFDF2E253C88D4008C3021 /* SDOSSwinjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF2D253C88D4008C3021 /* SDOSSwinjectApp.swift */; };
 		29FFDF30253C88D4008C3021 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF2F253C88D4008C3021 /* ContentView.swift */; };
 		29FFDF32253C88D5008C3021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29FFDF31253C88D5008C3021 /* Assets.xcassets */; };
@@ -51,6 +57,7 @@
 		29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependenciesMultiple.swift; sourceTree = "<group>"; };
 		294F78992226942700E2A24F /* SDOSSwinject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinject; sourceTree = BUILT_PRODUCTS_DIR; };
 		295B94852498D6CA00FBEEBF /* Dependencies.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = Dependencies.xcfilelist; sourceTree = "<group>"; };
+		296F1D9625518D6D0010A9B1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		29AE5B05223FB36000F589F9 /* dependencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dependencies.json; sourceTree = "<group>"; };
 		29AE5B06223FB36000F589F9 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		29B26E8A2548282300A4DFA7 /* dependencies_output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = dependencies_output.xcfilelist; sourceTree = "<group>"; };
@@ -66,7 +73,6 @@
 		29FFDF21253C8825008C3021 /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
 		29FFDF22253C8825008C3021 /* ArgumentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDTO.swift; sourceTree = "<group>"; };
 		29FFDF24253C8825008C3021 /* ConsoleParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleParameter.swift; sourceTree = "<group>"; };
-		29FFDF25253C8825008C3021 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		29FFDF2B253C88D4008C3021 /* SDOSSwinject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDOSSwinject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29FFDF2D253C88D4008C3021 /* SDOSSwinjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDOSSwinjectApp.swift; sourceTree = "<group>"; };
 		29FFDF2F253C88D4008C3021 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -217,7 +223,7 @@
 			children = (
 				29FFDF1E253C8825008C3021 /* DTO */,
 				29FFDF23253C8825008C3021 /* ConsoleParameter */,
-				29FFDF25253C8825008C3021 /* main.swift */,
+				296F1D9625518D6D0010A9B1 /* main.swift */,
 			);
 			name = Classes;
 			path = ../../../src/Scripts/Classes;
@@ -349,8 +355,7 @@
 				TargetAttributes = {
 					294F78982226942700E2A24F = {
 						CreatedOnToolsVersion = 10.2;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = 1210;
 					};
 					29FFDF2A253C88D4008C3021 = {
 						CreatedOnToolsVersion = 12.1;
@@ -556,6 +561,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				296F1DA725518DDE0010A9B1 /* BodyDTO.swift in Sources */,
+				296F1DA625518DDE0010A9B1 /* DependencyDTO.swift in Sources */,
+				296F1DA525518DDE0010A9B1 /* ConfigDTO.swift in Sources */,
+				296F1D9725518D6D0010A9B1 /* main.swift in Sources */,
+				296F1DA825518DDE0010A9B1 /* ArgumentDTO.swift in Sources */,
+				296F1DA125518DD70010A9B1 /* ConsoleParameter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,7 +602,6 @@
 		294F789E2226942700E2A24F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -613,6 +623,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_BUILD_DIR = "${PROJECT_DIR}/../../src/Scripts";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -635,7 +646,6 @@
 		294F789F2226942700E2A24F /* Preproduction */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -670,6 +680,7 @@
 				CONFIGURATION_BUILD_DIR = "${PROJECT_DIR}/../../src/Scripts";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -701,7 +712,6 @@
 		294F78A02226942700E2A24F /* Production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -736,6 +746,7 @@
 				CONFIGURATION_BUILD_DIR = "${PROJECT_DIR}/../../src/Scripts";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
