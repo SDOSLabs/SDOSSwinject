@@ -2,12 +2,12 @@
   - [Introducción](#introducción)
   - [Instalación](#instalación)
     - [Cocoapods](#cocoapods)
+    - [Swift Package Manager](#swift-package-manager)
   - [Cómo se usa](#cómo-se-usa)
     - [Errores comunes](#errores-comunes)
     - [Resolución de dependencias](#resolución-de-dependencias)
     - [Estructura del fichero generado](#estructura-del-fichero-generado)
   - [JSON](#json)
-  - [Dependencias](#dependencias)
   - [Referencias](#referencias)
 
 # SDOSSwinject
@@ -35,8 +35,24 @@ source 'https://github.com/CocoaPods/Specs.git' #Cocoapods source
 Añadir la dependencia al `Podfile`:
 
 ```ruby
-pod 'SDOSSwinject', '~>2.0.0' 
+pod 'SDOSSwinject', '~>2.1.0' 
 ```
+
+### Swift Package Manager
+
+Esta librería la usaremos en la `Build Phase` de nuestro proyecto. El script de esta librería no se debe incluir en el binario de la aplicación y sólamente servirá para generar código. Para que podamos usarlo deberemos instalar la librería de la siguiente forma:
+
+1. Crearnos una dependencia local en nuestro proyecto. Para ello nuestro proyecto debe estar incluido en un `.xcworkspace`. Debemos pulsar el botón `+` situado en la parte inferior izquierda del Xcode y seleccionar la opción "New Swift Package...".
+2. Le pondremos el nombre "Autogenerate" al paquete.
+3. Añadiremos la dependencia de `SDOSSwinject` en el `Package.swift`, sin necesidad de añadirlo al target:
+
+``` swift
+dependencies: [
+    .package(url: "https://github.com/SDOSLabs/SDOSSwinject.git", .upToNextMajor(from: "2.1.0"))
+]
+```
+
+De esta forma tendremos una carpeta en la raiz de nuestro proyecto que se llamará "Autogenerate" que contendrá un fichero `Package.swift` que usaremos más adelante para ejecutar el script.
 
 ## Cómo se usa
 
@@ -107,8 +123,16 @@ Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de depe
 4. Arrastrar el nuevo `Run Script` justo antes de `Compile Sources`
 5. Renombrar el script a `SDOSSwinject - Create dependencies`
 6. Copiar el siguiente script:
+
+    **Si la instalación es con cocoapods**
     ```sh
     "${PODS_ROOT}/SDOSSwinject/src/Scripts/SDOSSwinject" -i "${SRCROOT}/main/resources/dependencies/dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift"
+    ```
+    **Si la instalación es con Swift Package Manager**
+    ```sh
+    SPM_PATH="${SRCROOT}/Autogenerate"
+
+    (cd $SPM_PATH && xcrun --sdk macosx swift run SDOSSwinjectScript  -i "${SRCROOT}/main/resources/dependencies/dependencies.json" -o "${SRCROOT}/main/resources/generated/DependenciesGenerated.swift")
     ```
     <sup><sub>Los valores del script pueden cambiarse en función de las necesidades del proyecto</sup></sub>
 7. Añadir la siguiente línea al apartado `Input Files`. **No poner comillas**:
@@ -119,12 +143,12 @@ Este fichero habrá que modificarlo si añadimos nuevos ficheros `.json` de depe
     ```sh
     ${SRCROOT}/main/resources/dependencies/dependencies.xcfilelist
     ```
-9. Añadir la siguiente línea al apartado `Output File`. **No poner comillas**:
+9.  Añadir la siguiente línea al apartado `Output File`. **No poner comillas**:
    ```sh
    ${SRCROOT}/main/resources/generated/DependenciesGenerated.swift
    ```
-10. Compilar el proyecto. Esto generará el fichero en la ruta del paso anterior y deberá ser incluido al target del proyecto
-11. El fichero `DependenciesGenerated.swift` generado contiene todos los registros y resoluciones de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Una forma de disponer del gestor de dependencias completo sería creando el siguiente fichero en nuestro proyecto:
+11. Compilar el proyecto. Esto generará el fichero en la ruta del paso anterior y deberá ser incluido al target del proyecto
+12. El fichero `DependenciesGenerated.swift` generado contiene todos los registros y resoluciones de las dependencias incluidas en el/los ficheros `.json`. El desarrollador debe registrarlas manualmente durante la inicialización del gestor de dependencias. Una forma de disponer del gestor de dependencias completo sería creando el siguiente fichero en nuestro proyecto:
     
     *Dependency.swift*
     ```js
@@ -273,9 +297,6 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.arguments.type`|[x]|Tipo del argumento|`UIViewController`|
 |`body.arguments.defaultValue`||Valor por defecto del argumento|`UIViewController.init()`|
 
-## Dependencias
-* [Swinject](https://github.com/Swinject/Swinject) - >= 2.6
-
 ## Referencias
 * https://github.com/SDOSLabs/SDOSSwinject
-
+* [Swinject](https://github.com/Swinject/Swinject) - ~> 2.7

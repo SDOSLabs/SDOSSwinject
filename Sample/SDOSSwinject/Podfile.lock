@@ -1,0 +1,23 @@
+PODS:
+  - SDOSSwinject (2.0.0):
+    - Swinject (~> 2.7)
+  - Swinject (2.7.1)
+
+DEPENDENCIES:
+  - SDOSSwinject (from `../../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Swinject
+
+EXTERNAL SOURCES:
+  SDOSSwinject:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  SDOSSwinject: 713abd725684a8430b9133055d93bb3e7ae0d15c
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+
+PODFILE CHECKSUM: 39d4c4fd6280d9e42ec67192ff9fabfc7cd47dc1
+
+COCOAPODS: 1.9.3

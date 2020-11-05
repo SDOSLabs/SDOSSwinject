@@ -1,12 +1,13 @@
 //  This is a generated file, do not edit!
 //  SDOSSwinject
-//
 //  Created by SDOS
 //
-
 import Swinject
 
+//MARK: - Root dependency (${SRCROOT}/example/dependencies.json))
+
 typealias NavigationController = UINavigationController
+
 
 extension Container {
     ///Register all dependencies: 10 dependencies
@@ -24,8 +25,19 @@ extension Container {
 	}
 }
 
-//Generate resolvers with 9 dependencies (1 skipped)
+
+//Generate variable to access resolvers (1 skipped)
 extension Resolver {
+    var dependencies: DependenciesResolver {
+        return DependenciesResolver(resolver: self)
+    }
+}
+
+//Generate resolvers with 9 dependencies (1 skipped)
+struct DependenciesResolver {
+	private let resolver: Resolver
+	fileprivate init(resolver: Resolver) { self.resolver = resolver }
+
     func resolveNewsRepositoryActionsModuleCustom() -> NewsRepositoryActions {
         return (self as! Container).synchronize().resolve(NewsRepositoryActions.self, name: "Module")!
     }
@@ -59,43 +71,43 @@ extension Resolver {
 //Generate registers with 10 dependencies
 extension Container {
     @discardableResult
-    func registerNavigationControllerModuleNombreCustomWithRootViewController() -> ServiceEntry<NavigationController> {
+    fileprivate func registerNavigationControllerModuleNombreCustomWithRootViewController() -> ServiceEntry<NavigationController> {
         return self.register(NavigationController.self, name: "ModuleNombre") { (r: Resolver, rootViewController: UIViewController) in UINavigationController(rootViewController: rootViewController) }
     }
     @discardableResult
-    func registerNewsRepositoryActionsModuleCustom() -> ServiceEntry<NewsRepositoryActions> {
+    fileprivate func registerNewsRepositoryActionsModuleCustom() -> ServiceEntry<NewsRepositoryActions> {
         return self.register(NewsRepositoryActions.self, name: "Module") { (r: Resolver) in NewsRepository() }.inObjectScope(.container)
     }
     @discardableResult
-    func registerUseCaseNewsListModuleCustom() -> ServiceEntry<UseCaseNewsList> {
+    fileprivate func registerUseCaseNewsListModuleCustom() -> ServiceEntry<UseCaseNewsList> {
         return self.register(UseCaseNewsList.self, name: "Module") { (r: Resolver) in UseCaseNews.List() }.inObjectScope(.container)
     }
     @discardableResult
-    func registerUseCaseNewsDetailModuleCustom() -> ServiceEntry<UseCaseNewsDetail> {
+    fileprivate func registerUseCaseNewsDetailModuleCustom() -> ServiceEntry<UseCaseNewsDetail> {
         return self.register(UseCaseNewsDetail.self, name: "Module") { (r: Resolver) in UseCaseNews.Detail() }.inObjectScope(.container)
     }
     @discardableResult
-    func registerNewsListPresenterActionsModuleCustomWithDelegate() -> ServiceEntry<NewsListPresenterActions> {
+    fileprivate func registerNewsListPresenterActionsModuleCustomWithDelegate() -> ServiceEntry<NewsListPresenterActions> {
         return self.register(NewsListPresenterActions.self, name: "Module") { (r: Resolver, delegate: NewsListPresenterDelegate) in NewsListPresenter(delegate: delegate) }
     }
     @discardableResult
-    func registerNewsListViewActionsModuleCustom() -> ServiceEntry<NewsListViewActions> {
+    fileprivate func registerNewsListViewActionsModuleCustom() -> ServiceEntry<NewsListViewActions> {
         return self.register(NewsListViewActions.self, name: "Module") { (r: Resolver) in NewsListViewController.init() }
     }
     @discardableResult
-    func registerNewsListWireframeActionsModuleCustom() -> ServiceEntry<NewsListWireframeActions> {
+    fileprivate func registerNewsListWireframeActionsModuleCustom() -> ServiceEntry<NewsListWireframeActions> {
         return self.register(NewsListWireframeActions.self, name: "Module") { (r: Resolver) in NewsListWireframe() }
     }
     @discardableResult
-    func registerNewsDetailPresenterActionsModuleCustomWithDelegate() -> ServiceEntry<NewsDetailPresenterActions> {
+    fileprivate func registerNewsDetailPresenterActionsModuleCustomWithDelegate() -> ServiceEntry<NewsDetailPresenterActions> {
         return self.register(NewsDetailPresenterActions.self, name: "Module") { (r: Resolver, delegate: NewsDetailPresenterDelegate) in NewsDetailPresenter(delegate: delegate) }
     }
     @discardableResult
-    func registerNewsDetailViewActionsModuleCustomWithItem() -> ServiceEntry<NewsDetailViewActions> {
+    fileprivate func registerNewsDetailViewActionsModuleCustomWithItem() -> ServiceEntry<NewsDetailViewActions> {
         return self.register(NewsDetailViewActions.self, name: "Module") { (r: Resolver, item: NewsListVO) in NewsDetailViewController(item: item) }
     }
     @discardableResult
-    func registerNewsDetailWireframeActionsModuleCustom() -> ServiceEntry<NewsDetailWireframeActions> {
+    fileprivate func registerNewsDetailWireframeActionsModuleCustom() -> ServiceEntry<NewsDetailWireframeActions> {
         return self.register(NewsDetailWireframeActions.self, name: "Module") { (r: Resolver) in NewsDetailWireframe() }
     }
 

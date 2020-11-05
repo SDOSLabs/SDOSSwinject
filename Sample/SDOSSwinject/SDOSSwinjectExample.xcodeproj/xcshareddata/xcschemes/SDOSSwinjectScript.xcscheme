@@ -98,6 +98,16 @@
             value = "${PROJECT_DIR}/example/Dependencies.swift"
             isEnabled = "YES">
          </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_OUTPUT_FILE_LIST_COUNT"
+            value = "1"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SCRIPT_OUTPUT_FILE_LIST_0"
+            value = "${PROJECT_DIR}/example/dependencies_output.xcfilelist"
+            isEnabled = "NO">
+         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction

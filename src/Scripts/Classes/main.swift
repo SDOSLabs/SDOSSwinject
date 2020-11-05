@@ -533,6 +533,13 @@ extension ScriptAction {
             }
         }
         
+        let globalAccessLevel: String
+        if let str = dependency.config?.globalAccessLevel, !str.isEmpty {
+            globalAccessLevel = str + " "
+        } else {
+            globalAccessLevel = ""
+        }
+        
         var result = ""
         if parentDependency == nil {
             guard let subdependencyNameResolver = dependency.structName(input: input), let subdependencyName = dependency.subdependencyVariableName(input: input) else { return "" }
@@ -543,6 +550,7 @@ extension ScriptAction {
                 result.append(" (\(body.count - countTotal) skipped)")
             }
             result.append("\n")
+            result.append(globalAccessLevel)
             result.append("""
             extension Resolver {
                 var \(subdependencyName): \(subdependencyNameResolver) {
@@ -561,15 +569,14 @@ extension ScriptAction {
             result.append(" (\(body.count - countTotal) skipped)")
         }
         result.append("\n")
-        if let globalAccessLevel = dependency.config?.globalAccessLevel {
-            result.append(globalAccessLevel.isEmpty ? globalAccessLevel: globalAccessLevel + " ")
-        }
+        result.append(globalAccessLevel)
         result.append("struct \(subdependencyNameResolver) {\n")
         result.append("\tprivate let resolver: Resolver\n")
         result.append("\tfileprivate init(resolver: Resolver) { self.resolver = resolver }\n")
         result.append("\n")
         dependency.dependenciesResolve?.forEach {
             guard let subdependencyNameResolver = $0.structName(), let subdependencyName = $0.subdependencyVariableName() else { return }
+            result.append(globalAccessLevel)
             result.append("""
                 var \(subdependencyName): \(subdependencyNameResolver) {
                     return \(subdependencyNameResolver)(resolver: resolver)
@@ -607,6 +614,7 @@ extension ScriptAction {
         case INPUT_FILE
         case INPUT_FILE_LIST
         case OUTPUT_FILE
+        case OUTPUT_FILE_LIST
     }
     
     func validateInputOutput() {
@@ -614,7 +622,7 @@ extension ScriptAction {
             return
         }
         checkInput(params: parseParams(type: .INPUT_FILE) + parseParams(type: .INPUT_FILE_LIST), sources: [self.input])
-        checkOutput(params: parseParams(type: .OUTPUT_FILE), sources: [self.output])
+        checkOutput(params: parseParams(type: .OUTPUT_FILE) + parseParams(type: .OUTPUT_FILE_LIST), sources: [self.output])
     }
     
     func parseParams(type: TypeParams) -> [String] {
@@ -623,7 +631,7 @@ extension ScriptAction {
             if let num = Int(numString) {
                 for i in 0...num {
                     if let param = ProcessInfo.processInfo.environment["SCRIPT_\(type.rawValue)_\(i)"] {
-                        if param.hasSuffix(".files") || type == .INPUT_FILE_LIST {
+                        if param.hasSuffix(".files") || param.hasSuffix(".xcfilelist") || type == .INPUT_FILE_LIST || type == .OUTPUT_FILE_LIST {
                             if let fileContent = try? String(contentsOfFile: param) {
                                 fileContent.split(separator: "\n").map(String.init).forEach {
                                     if !$0.hasPrefix("#") {
