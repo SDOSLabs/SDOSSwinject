@@ -8,7 +8,6 @@
     - [Resolución de dependencias](#resolución-de-dependencias)
     - [Estructura del fichero generado](#estructura-del-fichero-generado)
   - [JSON](#json)
-  - [Dependencias](#dependencias)
   - [Referencias](#referencias)
 
 # SDOSSwinject
@@ -45,7 +44,7 @@ Esta librería la usaremos en la `Build Phase` de nuestro proyecto. El script de
 
 1. Crearnos una dependencia local en nuestro proyecto. Para ello nuestro proyecto debe estar incluido en un `.xcworkspace`. Debemos pulsar el botón `+` situado en la parte inferior izquierda del Xcode y seleccionar la opción "New Swift Package...".
 2. Le pondremos el nombre "Autogenerate" al paquete.
-3. Añadiremos la dependencia de `SDOSL10n` en el `Package.swift`, sin necesidad de añadirlo al target:
+3. Añadiremos la dependencia de `SDOSSwinject` en el `Package.swift`, sin necesidad de añadirlo al target:
 
 ``` swift
 dependencies: [
@@ -298,9 +297,6 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.arguments.type`|[x]|Tipo del argumento|`UIViewController`|
 |`body.arguments.defaultValue`||Valor por defecto del argumento|`UIViewController.init()`|
 
-## Dependencias
-* [Swinject](https://github.com/Swinject/Swinject) - >= 2.6
-
 ## Referencias
 * https://github.com/SDOSLabs/SDOSSwinject
-
+* [Swinject](https://github.com/Swinject/Swinject) - ~> 2.7
