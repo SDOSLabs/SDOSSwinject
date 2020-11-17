@@ -269,6 +269,9 @@ extension ScriptAction {
     }
     
     func validateInputSubdependency(rootDependency: DependencyDTO, dependency: DependencyDTO) {
+        guard !disableInputOutputFilesValidation else {
+            return
+        }
         dependency.dependenciesResolve?.forEach {
             if let subdependencyOriginalName = $0.subdependencyOriginalName {
                 checkSubdependencyInput(file: subdependencyOriginalName, fileContent: getPathsForFilelist(dependency: rootDependency).joined(separator: "\n"))
