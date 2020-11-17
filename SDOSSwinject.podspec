@@ -1,4 +1,4 @@
-@version = "2.1.0"
+@version = "2.1.1"
 Pod::Spec.new do |spec|
   spec.platform     = :ios, '9.0'
   spec.name         = 'SDOSSwinject'
