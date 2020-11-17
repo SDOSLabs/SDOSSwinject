@@ -1,3 +1,7 @@
+## [2.1.1 Fix validate flag for subdependencies](https://github.com/SDOSLabs/SDOSSwinject.git/tree/2.1.1)
+
+- Fix an error when use --disable-input-output-files-validation and you have any subdependencies files
+
 ## [2.1.0 Support Swift Package Manager](https://github.com/SDOSLabs/SDOSSwinject.git/tree/2.1.0)
 
 - Add support for Swift Package Manager
