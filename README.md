@@ -18,6 +18,8 @@
 ## Introducción
 SDOSSwinject es un script que parsea un JSON para generar código Swift para el registro y la resolución de dependencias con la librería Swinject. Se ha optado por esta solución ya que el registro y la resolución de dependencias son implementaciones separadas pero que necesitan ser consecuentes (para un registro sólo hay un tipo de resolución). La implementación manual podía contener errores que son impercetibles en tiempo de compilación y haría que las aplicaciones fallaran en tiempo de ejecución.
 
+No tiene dependendencias con otras librerías, pero el código que genera es para ser usado teniendo integrada la librería [Swinject](https://github.com/Swinject/Swinject.git). Consultad su documentación para la instalación.
+
 ## Instalación
 
 Podéis consultar el siguiente video donde se sigue paso a paso la guía de instalación aquí documentada: https://www.loom.com/share/ecd4e053b5db4a609ac611699509b4f3
@@ -35,7 +37,7 @@ source 'https://github.com/CocoaPods/Specs.git' #Cocoapods source
 Añadir la dependencia al `Podfile`:
 
 ```ruby
-pod 'SDOSSwinject', '~>2.1.0' 
+pod 'SDOSSwinject', '~>2.1.2' 
 ```
 
 ### Swift Package Manager
@@ -48,7 +50,7 @@ Esta librería la usaremos en la `Build Phase` de nuestro proyecto. El script de
 
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/SDOSLabs/SDOSSwinject.git", .upToNextMajor(from: "2.1.0"))
+    .package(url: "https://github.com/SDOSLabs/SDOSSwinject.git", .upToNextMajor(from: "2.1.2"))
 ]
 ```
 
