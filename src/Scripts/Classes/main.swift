@@ -579,9 +579,8 @@ extension ScriptAction {
         result.append("\n")
         dependency.dependenciesResolve?.forEach {
             guard let subdependencyNameResolver = $0.structName(), let subdependencyName = $0.subdependencyVariableName() else { return }
-            result.append(globalAccessLevel)
             result.append("""
-                var \(subdependencyName): \(subdependencyNameResolver) {
+                \(globalAccessLevel)var \(subdependencyName): \(subdependencyNameResolver) {
                     return \(subdependencyNameResolver)(resolver: resolver)
                 }
             

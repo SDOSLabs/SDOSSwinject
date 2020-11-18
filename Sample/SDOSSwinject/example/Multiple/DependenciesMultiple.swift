@@ -9,7 +9,7 @@ import Swinject
 
 extension Container {
     ///Register all dependencies: 4 dependencies
-    func registerAllModuleCustom() {
+    public func registerAllModuleCustom() {
 		self.registerUseCaseNewsList2ModuleCustom()
 
 		self.registerAllUIModuleCustom()
@@ -20,27 +20,27 @@ extension Container {
 
 
 //Generate variable to access resolvers
-extension Resolver {
+public extension Resolver {
     var dependencies: DependenciesResolver {
         return DependenciesResolver(resolver: self)
     }
 }
 
 //Generate resolvers with 1 dependencies
-struct DependenciesResolver {
+public struct DependenciesResolver {
 	private let resolver: Resolver
 	fileprivate init(resolver: Resolver) { self.resolver = resolver }
 
-    var uI: UIResolver {
+    public var uI: UIResolver {
         return UIResolver(resolver: resolver)
     }
-    var bL: BLResolver {
+    public var bL: BLResolver {
         return BLResolver(resolver: resolver)
     }
-    var event: EventResolver {
+    public var event: EventResolver {
         return EventResolver(resolver: resolver)
     }
-    func resolveUseCaseNewsList2ModuleCustom() -> UseCaseNewsList2 {
+    public func resolveUseCaseNewsList2ModuleCustom() -> UseCaseNewsList2 {
         return (self as! Container).synchronize().resolve(UseCaseNewsList2.self, name: "Module")!
     }
 
