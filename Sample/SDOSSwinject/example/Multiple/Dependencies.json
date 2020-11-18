@@ -1,7 +1,8 @@
 {
     "config": {
         "name": "Module",
-        "suffixName": "Custom"
+        "suffixName": "Custom",
+        "globalAccessLevel": "public"
         },
     "dependencies": [
         "${SRCROOT}/example/Multiple/UI.json",

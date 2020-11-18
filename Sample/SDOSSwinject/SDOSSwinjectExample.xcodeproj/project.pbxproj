@@ -8,12 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		295298E9253C8BBB0037548A /* Libraries in Frameworks */ = {isa = PBXBuildFile; productRef = 295298E8253C8BBB0037548A /* Libraries */; };
-		296F1D9725518D6D0010A9B1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296F1D9625518D6D0010A9B1 /* main.swift */; };
-		296F1DA125518DD70010A9B1 /* ConsoleParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF24253C8825008C3021 /* ConsoleParameter.swift */; };
-		296F1DA525518DDE0010A9B1 /* ConfigDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF21253C8825008C3021 /* ConfigDTO.swift */; };
-		296F1DA625518DDE0010A9B1 /* DependencyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF1F253C8825008C3021 /* DependencyDTO.swift */; };
-		296F1DA725518DDE0010A9B1 /* BodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF20253C8825008C3021 /* BodyDTO.swift */; };
-		296F1DA825518DDE0010A9B1 /* ArgumentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF22253C8825008C3021 /* ArgumentDTO.swift */; };
 		29FFDF2E253C88D4008C3021 /* SDOSSwinjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF2D253C88D4008C3021 /* SDOSSwinjectApp.swift */; };
 		29FFDF30253C88D4008C3021 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FFDF2F253C88D4008C3021 /* ContentView.swift */; };
 		29FFDF32253C88D5008C3021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29FFDF31253C88D5008C3021 /* Assets.xcassets */; };
@@ -57,7 +51,6 @@
 		29259E63248E58CF005D8CEF /* DependenciesMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependenciesMultiple.swift; sourceTree = "<group>"; };
 		294F78992226942700E2A24F /* SDOSSwinject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDOSSwinject; sourceTree = BUILT_PRODUCTS_DIR; };
 		295B94852498D6CA00FBEEBF /* Dependencies.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = Dependencies.xcfilelist; sourceTree = "<group>"; };
-		296F1D9625518D6D0010A9B1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		29AE5B05223FB36000F589F9 /* dependencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dependencies.json; sourceTree = "<group>"; };
 		29AE5B06223FB36000F589F9 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		29B26E8A2548282300A4DFA7 /* dependencies_output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = dependencies_output.xcfilelist; sourceTree = "<group>"; };
@@ -68,11 +61,6 @@
 		29BB8539249B318600728046 /* EventDetail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EventDetail.json; sourceTree = "<group>"; };
 		29D10360224B5F7700B787BF /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../../CHANGELOG.md; sourceTree = "<group>"; };
 		29D10361224B5F7700B787BF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
-		29FFDF1F253C8825008C3021 /* DependencyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyDTO.swift; sourceTree = "<group>"; };
-		29FFDF20253C8825008C3021 /* BodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyDTO.swift; sourceTree = "<group>"; };
-		29FFDF21253C8825008C3021 /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
-		29FFDF22253C8825008C3021 /* ArgumentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentDTO.swift; sourceTree = "<group>"; };
-		29FFDF24253C8825008C3021 /* ConsoleParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleParameter.swift; sourceTree = "<group>"; };
 		29FFDF2B253C88D4008C3021 /* SDOSSwinject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDOSSwinject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29FFDF2D253C88D4008C3021 /* SDOSSwinjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDOSSwinjectApp.swift; sourceTree = "<group>"; };
 		29FFDF2F253C88D4008C3021 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -137,21 +125,12 @@
 			path = Multiple;
 			sourceTree = "<group>";
 		};
-		294F789A2226942700E2A24F /* SDOSSwinjectScript */ = {
-			isa = PBXGroup;
-			children = (
-				29FFDF1D253C8825008C3021 /* Classes */,
-			);
-			path = SDOSSwinjectScript;
-			sourceTree = "<group>";
-		};
 		2970AD6C1BFA153F007CFBD9 = {
 			isa = PBXGroup;
 			children = (
 				29D10360224B5F7700B787BF /* CHANGELOG.md */,
 				29D10361224B5F7700B787BF /* README.md */,
 				29AE5B04223FB36000F589F9 /* example */,
-				294F789A2226942700E2A24F /* SDOSSwinjectScript */,
 				29FFDF2C253C88D4008C3021 /* SDOSSwinject */,
 				2970AD761BFA153F007CFBD9 /* Products */,
 				1A3F2B7365F64DEDC650C528 /* Frameworks */,
@@ -216,36 +195,6 @@
 				29BB8533249B318600728046 /* list */,
 			);
 			path = events;
-			sourceTree = "<group>";
-		};
-		29FFDF1D253C8825008C3021 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				29FFDF1E253C8825008C3021 /* DTO */,
-				29FFDF23253C8825008C3021 /* ConsoleParameter */,
-				296F1D9625518D6D0010A9B1 /* main.swift */,
-			);
-			name = Classes;
-			path = ../../../src/Scripts/Classes;
-			sourceTree = "<group>";
-		};
-		29FFDF1E253C8825008C3021 /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-				29FFDF1F253C8825008C3021 /* DependencyDTO.swift */,
-				29FFDF20253C8825008C3021 /* BodyDTO.swift */,
-				29FFDF21253C8825008C3021 /* ConfigDTO.swift */,
-				29FFDF22253C8825008C3021 /* ArgumentDTO.swift */,
-			);
-			path = DTO;
-			sourceTree = "<group>";
-		};
-		29FFDF23253C8825008C3021 /* ConsoleParameter */ = {
-			isa = PBXGroup;
-			children = (
-				29FFDF24253C8825008C3021 /* ConsoleParameter.swift */,
-			);
-			path = ConsoleParameter;
 			sourceTree = "<group>";
 		};
 		29FFDF2C253C88D4008C3021 /* SDOSSwinject */ = {
@@ -637,12 +586,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				296F1DA725518DDE0010A9B1 /* BodyDTO.swift in Sources */,
-				296F1DA625518DDE0010A9B1 /* DependencyDTO.swift in Sources */,
-				296F1DA525518DDE0010A9B1 /* ConfigDTO.swift in Sources */,
-				296F1D9725518D6D0010A9B1 /* main.swift in Sources */,
-				296F1DA825518DDE0010A9B1 /* ArgumentDTO.swift in Sources */,
-				296F1DA125518DD70010A9B1 /* ConsoleParameter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1025,7 +968,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = es.sdos.SDOSSwinject;
@@ -1093,7 +1036,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = es.sdos.SDOSSwinject;
@@ -1163,7 +1106,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = es.sdos.SDOSSwinject;
@@ -1210,7 +1153,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = es.sdos.SDOSSwinject;
@@ -1278,7 +1221,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = es.sdos.SDOSSwinject;
@@ -1348,7 +1291,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = es.sdos.SDOSSwinject;

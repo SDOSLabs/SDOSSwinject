@@ -1,3 +1,7 @@
+## [2.1.2 Fix format](https://github.com/SDOSLabs/SDOSSwinject.git/tree/2.1.2)
+
+- Fix problem with format when use key `globalAccessLevel`
+
 ## [2.1.1 Fix validate flag for subdependencies](https://github.com/SDOSLabs/SDOSSwinject.git/tree/2.1.1)
 
 - Fix an error when use --disable-input-output-files-validation and you have any subdependencies files
