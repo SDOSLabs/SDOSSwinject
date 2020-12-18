@@ -21,6 +21,8 @@
             ]
         }, {
             "dependencyName": "NewsRepositoryActions",
+            "name": "nombre",
+            "resolveNameSimple": true,
             "className": "NewsRepository",
             "scope": "container"
         }, {
