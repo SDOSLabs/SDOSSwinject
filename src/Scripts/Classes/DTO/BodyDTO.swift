@@ -17,6 +17,7 @@ struct BodyDTO: Decodable {
     var accessLevel: String?
     var initName: String?
     var onlyRegister: Bool? = false
+    var resolveNameSimple: Bool? = false
     
     /**
      Example result:
@@ -153,14 +154,17 @@ struct BodyDTO: Decodable {
      */
     func resolveHeader(dependency: DependencyDTO) -> String {
         var result = "resolve\(self.dependencyName)"
-        if let name = dependency.config?.name {
-            result.append(name.capitalizingFirstLetter())
-        }
-        if let name = self.name {
-            result.append(name.capitalizingFirstLetter())
-        }
-        if let suffixName = dependency.config?.suffixName {
-            result.append(suffixName.capitalizingFirstLetter())
+        if let resolveNameSimple = resolveNameSimple, resolveNameSimple {
+        } else {
+            if let name = dependency.config?.name {
+                result.append(name.capitalizingFirstLetter())
+            }
+            if let name = self.name {
+                result.append(name.capitalizingFirstLetter())
+            }
+            if let suffixName = dependency.config?.suffixName {
+                result.append(suffixName.capitalizingFirstLetter())
+            }
         }
         result.append("(")
         if let arguments = self.arguments {
@@ -193,7 +197,7 @@ struct BodyDTO: Decodable {
      return resolve(NavigationController.self, name: "ModuleNombre", argument: rootViewController)!
      */
     func resolveImplementation(dependency: DependencyDTO) -> String {
-        var result = "return (\(dependency.subdependencyOriginalName == nil ? "self" : "resolver") as! Container).synchronize().resolve(\(self.dependencyName).self"
+        var result = "return (\(dependency.subdependencyOriginalName == nil ? "resolver" : "resolver") as! Container).synchronize().resolve(\(self.dependencyName).self"
         var nameFinal = ""
         if let name = dependency.config?.name {
             nameFinal.append(name.capitalizingFirstLetter())
