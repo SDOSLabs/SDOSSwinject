@@ -13,7 +13,7 @@ extension Container {
     ///Register all dependencies: 10 dependencies
     func registerAllModuleCustom() {
 		self.registerNavigationControllerModuleNombreCustomWithRootViewController()
-		self.registerNewsRepositoryActionsModuleCustom()
+		self.registerNewsRepositoryActionsModuleNombreCustom()
 		self.registerUseCaseNewsListModuleCustom()
 		self.registerUseCaseNewsDetailModuleCustom()
 		self.registerNewsListPresenterActionsModuleCustomWithDelegate()
@@ -38,32 +38,32 @@ struct DependenciesResolver {
 	private let resolver: Resolver
 	fileprivate init(resolver: Resolver) { self.resolver = resolver }
 
-    func resolveNewsRepositoryActionsModuleCustom() -> NewsRepositoryActions {
-        return (self as! Container).synchronize().resolve(NewsRepositoryActions.self, name: "Module")!
+    func resolveNewsRepositoryActions() -> NewsRepositoryActions {
+        return (resolver as! Container).synchronize().resolve(NewsRepositoryActions.self, name: "ModuleNombre")!
     }
     func resolveUseCaseNewsListModuleCustom() -> UseCaseNewsList {
-        return (self as! Container).synchronize().resolve(UseCaseNewsList.self, name: "Module")!
+        return (resolver as! Container).synchronize().resolve(UseCaseNewsList.self, name: "Module")!
     }
     func resolveUseCaseNewsDetailModuleCustom() -> UseCaseNewsDetail {
-        return (self as! Container).synchronize().resolve(UseCaseNewsDetail.self, name: "Module")!
+        return (resolver as! Container).synchronize().resolve(UseCaseNewsDetail.self, name: "Module")!
     }
     func resolveNewsListPresenterActionsModuleCustom(delegate: NewsListPresenterDelegate) -> NewsListPresenterActions {
-        return (self as! Container).synchronize().resolve(NewsListPresenterActions.self, name: "Module", argument: delegate)!
+        return (resolver as! Container).synchronize().resolve(NewsListPresenterActions.self, name: "Module", argument: delegate)!
     }
     func resolveNewsListViewActionsModuleCustom() -> NewsListViewActions {
-        return (self as! Container).synchronize().resolve(NewsListViewActions.self, name: "Module")!
+        return (resolver as! Container).synchronize().resolve(NewsListViewActions.self, name: "Module")!
     }
     func resolveNewsListWireframeActionsModuleCustom() -> NewsListWireframeActions {
-        return (self as! Container).synchronize().resolve(NewsListWireframeActions.self, name: "Module")!
+        return (resolver as! Container).synchronize().resolve(NewsListWireframeActions.self, name: "Module")!
     }
     func resolveNewsDetailPresenterActionsModuleCustom(delegate: NewsDetailPresenterDelegate) -> NewsDetailPresenterActions {
-        return (self as! Container).synchronize().resolve(NewsDetailPresenterActions.self, name: "Module", argument: delegate)!
+        return (resolver as! Container).synchronize().resolve(NewsDetailPresenterActions.self, name: "Module", argument: delegate)!
     }
     func resolveNewsDetailViewActionsModuleCustom(item: NewsListVO) -> NewsDetailViewActions {
-        return (self as! Container).synchronize().resolve(NewsDetailViewActions.self, name: "Module", argument: item)!
+        return (resolver as! Container).synchronize().resolve(NewsDetailViewActions.self, name: "Module", argument: item)!
     }
     func resolveNewsDetailWireframeActionsModuleCustom() -> NewsDetailWireframeActions {
-        return (self as! Container).synchronize().resolve(NewsDetailWireframeActions.self, name: "Module")!
+        return (resolver as! Container).synchronize().resolve(NewsDetailWireframeActions.self, name: "Module")!
     }
 
 }
@@ -75,8 +75,8 @@ extension Container {
         return self.register(NavigationController.self, name: "ModuleNombre") { (r: Resolver, rootViewController: UIViewController) in UINavigationController(rootViewController: rootViewController) }
     }
     @discardableResult
-    fileprivate func registerNewsRepositoryActionsModuleCustom() -> ServiceEntry<NewsRepositoryActions> {
-        return self.register(NewsRepositoryActions.self, name: "Module") { (r: Resolver) in NewsRepository() }.inObjectScope(.container)
+    fileprivate func registerNewsRepositoryActionsModuleNombreCustom() -> ServiceEntry<NewsRepositoryActions> {
+        return self.register(NewsRepositoryActions.self, name: "ModuleNombre") { (r: Resolver) in NewsRepository() }.inObjectScope(.container)
     }
     @discardableResult
     fileprivate func registerUseCaseNewsListModuleCustom() -> ServiceEntry<UseCaseNewsList> {

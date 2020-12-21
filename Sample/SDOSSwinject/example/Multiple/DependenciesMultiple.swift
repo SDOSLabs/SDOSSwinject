@@ -41,7 +41,7 @@ public struct DependenciesResolver {
         return EventResolver(resolver: resolver)
     }
     public func resolveUseCaseNewsList2ModuleCustom() -> UseCaseNewsList2 {
-        return (self as! Container).synchronize().resolve(UseCaseNewsList2.self, name: "Module")!
+        return (resolver as! Container).synchronize().resolve(UseCaseNewsList2.self, name: "Module")!
     }
 
 }

@@ -262,6 +262,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
             "dependencyName": "string",
             "className": "string",
             "name": "string",
+            "resolveNameSimple": bool,
             "scope": "string",
             "accessLevel": "string",
             "initName": "string",
@@ -290,6 +291,7 @@ La librería se apoya en un JSON para generar el código `.swift`. Este JSON tie
 |`body.dependencyName`|[x]|Tipo de la dependencia a injectar. Por lo general será un protocolo|`NavigationController`|
 |`body.className`|[x]|Nombre de la clase que se debe inicializar al solicitar la dependencia. Esta clase deberá contener un método init con los parámetros indicados en el valor `body.arguments`|`UINavigationController`|
 |`body.name`||Nombre especifico para el registro de la dependencia. Este parámetro nos permite crear varios registros a la misma dependencia sin que se solapen los nombres de los métodos. Es útil cuando queremos registrar varias veces la misma dependencia con diferentes argumentos|`Test`|
+|`body.resolveNameSimple`||Si el valor es true indica si el nombre del método del resolver debe incluir los modificadores indicados en config.name, config.suffixName o body.name. Por defecto es false y los incluye|`true`|
 |`body.scope`||Ámbito de resolución de la dependencia. Estos ámbitos son los [definidos en la librería Swinject](https://github.com/Swinject/Swinject/blob/master/Documentation/ObjectScopes.md). Valores disponibles: `transient`, (default) `graph`, `container`, `weak`|`container`|
 |`body.accessLevel`||Nivel de acceso que se utilizará para los métodos de registro y resolución de la dependencia. Tiene prioridad sobre `config.globalAccessLevel`|`public`|
 |`body.initName`||Indica el nombre del método que deberá llamarse para inicializar la clase |`shared`|
